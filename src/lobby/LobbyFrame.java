@@ -177,7 +177,6 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		if (command.equals("종료")) {
 			dispose();
 			Login login = new Login();
-			login.start();
 		}
 		if (command.equals("랭킹 조회")) {
 			if (lsi.isRowSelected(table)) {
