@@ -6,6 +6,11 @@ public class User {
 	private String name;
 	private String mbti;
 	private String gender;
+	public User(String id, String pw) {
+		super();
+		this.id = id;
+		this.pw = pw;
+	}
 	public User(String id, String pw, String name, String mbti, String gender) {
 		super();
 		this.id = id;

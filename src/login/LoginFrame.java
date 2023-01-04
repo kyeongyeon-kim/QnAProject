@@ -1,8 +1,14 @@
 package login;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
+
+import com.sun.corba.se.spi.orbutil.fsm.Action;
+
 import javax.swing.JTextPane;
 import java.awt.Color;
 import java.awt.Font;
@@ -11,20 +17,26 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.TextEvent;
+import java.awt.event.TextListener;
 import java.awt.event.ActionEvent;
 
 public class LoginFrame extends JFrame implements FocusListener {
-
 	private JPanel contentPane;
 	private JTextField tfId;
 	private JTextField tfPw;
+	private JPasswordField pfPw;
+	private JLabel lblResult;
 	private JButton btnFind;
 	private JButton btnLogin;
 	private JButton btnJoin;
+	private JoinDialog joinDialog;
 
-	public LoginFrame() {
+	public LoginFrame(Login login) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(700, 250, 350, 447);
+		setBounds(700, 250, 350, 455);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -46,24 +58,50 @@ public class LoginFrame extends JFrame implements FocusListener {
 		tfPw.setBounds(58, 190, 220, 39);
 		tfSetting(tfPw);
 		
+//		pfPw = new JPasswordField("비밀번호");
+//		pfPw.setBounds(58, 190, 220, 39);
+//		tfSetting(pfPw); // 암호화 되지만 어떤값을 입력해야하는지 알려주지 못함
+		
+		lblResult = new JLabel("");
+		lblResult.setBounds(59, 228, 220, 39);
+		lblResult.setFont(new Font("맑은 고딕", Font.BOLD, 11));
+		lblResult.setBorder(null);
+		lblResult.setForeground(Color.RED);
+		contentPane.add(lblResult);
+		
 		btnLogin = new JButton("로그인");
 		btnLogin.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		btnLogin.setBackground(new Color(96,182,230));
 		btnLogin.setBorderPainted(false);
 		btnLogin.setForeground(Color.white);
-		btnLogin.setBounds(58, 252, 220, 39);
+		btnLogin.setBounds(58, 260, 220, 39);
+		btnLogin.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int result = login.checkLogin(tfId.getText(), tfPw.getText());
+				if (result == login.loginComplete) {
+					// 로그인 완료
+					lblResult.setText("");
+				} else if (result == login.loginFailByPw) {
+					lblResult.setText("비밀번호가 일치하지 않습니다.");
+				} else if (result == login.loginFailById) {
+					lblResult.setText("존재하지 않는 아이디입니다.");
+				}
+			}
+		});
+		
 		contentPane.add(btnLogin);
 		
 		btnJoin = new JButton("회원가입");
 		btnJoin.setFont(new Font("맑은 고딕", Font.BOLD, 11));
 		btnJoin.setBackground(Color.WHITE);
 		btnJoin.setBorderPainted(false);
-		btnJoin.setBounds(79, 301, 81, 23);
+		btnJoin.setBounds(79, 308, 81, 23);
 		btnJoin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JoinDialog dialog = new JoinDialog();
-				dialog.setVisible(true);
+				joinDialog = new JoinDialog();
+				joinDialog.setVisible(true);
 			}
 		});
 		contentPane.add(btnJoin);
@@ -72,7 +110,7 @@ public class LoginFrame extends JFrame implements FocusListener {
 		btnFind.setFont(new Font("맑은 고딕", Font.BOLD, 11));
 		btnFind.setBorderPainted(false);
 		btnFind.setBackground(Color.WHITE);
-		btnFind.setBounds(155, 301, 95, 23);
+		btnFind.setBounds(155, 308, 95, 23);
 		contentPane.add(btnFind);
 	}
 	
@@ -104,5 +142,9 @@ public class LoginFrame extends JFrame implements FocusListener {
 		} else if (e.getSource() == tfPw && tfPw.getText().equals("")) {
 			tfPw.setText("비밀번호");
 		}
+	}
+	
+	// 비밀번호 암호화
+	public void hidePw() {
 	}
 }
