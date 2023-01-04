@@ -14,7 +14,6 @@ import javax.swing.table.TableColumnModel;
 
 public class rankingListPanel extends JPanel {
 	
-	
 	public rankingListPanel() {
 		setPreferredSize(new Dimension(270, 450));
 		setLayout(new BorderLayout());
