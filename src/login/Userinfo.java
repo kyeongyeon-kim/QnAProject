@@ -1,12 +1,12 @@
 package login;
 
-public class User {
+public class Userinfo {
 	private String id;
 	private String pw;
 	private String name;
 	private String mbti;
 	private String gender;
-	public User(String id, String pw, String name, String mbti, String gender) {
+	public Userinfo(String id, String pw, String name, String mbti, String gender) {
 		super();
 		this.id = id;
 		this.pw = pw;

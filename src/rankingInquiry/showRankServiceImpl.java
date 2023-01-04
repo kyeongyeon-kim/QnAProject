@@ -1,12 +1,11 @@
 package rankingInquiry;
 
-public class showRankServiceImpl {
-	private showRankService showRank;
-	
-	public showRankServiceImpl(showRankService showRank) {
-		super();
-		this.showRank = showRank;
-	}
+public class showRankServiceImpl implements showRankService {
 
+	@Override
+	public int calculationScore() {
+		
+		return 0;
+	}
 	
 }

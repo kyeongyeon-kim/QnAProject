@@ -23,7 +23,5 @@ public class rankingListPanel extends JPanel {
 		String[] header = { "랭킹", "아이디", "점수" };
 		DefaultTableModel model = new DefaultTableModel(header, 30);
 		JTable table = new JTable(model);
-		JScrollPane scrollPane = new JScrollPane(table);
-		add(scrollPane, "Center");
 	}
 }
