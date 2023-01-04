@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.sun.corba.se.spi.orbutil.fsm.Action;
 
+import lobby.LobbyFrame;
+
 import javax.swing.JTextPane;
 import java.awt.Color;
 import java.awt.Font;
@@ -82,6 +84,8 @@ public class LoginFrame extends JFrame implements FocusListener {
 				if (result == login.loginComplete) {
 					// 로그인 완료
 					lblResult.setText("");
+					LobbyFrame frame = new LobbyFrame();
+					frame.setVisible(true);
 				} else if (result == login.loginFailByPw) {
 					lblResult.setText("비밀번호가 일치하지 않습니다.");
 				} else if (result == login.loginFailById) {
