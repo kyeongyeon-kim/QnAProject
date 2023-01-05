@@ -21,7 +21,6 @@ import javax.swing.table.TableRowSorter;
 import com.mysql.cj.x.protobuf.MysqlxCrud.CollectionOrBuilder;
 
 import dbutil.ConnectionProvider;
-import object.Attacker;
 import rankingInquiry.UserRankDialog;
 
 public class LobbyServiceImpl implements LobbyService {
