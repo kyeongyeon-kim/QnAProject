@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -21,6 +20,7 @@ import javax.swing.table.TableRowSorter;
 import com.mysql.cj.x.protobuf.MysqlxCrud.CollectionOrBuilder;
 
 import dbutil.ConnectionProvider;
+import object.Attacker;
 import rankingInquiry.UserRankDialog;
 
 public class LobbyServiceImpl implements LobbyService {

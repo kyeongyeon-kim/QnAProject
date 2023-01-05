@@ -1,7 +1,7 @@
 package lobby;
 
 import java.awt.Color;
-import java.awt.EventQueue;
+import java.awt.Dialog;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +29,7 @@ import javax.swing.table.TableRowSorter;
 import login.Login;
 import login.User;
 import mypage.MypageInfo;
+import object.Attacker;
 import rankingInquiry.UserRankDialog;
 
 public class LobbyFrame extends JFrame implements ActionListener {
