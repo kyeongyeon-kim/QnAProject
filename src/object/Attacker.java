@@ -1,4 +1,4 @@
-package lobby;
+package object;
 
 public class Attacker {
 	private String name;

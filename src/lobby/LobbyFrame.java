@@ -27,6 +27,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import login.Login;
+import object.Attacker;
 import rankingInquiry.UserRankDialog;
 
 public class LobbyFrame extends JFrame implements ActionListener {
