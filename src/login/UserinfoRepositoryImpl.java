@@ -85,4 +85,25 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 		}
 		return 0;
 	}
+
+	@Override
+	public User loginUser(String id) {
+		String sql = "SELECT * FROM userinfo WHERE id = ?";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, id);
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					String pw = rs.getString("pw");
+					String name = rs.getString("name");
+					String mbti = rs.getString("mbti");
+					String gender = rs.getString("gender");
+					return new User(id, pw, name, mbti, gender);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

@@ -6,4 +6,5 @@ public interface UserinfoRepository {
 	int userInsert(User user);
 	String selectPw(String id);
 	int userUpdate(User user);
+	User loginUser(String id);
 }

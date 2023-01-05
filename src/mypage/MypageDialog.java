@@ -87,7 +87,7 @@ public class MypageDialog extends JDialog implements ActionListener {
 		btnChangeInfo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ChangeInfoDialog(user).setVisible(true);
+				new ChangeInfo(user);
 			}
 		});
 		

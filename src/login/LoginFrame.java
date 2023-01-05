@@ -77,8 +77,9 @@ public class LoginFrame extends JFrame implements FocusListener {
 				if (result == login.loginComplete) {
 					// 로그인 완료
 					lblResult.setText("");
-					LobbyFrame frame = new LobbyFrame();
+					LobbyFrame frame = new LobbyFrame(login.loginUser(tfId.getText()));
 					frame.setVisible(true);
+					dispose();
 				} else if (result == login.loginFailByPw) {
 					lblResult.setText("비밀번호가 일치하지 않습니다.");
 				} else if (result == login.loginFailById) {

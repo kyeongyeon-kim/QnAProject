@@ -27,6 +27,8 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import login.Login;
+import login.User;
+import mypage.MypageInfo;
 import rankingInquiry.UserRankDialog;
 
 public class LobbyFrame extends JFrame implements ActionListener {
@@ -41,23 +43,23 @@ public class LobbyFrame extends JFrame implements ActionListener {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LobbyFrame frame = new LobbyFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					LobbyFrame frame = new LobbyFrame();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public LobbyFrame() {
+	public LobbyFrame(User user) {
 		lsi = new LobbyServiceImpl(new LobbyServiceToolImpl());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 500);
@@ -147,6 +149,12 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		mypageBtn.setBorderPainted(false);
 		mypageBtn.setBackground(new Color(92, 180, 229));
 		mypageBtn.setBounds(39, 314, 100, 50);
+		mypageBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MypageInfo(user);
+			}
+		});
 		contentPane.add(mypageBtn);
 
 		JButton rankBtn = new JButton("랭킹 조회");

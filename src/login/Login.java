@@ -5,6 +5,7 @@ public class Login {
 	public final int loginComplete = 0;
 	public final int loginFailByPw = 1;
 	public final int loginFailById = 2;
+	private UserinfoRepositoryImpl repo = new UserinfoRepositoryImpl();
 	
 	public Login() {
 		loginFrame = new LoginFrame(this);
@@ -13,7 +14,6 @@ public class Login {
 
 	// 로그인 정보 -> db 연결
 	public int checkLogin(String id, String pw) {
-		UserinfoRepositoryImpl repo = new UserinfoRepositoryImpl();
 		if (repo.countById(id) != 0) {
 			if (repo.selectPw(id).equals(pw)) {
 				System.out.println("로그인 완료");
@@ -27,6 +27,12 @@ public class Login {
 			return loginFailById;
 		}
 	}
+	
+	public User loginUser(String id) {
+		return repo.loginUser(id);
+	}
+	
+	
 	public static void main(String[] args) {
 		Login login = new Login();
 	}

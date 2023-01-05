@@ -15,7 +15,7 @@ public class ChangeInfo {
 
 	public ChangeInfo(User user) { // 로비에서 user 받기
 		this.user = user;
-//		new MypageDialog(user).setVisible(true);
+		new ChangeInfoDialog(user).setVisible(true);
 	}
 
 	// 입력값 확인
@@ -35,9 +35,5 @@ public class ChangeInfo {
 	// 수정하기
 	public void updateInfo(User newUser) {
 		userinfoService.userUpdate(newUser);
-	}
-
-	public static void main(String[] args) {
-		new ChangeInfo(new User("은진", "1234", "이은진", "ISTJ", "여")); // 테스트용
 	}
 }

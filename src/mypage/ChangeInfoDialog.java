@@ -140,7 +140,6 @@ public class ChangeInfoDialog extends JDialog implements FocusListener {
 				for (int i = 0; i < c.length; i++) {
 					pw += c[i];
 				}
-				System.out.println(pw);
 				String name = tfName.getText();
 				String mbti = tfMbti.getText().toUpperCase();
 				String gender = "";
@@ -185,9 +184,9 @@ public class ChangeInfoDialog extends JDialog implements FocusListener {
 		ChangeInfo change = new ChangeInfo(user);
 		int result = change.checkInput(pw, name, mbti, gender);
 		if (result == change.updateComplete) {
+			lblResult.setText("업데이트 완료");
 			change.updateInfo(new User(user.getId(), pw, name, mbti, gender));
-			System.out.println("업데이트 완료");
-			dispose();
+			this.dispose();
 		} else if (result == change.updateFailByName) {
 			lblResult.setText("이름 입력이 잘못되었습니다.(1~15자)");
 		} else if (result == change.updateFailByMbti) {
