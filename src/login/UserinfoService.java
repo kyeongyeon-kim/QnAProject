@@ -51,22 +51,22 @@ public class UserinfoService {
 		System.out.println("mbti 입력오류");
 		return false;
 	}
-	public boolean duplicateId (String id) {
+
+	public boolean duplicateId(String id) {
 		// 중복확인
 		if (repo.countById(id) == 0) {
 			return true;
-		} 
+		}
 		System.out.println("아이디중복");
 		return false;
 	}
+
 	public void userInsert(User user) {
-		// 중복확인
-		if (repo.countById(user.getId()) != 0) {
-			// 중복 예외
-			System.out.println("아이디중복");
-		} else {
-			// insert
-			repo.userInsert(user);
-		}
+		repo.userInsert(user);
+
+	}
+	
+	public void userUpdate(User user) {
+		repo.userUpdate(user);
 	}
 }

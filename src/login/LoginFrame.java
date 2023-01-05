@@ -2,12 +2,9 @@ package login;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
-
-import com.sun.corba.se.spi.orbutil.fsm.Action;
 
 import lobby.LobbyFrame;
 
@@ -19,10 +16,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.TextEvent;
-import java.awt.event.TextListener;
 import java.awt.event.ActionEvent;
 
 public class LoginFrame extends JFrame implements FocusListener {
@@ -38,7 +31,7 @@ public class LoginFrame extends JFrame implements FocusListener {
 
 	public LoginFrame(Login login) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(700, 250, 350, 455);
+		setBounds(700, 230, 350, 455);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -5,4 +5,5 @@ public interface UserinfoRepository {
 	int userInsert(String id, String pw, String name, String mbti, String gender);
 	int userInsert(User user);
 	String selectPw(String id);
+	int userUpdate(User user);
 }
