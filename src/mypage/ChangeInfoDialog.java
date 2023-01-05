@@ -1,9 +1,13 @@
-package login;
+package mypage;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
+
+import login.User;
+
 import javax.swing.JTextPane;
 
 import java.awt.Color;
@@ -19,7 +23,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
-public class JoinDialog extends JDialog implements FocusListener {
+public class ChangeInfoDialog extends JDialog implements FocusListener {
 	private JPanel contentPane;
 	private JTextField tfName;
 	private JTextField tfId;
@@ -30,7 +34,7 @@ public class JoinDialog extends JDialog implements FocusListener {
 	private JRadioButton btnWoman;
 	private JRadioButton btnMan;
 
-	public JoinDialog() {
+	public ChangeInfoDialog(User user) {
 		setModal(true);
 		setBounds(700, 180, 361, 566);
 		contentPane = new JPanel();
@@ -41,31 +45,48 @@ public class JoinDialog extends JDialog implements FocusListener {
 		
 		JTextPane textPane = new JTextPane();
 		textPane.setFont(new Font("맑은 고딕", Font.BOLD, 30));
-		textPane.setText("회원가입");
+		textPane.setText("정보수정");
 		textPane.setEditable(false);
 		textPane.setBounds(115, 60, 131, 39);
 		contentPane.add(textPane);
 		
-		tfName = new JTextField("이름");
-		tfName.setBounds(63, 145, 220, 39);
+		JLabel lblName = new JLabel("이름");
+		lblName.setBounds(63, 145, 220, 39);
+		lblName.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		contentPane.add(lblName);
+		
+		tfName = new JTextField(user.getName());
+		tfName.setBounds(120, 145, 160, 39);
 		tfSetting(tfName);
 		
-		tfId = new JTextField("아이디");
-		tfId.setBounds(63, 195, 220, 39);
+		JLabel lblId = new JLabel("아이디");
+		lblId.setBounds(63, 195, 220, 39);
+	
+		lblId.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		contentPane.add(lblId);
+		
+		tfId = new JTextField(user.getId());
+		tfId.setBounds(120, 195, 160, 39);
+		tfId.setEditable(false);
 		tfSetting(tfId);
 		
-		tfMbti = new JTextField("MBTI");
-		tfMbti.setBounds(63, 245, 220, 39);
+		JLabel lblMbti = new JLabel("MBTI");
+		lblMbti.setBounds(63, 245, 220, 39);
+		lblMbti.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		contentPane.add(lblMbti);
+		
+		tfMbti = new JTextField(user.getMbti());
+		tfMbti.setBounds(120, 245, 160, 39);
 		tfSetting(tfMbti);
 		
-	
-		
-		
-		
-		
-		tfPw = new JTextField("비밀번호");
-		tfPw.setBounds(63, 295, 220, 39);
-		tfSetting(tfPw);
+		JLabel lblPw = new JLabel("비밀번호");
+		lblPw.setBounds(63, 295, 220, 39);
+		lblPw.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		contentPane.add(lblPw);
+
+		JPasswordField pfPw = new JPasswordField(user.getPw());
+		pfPw.setBounds(120, 295, 160, 39);
+		tfSetting(pfPw); 
 		
 		JLabel lblGender = new JLabel();
 		lblGender.setBackground(Color.WHITE);
@@ -78,7 +99,6 @@ public class JoinDialog extends JDialog implements FocusListener {
 		btnMan.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		btnMan.setBackground(Color.WHITE);
 		btnMan.setBounds(133, 354, 60, 21);
-		btnMan.setSelected(true);
 		contentPane.add(btnMan);
 		
 		btnWoman = new JRadioButton("여자");
@@ -90,7 +110,14 @@ public class JoinDialog extends JDialog implements FocusListener {
 		ButtonGroup group = new ButtonGroup();
 		group.add(btnMan);
 		group.add(btnWoman);
-		
+
+		String gender = user.getGender();
+		if (gender.equals("남")) {
+			btnMan.setSelected(true);
+		} else if (gender.equals("여")) {
+			btnWoman.setSelected(true);
+		}
+
 		lblResult = new JLabel("");
 		lblResult.setBounds(64, 380, 220, 39);
 		lblResult.setFont(new Font("맑은 고딕", Font.BOLD, 11));
@@ -98,7 +125,7 @@ public class JoinDialog extends JDialog implements FocusListener {
 		lblResult.setForeground(Color.RED);
 		contentPane.add(lblResult);
 		
-		btnNext = new JButton("다음");
+		btnNext = new JButton("완료");
 		btnNext.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		btnNext.setBackground(new Color(96,182,230));
 		btnNext.setBorderPainted(false);
@@ -108,8 +135,11 @@ public class JoinDialog extends JDialog implements FocusListener {
 		btnNext.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String id = tfId.getText();
-				String pw = tfPw.getText();
+				char[] c = pfPw.getPassword();
+				String pw = "";
+				for (int i = 0; i < c.length; i++) {
+					pw += c[i];
+				}
 				String name = tfName.getText();
 				String mbti = tfMbti.getText().toUpperCase();
 				String gender = "";
@@ -118,7 +148,7 @@ public class JoinDialog extends JDialog implements FocusListener {
 				} else if (btnWoman.isSelected()) {
 					gender = "여";
 				}
-				checkInput(id, pw, name, mbti, gender);
+				updateInput(user, pw, name, mbti, gender);
 			}
 		});
 	}
@@ -136,24 +166,13 @@ public class JoinDialog extends JDialog implements FocusListener {
 	}
 
 	@Override
-	public void focusGained(FocusEvent e) { // 입력시 초기값 지우기
-		if (e.getSource() == tfName && tfName.getText().equals("이름")) {
-			tfName.setText("");
-		} else if (e.getSource() == tfId && tfId.getText().equals("아이디")) {
-			tfId.setText("");
-		} else if (e.getSource() == tfMbti && tfMbti.getText().equals("MBTI")) {
-			tfMbti.setText("");
-		} else if (e.getSource() == tfPw && tfPw.getText().equals("비밀번호")) {
-			tfPw.setText("");
-		}
+	public void focusGained(FocusEvent e) { 
 	}
 
 	@Override
 	public void focusLost(FocusEvent e) { // 내용을 지우면 초기값 설정
 		if (e.getSource() == tfName && tfName.getText().equals("")) {
 			tfName.setText("이름");
-		} else if (e.getSource() == tfId && tfId.getText().equals("")) {
-			tfId.setText("아이디");
 		} else if (e.getSource() == tfMbti && tfMbti.getText().equals("")) {
 			tfMbti.setText("MBTI");
 		} else if (e.getSource() == tfPw && tfPw.getText().equals("")) {
@@ -161,23 +180,19 @@ public class JoinDialog extends JDialog implements FocusListener {
 		}
 	}
 	
-	public void checkInput(String id, String pw, String name, String mbti, String gender) {
-		Join join = new Join();
-		int result = join.checkInput(id, pw, name, mbti, gender);
-		if (result == join.joinComplete) {
-			System.out.println("회원가입 완료");
-			lblResult.setText("");
-			join.insert();
-		} else if (result == join.joinFailByName) {
+	public void updateInput(User user, String pw, String name, String mbti, String gender) {
+		ChangeInfo change = new ChangeInfo(user);
+		int result = change.checkInput(pw, name, mbti, gender);
+		if (result == change.updateComplete) {
+			lblResult.setText("업데이트 완료");
+			change.updateInfo(new User(user.getId(), pw, name, mbti, gender));
+			this.dispose();
+		} else if (result == change.updateFailByName) {
 			lblResult.setText("이름 입력이 잘못되었습니다.(1~15자)");
-		} else if (result == join.joinFailByDuplicate) {
-			lblResult.setText("이미 가입된 아이디입니다.");
-		} else if (result == join.joinFailById) {
-			lblResult.setText("아이디 입력이 잘못되었습니다.(4~20자)");
-		} else if (result == join.joinFailByMbti) {
+		} else if (result == change.updateFailByMbti) {
 			lblResult.setText("MBTI 입력이 잘못되었습니다.(ex.INFP)");
-		} else if (result == join.joinFailByPw) {
+		} else if (result == change.updateFailByPw) {
 			lblResult.setText("비밀번호 입력이 잘못되었습니다.(4~20자)");
-		} 
+		}
 	}
 }

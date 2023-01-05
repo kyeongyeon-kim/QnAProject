@@ -1,36 +1,36 @@
 package lobby;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Dialog;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import login.Login;
+import login.User;
+import mypage.MypageInfo;
+import object.Attacker;
 import rankingInquiry.UserRankDialog;
-
-import java.awt.Color;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.util.regex.PatternSyntaxException;
-import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.RowFilter;
 
 public class LobbyFrame extends JFrame implements ActionListener {
 	private JPanel contentPane;
@@ -44,23 +44,23 @@ public class LobbyFrame extends JFrame implements ActionListener {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LobbyFrame frame = new LobbyFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					LobbyFrame frame = new LobbyFrame();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public LobbyFrame() {
+	public LobbyFrame(User user) {
 		lsi = new LobbyServiceImpl(new LobbyServiceToolImpl());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 500);
@@ -80,19 +80,16 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		});
 		startBtn.setBounds(38, 44, 101, 200);
 		contentPane.add(startBtn);
-
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(240, 248, 253));
 		panel.setBounds(151, 44, 350, 380);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-		
-
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(12, 37, 326, 300);
 		panel.add(scrollPane);
-
 		String[] header = { "이름", "성별", "아이디", "MBTI" };
 		model = new DefaultTableModel(header, 0);
 		table = new JTable(model);
@@ -153,6 +150,12 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		mypageBtn.setBorderPainted(false);
 		mypageBtn.setBackground(new Color(92, 180, 229));
 		mypageBtn.setBounds(39, 314, 100, 50);
+		mypageBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MypageInfo(user);
+			}
+		});
 		contentPane.add(mypageBtn);
 
 		JButton rankBtn = new JButton("랭킹 조회");
@@ -165,7 +168,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 
 		sorter = new TableRowSorter<TableModel>(model);
 		table.setRowSorter(sorter);
-		
+
 		lsi.readUserinfo(model);
 
 		setLocationRelativeTo(null);
@@ -182,7 +185,12 @@ public class LobbyFrame extends JFrame implements ActionListener {
 			if (lsi.isRowSelected(table)) {
 				int seletedRow = table.getSelectedRow();
 				Object userName = table.getValueAt(seletedRow, 0);
-				new UserRankDialog((String) userName);
+				Object userId = table.getValueAt(seletedRow, 2);
+				UserRankDialog urd = new UserRankDialog((String) userName);
+				List<Attacker> attackerList = lsi.makeAttackerList(userId);
+				
+				lsi.setUserRanking(urd, attackerList);
+				urd.setVisible(true);
 			}
 		}
 		if (command.equals("검색")) {
