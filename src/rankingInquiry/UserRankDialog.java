@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -20,8 +21,16 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 
 public class UserRankDialog extends JDialog implements ActionListener {
-	private showRankService showRank;
+	private DefaultTableModel model;
 	
+	public DefaultTableModel getModel() {
+		return model;
+	}
+
+	public void setModel(DefaultTableModel model) {
+		this.model = model;
+	}
+
 	public UserRankDialog(String str) {
 		getContentPane().setBackground(Color.WHITE);
 		getContentPane().setLayout(null);
@@ -39,27 +48,28 @@ public class UserRankDialog extends JDialog implements ActionListener {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		String[] header = { "랭킹", "아이디", "점수" };
-		DefaultTableModel model = new DefaultTableModel(header, 30);
+		model = new DefaultTableModel(header, 0);
 		JTable table = new JTable(model);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setDefaultEditor(Object.class, null);
 		table.setPreferredSize(new Dimension(270, 450));
 		mainPanel.add(table);
 		JScrollPane scrollPane = new JScrollPane(table);
 		mainPanel.add(scrollPane, "Center");
-		mainPanel.setBounds(12, 70, 270, 455);
+		mainPanel.setBounds(12, 70, 270, 250);
 		getContentPane().add(mainPanel);
 
 		JButton closeBtn = new JButton("확인");
 		closeBtn.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
 		closeBtn.setForeground(new Color(255, 255, 255));
-		closeBtn.setBounds(92, 535, 97, 23);
+		closeBtn.setBounds(92, 330, 97, 23);
 		closeBtn.setBackground(new Color(92, 180, 229));
 		closeBtn.addActionListener(this);
 		getContentPane().add(closeBtn);
 		
-		setSize(300, 600);
+		setSize(300, 400);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		setVisible(true);
 	}
 
 	@Override
