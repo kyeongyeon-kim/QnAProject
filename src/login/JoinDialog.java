@@ -58,6 +58,11 @@ public class JoinDialog extends JDialog implements FocusListener {
 		tfMbti.setBounds(63, 245, 220, 39);
 		tfSetting(tfMbti);
 		
+	
+		
+		
+		
+		
 		tfPw = new JTextField("비밀번호");
 		tfPw.setBounds(63, 295, 220, 39);
 		tfSetting(tfPw);

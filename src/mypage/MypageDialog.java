@@ -29,6 +29,7 @@ public class MypageDialog extends JDialog implements ActionListener {
 	private JPanel attackDefendPanel;
 
 	public MypageDialog(User user) {
+		setModal(true);
 		setBounds(555, 175, 602, 567);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.WHITE);

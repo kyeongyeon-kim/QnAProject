@@ -11,10 +11,8 @@ public class MypageInfo {
 	}
 	
 	// 테이블 정보 얻어오기
-	
-	
 
-//	public static void main(String[] args) {
-//		new MypageInfo(new User("은진", "1234", "이은진", "ISTJ", "여")); // 테스트용
-//	}
+	public static void main(String[] args) {
+		new MypageInfo(new User("은진", "1234", "이은진", "ISTJ", "여")); // 테스트용
+	}
 }

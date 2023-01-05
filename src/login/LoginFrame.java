@@ -16,13 +16,14 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 
-public class LoginFrame extends JFrame implements FocusListener {
+public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 	private JPanel contentPane;
 	private JTextField tfId;
 	private JTextField tfPw;
-	private JPasswordField pfPw;
 	private JLabel lblResult;
 	private JButton btnFind;
 	private JButton btnLogin;
@@ -53,10 +54,6 @@ public class LoginFrame extends JFrame implements FocusListener {
 		tfPw.setBounds(58, 190, 220, 39);
 		tfSetting(tfPw);
 		
-//		pfPw = new JPasswordField("비밀번호");
-//		pfPw.setBounds(58, 190, 220, 39);
-//		tfSetting(pfPw); // 암호화 되지만 어떤값을 입력해야하는지 알려주지 못함
-		
 		lblResult = new JLabel("");
 		lblResult.setBounds(59, 228, 220, 39);
 		lblResult.setFont(new Font("맑은 고딕", Font.BOLD, 11));
@@ -70,21 +67,23 @@ public class LoginFrame extends JFrame implements FocusListener {
 		btnLogin.setBorderPainted(false);
 		btnLogin.setForeground(Color.white);
 		btnLogin.setBounds(58, 260, 220, 39);
+		btnLogin.addKeyListener(this);
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int result = login.checkLogin(tfId.getText(), tfPw.getText());
-				if (result == login.loginComplete) {
-					// 로그인 완료
-					lblResult.setText("");
-					LobbyFrame frame = new LobbyFrame(login.loginUser(tfId.getText()));
-					frame.setVisible(true);
-					dispose();
-				} else if (result == login.loginFailByPw) {
-					lblResult.setText("비밀번호가 일치하지 않습니다.");
-				} else if (result == login.loginFailById) {
-					lblResult.setText("존재하지 않는 아이디입니다.");
-				}
+//				int result = login.checkLogin(tfId.getText(), tfPw.getText());
+//				if (result == login.loginComplete) {
+//					// 로그인 완료
+//					lblResult.setText("");
+//					LobbyFrame frame = new LobbyFrame(login.loginUser(tfId.getText()));
+//					frame.setVisible(true);
+//					dispose();
+//				} else if (result == login.loginFailByPw) {
+//					lblResult.setText("비밀번호가 일치하지 않습니다.");
+//				} else if (result == login.loginFailById) {
+//					lblResult.setText("존재하지 않는 아이디입니다.");
+//				}
+				selectLogin(login);
 			}
 		});
 		
@@ -141,8 +140,38 @@ public class LoginFrame extends JFrame implements FocusListener {
 			tfPw.setText("비밀번호");
 		}
 	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			btnLogin.doClick();
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 	
-	// 비밀번호 암호화
-	public void hidePw() {
+	public void selectLogin(Login login) {
+		int result = login.checkLogin(tfId.getText(), tfPw.getText());
+		if (result == login.loginComplete) {
+			// 로그인 완료
+			lblResult.setText("");
+			LobbyFrame frame = new LobbyFrame(login.loginUser(tfId.getText()));
+			frame.setVisible(true);
+			dispose();
+		} else if (result == login.loginFailByPw) {
+			lblResult.setText("비밀번호가 일치하지 않습니다.");
+		} else if (result == login.loginFailById) {
+			lblResult.setText("존재하지 않는 아이디입니다.");
+		}
 	}
 }

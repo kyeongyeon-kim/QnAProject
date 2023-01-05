@@ -16,14 +16,11 @@ public class Login {
 	public int checkLogin(String id, String pw) {
 		if (repo.countById(id) != 0) {
 			if (repo.selectPw(id).equals(pw)) {
-				System.out.println("로그인 완료");
 				return loginComplete;
 			} else {
-				System.out.println("로그인 실패: 비밀번호 틀림");
 				return loginFailByPw;
 			}
 		} else {
-			System.out.println("로그인 실패: 존재하지 않는 아이디");
 			return loginFailById;
 		}
 	}
