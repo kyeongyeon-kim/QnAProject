@@ -27,10 +27,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import gamemode.GameFrame;
 import login.Login;
+import login.UserinfoRepositoryImpl;
+import login.UserinfoService;
 import mypage.MypageInfo;
 import object.Attacker;
-import object.User;
 import rankingInquiry.UserRankDialog;
 
 public class LobbyFrame extends JFrame implements ActionListener {
@@ -41,26 +43,8 @@ public class LobbyFrame extends JFrame implements ActionListener {
 	private DefaultTableModel model;
 	private LobbyServiceImpl lsi;
 	private TableRowSorter<TableModel> sorter;
+	private UserinfoRepositoryImpl repo = new UserinfoRepositoryImpl();
 
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					LobbyFrame frame = new LobbyFrame();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
-	/**
-	 * Create the frame.
-	 */
 	public LobbyFrame(User user) {
 		lsi = new LobbyServiceImpl(new LobbyServiceToolImpl());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,10 +59,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		startBtn.setForeground(Color.WHITE);
 		startBtn.setBorderPainted(false);
 		startBtn.setBackground(new Color(92, 180, 229));
-		startBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		startBtn.addActionListener(this);
 		startBtn.setBounds(38, 44, 101, 200);
 		contentPane.add(startBtn);
 		
@@ -138,7 +119,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		});
 		panel.add(combo);
 
-		JButton endBtn = new JButton("종료");
+		JButton endBtn = new JButton("로그아웃");
 		endBtn.setForeground(Color.WHITE);
 		endBtn.setBorderPainted(false);
 		endBtn.setBackground(new Color(92, 180, 229));
@@ -178,18 +159,17 @@ public class LobbyFrame extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
-		if (command.equals("종료")) {
+		if (command.equals("로그아웃")) {
 			dispose();
 			Login login = new Login();
 		}
 		if (command.equals("랭킹 조회")) {
 			if (lsi.isRowSelected(table)) {
 				int seletedRow = table.getSelectedRow();
-				Object userName = table.getValueAt(seletedRow, 0);
 				Object userId = table.getValueAt(seletedRow, 2);
-				UserRankDialog urd = new UserRankDialog((String) userName);
+				User user = repo.loginUser((String)userId);
+				UserRankDialog urd = new UserRankDialog(user);
 				List<Attacker> attackerList = lsi.makeAttackerList(userId);
-				
 				lsi.setUserRanking(urd, attackerList);
 				urd.setVisible(true);
 			}
@@ -199,5 +179,21 @@ public class LobbyFrame extends JFrame implements ActionListener {
 			lsi.infomationFiltering(getText, sorter);
 			inputInfo.setText("");
 		}
+		if (command.equals("공략 시작")) {
+			if (lsi.isRowSelected(table)) {
+				int seletedRow = table.getSelectedRow();
+				Object userId = table.getValueAt(seletedRow, 2);
+				GameFrame gf = new GameFrame(repo.loginUser((String)userId));
+				gf.setVisible(true);
+				dispose();
+				
+			}
+			
+		}
+	}
+	public static void main(String[] args) {
+		User user = new User("id", "pw", "name", "mbti", "gender");
+		LobbyFrame name = new LobbyFrame(user);
+		name.setVisible(true);
 	}
 }

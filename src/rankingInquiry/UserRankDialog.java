@@ -1,5 +1,13 @@
 package rankingInquiry;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -7,18 +15,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.management.GarbageCollectorMXBean;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-
-import javax.swing.JButton;
+import login.User;
 
 public class UserRankDialog extends JDialog implements ActionListener {
 	private DefaultTableModel model;
@@ -31,11 +30,11 @@ public class UserRankDialog extends JDialog implements ActionListener {
 		this.model = model;
 	}
 
-	public UserRankDialog(String str) {
+	public UserRankDialog(User user) {
 		getContentPane().setBackground(Color.WHITE);
 		getContentPane().setLayout(null);
 		setModal(true);
-		String resultText = "<HTML><body style='text-align:center;'>" + str + "님 <br>Attacker 랭킹</body></HTML>";
+		String resultText = "<HTML><body style='text-align:center;'>" + user.getId() + "님 <br>Attacker 랭킹</body></HTML>";
 		JLabel rankingLabel = new JLabel(resultText);
 		rankingLabel.setBackground(Color.BLACK);
 		rankingLabel.setHorizontalAlignment(SwingConstants.CENTER);

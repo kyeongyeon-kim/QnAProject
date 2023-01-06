@@ -1,42 +1,48 @@
 package gamemode;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import imagemanagement.ImageManager;
+import lobby.LobbyFrame;
+import login.User;
+import stylemanagement.ImageServiceImpl;
+import stylemanagement.ImageServiceToolImpl;
 
 public class GameFrame extends JFrame {
 	JLabel label;
 	int currentImageIndex = 0;
 	
-
-	public GameFrame() {
+	public GameFrame(User user) {
 		GameModeServiceImpl gms = new GameModeServiceImpl(new GameModeServiceToolImpl());
-		ImageManager im = new ImageManager();
+		ImageServiceImpl isi = new ImageServiceImpl(new ImageServiceToolImpl());
 		
-		label = new JLabel(new ImageIcon(im.getImages().get(currentImageIndex)));
+		label = new JLabel(new ImageIcon(isi.readIntro().get(currentImageIndex)));
 		getContentPane().add(label, BorderLayout.CENTER);
 
-		setSize(1280, 845);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-
 		label.addMouseListener(new MouseAdapter() {
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				currentImageIndex = (currentImageIndex + 1) % im.getImages().size();
-				label.setIcon(new ImageIcon(im.getImages().get(currentImageIndex)));
+				currentImageIndex = (currentImageIndex + 1) % isi.readIntro().size();
+				label.setIcon(new ImageIcon(isi.readIntro().get(currentImageIndex)));
+				if (user.getGender().equals("남") && currentImageIndex == 0) {
+					currentImageIndex = (currentImageIndex + 1) % isi.readIntro().size();
+					label.setIcon(new ImageIcon(isi.readKatalkMan().get(currentImageIndex)));
+				}
 			}
 		});
-
 		
 		label.setFocusable(true);
 		label.addKeyListener(new KeyAdapter() {
@@ -44,15 +50,30 @@ public class GameFrame extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					currentImageIndex = (currentImageIndex + 1) % im.getImages().size();
-					label.setIcon(new ImageIcon(im.getImages().get(currentImageIndex)));
+					currentImageIndex = (currentImageIndex + 1) % isi.readIntro().size();
+					label.setIcon(new ImageIcon(isi.readIntro().get(currentImageIndex)));
 				}
 			}
 		});
+		
+		this.addWindowListener(new WindowAdapter() {
+			
+			@Override
+			public void windowClosed(WindowEvent e) {
+				LobbyFrame lf = new LobbyFrame(user);
+				lf.setVisible(true);
+			}
+			
+		});
+		
+		setSize(960, 740);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
 	public static void main(String[] args) {
-		GameFrame gf = new GameFrame();
+		User user = new User("id", "pw", "name", "mbti", "gender");
+		GameFrame gf = new GameFrame(user);
 		gf.setVisible(true);
 	}
 }
