@@ -164,7 +164,12 @@ public class ChangeInfoDialog extends JDialog implements FocusListener, MouseLis
 				}
 				if (checkNotInput(pw, name, mbti, gender)) {
 					updateInput(changeInfo, user, pw, name, mbti, gender);
+					user.setName(name);
+					user.setPw(pw);
+					user.setMbti(mbti);
+					user.setGender(gender);
 				}
+				
 			}
 		});
 	}
