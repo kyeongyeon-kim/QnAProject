@@ -67,10 +67,4 @@ public class GameFrame extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
-
-	public static void main(String[] args) {
-		User user = new User("id", "pw", "name", "mbti", "gender");
-		GameFrame gf = new GameFrame(user);
-		gf.setVisible(true);
-	}
 }

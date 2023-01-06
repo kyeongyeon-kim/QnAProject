@@ -60,10 +60,24 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		startBtn.setForeground(Color.WHITE);
 		startBtn.setBorderPainted(false);
 		startBtn.setBackground(new Color(92, 180, 229));
-		startBtn.addActionListener(this);
 		startBtn.setBounds(38, 44, 101, 200);
 		contentPane.add(startBtn);
-		
+		startBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (lsi.isRowSelected(table)) {
+					int seletedRow = table.getSelectedRow();
+					// attacker 정보도 나중에 GameFrame안에 넣어야해서 만들어놓음
+//					Object userId = table.getValueAt(seletedRow, 2);
+					GameFrame gf = new GameFrame(user);
+					gf.setVisible(true);
+					dispose();
+				}
+
+			}
+		});
+
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(240, 248, 253));
 		panel.setBounds(151, 44, 350, 380);
@@ -168,7 +182,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 			if (lsi.isRowSelected(table)) {
 				int seletedRow = table.getSelectedRow();
 				Object userId = table.getValueAt(seletedRow, 2);
-				User user = repo.loginUser((String)userId);
+				User user = repo.loginUser((String) userId);
 				UserRankDialog urd = new UserRankDialog(user);
 				List<Attacker> attackerList = lsi.makeAttackerList(userId);
 				lsi.setUserRanking(urd, attackerList);
@@ -180,21 +194,5 @@ public class LobbyFrame extends JFrame implements ActionListener {
 			lsi.infomationFiltering(getText, sorter);
 			inputInfo.setText("");
 		}
-		if (command.equals("공략 시작")) {
-			if (lsi.isRowSelected(table)) {
-				int seletedRow = table.getSelectedRow();
-				Object userId = table.getValueAt(seletedRow, 2);
-				GameFrame gf = new GameFrame(repo.loginUser((String)userId));
-				gf.setVisible(true);
-				dispose();
-				
-			}
-			
-		}
-	}
-	public static void main(String[] args) {
-		User user = new User("id", "pw", "name", "mbti", "gender");
-		LobbyFrame name = new LobbyFrame(user);
-		name.setVisible(true);
 	}
 }
