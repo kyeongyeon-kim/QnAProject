@@ -1,4 +1,4 @@
-package exam;
+package mypage;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import dbutil.ConnectionProvider;
+import exam.examServiceImpl;
 
 import javax.swing.JScrollBar;
 import javax.swing.JButton;
@@ -36,26 +37,29 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
-public class examFrame extends JFrame implements ActionListener {
+public class ChangeExamFrame extends JFrame implements ActionListener {
 
 	private JScrollPane scrollPane;
 	private JPanel contentPane;
 	private static JRadioButton radiobtn[] = new JRadioButton[41];
 	private static JLabel lblTest[] = new JLabel[10];
 	private static JLabel number = new JLabel();
-	private JButton signUpButton;
+	private JButton editButton;
 	private examServiceImpl esi;
 	private List<Integer> examEachNum;
 	private List<String> fixOptionList;
 	static List<Integer> selectNum = new ArrayList<>();
 	private JLabel lblNewLabel;
+	private List<Integer> missionOut;
+	private List<Integer> IdxNum;
+	
 
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					examFrame frame = new examFrame();
+					ChangeExamFrame frame = new ChangeExamFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,7 +68,7 @@ public class examFrame extends JFrame implements ActionListener {
 		});
 	}
 
-	public examFrame() {
+	public ChangeExamFrame() {
 		esi = new examServiceImpl();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,20 +80,20 @@ public class examFrame extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 
 		// 질문지 제목
-		JLabel questionTitle = new JLabel("질문지");
-		questionTitle.setBounds(218, 10, 97, 54);
+		JLabel questionTitle = new JLabel("질문지 수정");
+		questionTitle.setBounds(190, 10, 180, 54);
 		questionTitle.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		contentPane.add(questionTitle);
 		
-		//가입하기 버튼
-		signUpButton = new JButton("가입하기");
-		signUpButton.setBounds(198, 625, 135, 40);
-		signUpButton.setBackground(new Color(96,182,230));
-		signUpButton.setBorderPainted(false);
-		signUpButton.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		signUpButton.setForeground(Color.white);
-		contentPane.add(signUpButton);
-		signUpButton.addActionListener(this);
+		//수정하기 버튼
+		editButton = new JButton("수정하기");
+		editButton.setBounds(198, 625, 135, 40);
+		editButton.setBackground(new Color(96,182,230));
+		editButton.setBorderPainted(false);
+		editButton.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		editButton.setForeground(Color.white);
+		contentPane.add(editButton);
+		editButton.addActionListener(this);
 
 		// 스크롤
 		JScrollPane scrollPane_1 = new JScrollPane();
@@ -159,14 +163,34 @@ public class examFrame extends JFrame implements ActionListener {
 				group.add(radiobtn[j]);
 			}
 			count += examEachNum.get(i-1); 
+			
+			
 		}
+		
+		//이름으로 질문지 답변 가져오기 (수정)
+		String name = "도연"; 
+		missionOut = esi.readMissionNum(name);
+		System.out.println("가져온값"+missionOut);
+		
+		
+		
+		for(int i=0;i<10;i++) {
+			int a = missionOut.get(i);
+			radiobtn[a].setSelected(true);
+		}
+		
+		
+		
+		
+		
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		//가입하기 버튼 눌렸을 때
-		if(signUpButton.equals(e.getSource())) {
+		//수정하기 버튼 눌렸을 때
+		if(editButton.equals(e.getSource())) {
 			selectNum.removeAll(selectNum);
 			//버튼 선택된거 
 			for(int i =0; i < radiobtn.length; i++) {

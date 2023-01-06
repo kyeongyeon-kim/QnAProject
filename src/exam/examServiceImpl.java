@@ -1,10 +1,12 @@
 package exam;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,11 +20,12 @@ import dbutil.ConnectionProvider;
 
 public class examServiceImpl implements examService {
 	private static JLabel lblTest[] = new JLabel[10];
-	private static JRadioButton radioTest[] = new JRadioButton[41];
 	static List<String> QuestionList = new ArrayList<>();
-	static List<String> optionList = new ArrayList<>();
+	static List<String> fixOptionList = new ArrayList<>();
 	static List<Integer> examEachNum = new ArrayList<>();
-	static Map<Integer,String> map = new LinkedHashMap<>();
+	static List<Integer> missionIn = new ArrayList<>();
+	static List<Integer> missionOut = new ArrayList<>();
+//  static List<Integer> selectNum = new ArrayList<Integer>(Arrays.asList(0,5,7,11,16,22,25,29,33,37));
 	
 	@Override
 	public List<String> readQuestion() {
@@ -50,44 +53,23 @@ public class examServiceImpl implements examService {
 	
 
 	@Override
-	public List<String> readOption() {
+	public List<String> readFixOption() {
 			try (Connection conn = ConnectionProvider.makeConnection();
 					Statement stmt1 = conn.createStatement();
-					Statement stmt2 = conn.createStatement();
-					ResultSet rs1 = stmt1.executeQuery("SELECT * FROM exam_option ORDER BY choice;");
-					ResultSet rs2 = stmt2.executeQuery("SELECT * FROM exam;")) {
+					ResultSet rs1 = stmt1.executeQuery("SELECT * FROM exam_option;");
+				) {
 
-				for (int j = 0; j < 41; j++) {
-					radioTest[j] = new JRadioButton();
-				}
-				
-//				while(rs1.next()) {
-//					int fixChoiceNum = rs1.getInt("choice");
-//					String fixOption = rs1.getString("option");
-//					map.put(fixChoiceNum,fixOption);
-//				}
-//				for (Map.Entry<Integer,String> entry : map.entrySet())
-//				{
-//				    System.out.println("key : " + entry.getKey() + " / " + "value : " + entry.getValue());
-//				}
-
-		
-//				while(rs2.next()) {
-//					int qeustionNum = rs2.getInt("examNo");
-//					
-//				}
 				int k =0;
 				while(rs1.next()) {
 					String option = rs1.getString("option");
-			//		radioTest[k].setText(option);
-					optionList.add(option);
+					fixOptionList.add(option);
 					k++;
 				}
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			return optionList;
+			return fixOptionList;
 		
 	}
 
@@ -99,10 +81,6 @@ public class examServiceImpl implements examService {
 				ResultSet rs = stmt.executeQuery("SELECT count(*) FROM exam_option group by examNo;");
 				){
 
-			for (int j = 0; j < 41; j++) {
-				radioTest[j] = new JRadioButton();
-			}
-			
 			while (rs.next()) {
 				int examNo = rs.getInt("count(*)");
 				examEachNum.add(examNo);
@@ -114,4 +92,58 @@ public class examServiceImpl implements examService {
 		return examEachNum;
 	}
 
+
+	@Override
+	public void signUp(List<Integer> e) {
+		
+		//받아온 리스트로 값 변환해서 다른 리스트에 넣어서 DB에 넣기 
+		int a = e.get(0) +11;
+		missionIn.add(a);
+		
+		int count=0;
+		for(int i=1; i<10; i++) {
+			int b = examEachNum.get(i-1);  
+			count+=b;
+			int c = e.get(i) - count + 1 + (i+1)*10;
+			missionIn.add(c);
+		}
+		
+		System.out.println("db들어갈 값"+missionIn);
+		
+		
+			String sql = "INSERT INTO mission (id,choice) VALUES ('완희',?)";
+			try(Connection conn = ConnectionProvider.makeConnection();
+					PreparedStatement pstmt =conn.prepareStatement(sql)){
+				
+				for(int i=0;i<10;i++) {
+					pstmt.setInt(1, missionIn.get(i));
+					System.out.println(pstmt.executeUpdate());
+				}
+				
+			} catch (SQLException ee) {
+				ee.printStackTrace();
+			}
+	}
+
+
+	@Override
+	public List<Integer> readMissionNum(String n) {
+		String sql = "SELECT * FROM mission WHERE id = ?";
+		try(Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement pstmt =conn.prepareStatement(sql)){
+			pstmt.setString(1,n);
+			
+		try(ResultSet rs = pstmt.executeQuery();){
+			while(rs.next()) {
+				int choice = rs.getInt("choice");   //13
+				
+				missionOut.add(choice);
+			}
+		}
+			
+		} catch (SQLException ee) {
+			ee.printStackTrace();
+		}
+		return missionOut;
+	}
 }
