@@ -1,5 +1,7 @@
 package login;
 
+import object.User;
+
 public class Login {
 	private LoginFrame loginFrame;
 	public final int loginComplete = 0;

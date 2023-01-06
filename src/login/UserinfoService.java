@@ -3,6 +3,8 @@ package login;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import object.User;
+
 public class UserinfoService {
 	private UserinfoRepository repo;
 
@@ -17,7 +19,6 @@ public class UserinfoService {
 		if (m.matches()) {
 			return true;
 		}
-		System.out.println("id 입력오류");
 		return false;
 	}
 
@@ -27,7 +28,6 @@ public class UserinfoService {
 		if (m.matches()) {
 			return true;
 		}
-		System.out.println("pw 입력오류");
 		return false;
 	}
 
@@ -37,18 +37,18 @@ public class UserinfoService {
 		if (m.matches()) {
 			return true;
 		}
-		System.out.println("이름 입력오류");
 		return false;
 	}
 
 	public boolean verifyMbti(String str) {
 		String mbti = str.toUpperCase();
 		Pattern p = Pattern.compile("[I|E]{1}[S|N]{1}[T|F]{1}[J|P]{1}");
+		Pattern p2= Pattern.compile("선택안함");
 		Matcher m = p.matcher(mbti);
-		if (m.matches()) {
+		Matcher m2 = p2.matcher(mbti);
+		if (m.matches() || m2.matches()) {
 			return true;
 		}
-		System.out.println("mbti 입력오류");
 		return false;
 	}
 
@@ -57,7 +57,6 @@ public class UserinfoService {
 		if (repo.countById(id) == 0) {
 			return true;
 		}
-		System.out.println("아이디중복");
 		return false;
 	}
 

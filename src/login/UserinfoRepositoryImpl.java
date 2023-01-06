@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import dbutil.ConnectionProvider;
+import object.User;
 
 public class UserinfoRepositoryImpl implements UserinfoRepository {
 	@Override

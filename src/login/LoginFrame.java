@@ -52,6 +52,7 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 		
 		tfPw = new JTextField("비밀번호");
 		tfPw.setBounds(58, 190, 220, 39);
+		tfPw.addKeyListener(this);
 		tfSetting(tfPw);
 		
 		lblResult = new JLabel("");
@@ -71,18 +72,6 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				int result = login.checkLogin(tfId.getText(), tfPw.getText());
-//				if (result == login.loginComplete) {
-//					// 로그인 완료
-//					lblResult.setText("");
-//					LobbyFrame frame = new LobbyFrame(login.loginUser(tfId.getText()));
-//					frame.setVisible(true);
-//					dispose();
-//				} else if (result == login.loginFailByPw) {
-//					lblResult.setText("비밀번호가 일치하지 않습니다.");
-//				} else if (result == login.loginFailById) {
-//					lblResult.setText("존재하지 않는 아이디입니다.");
-//				}
 				selectLogin(login);
 			}
 		});
@@ -151,13 +140,11 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	public void selectLogin(Login login) {

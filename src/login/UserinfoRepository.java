@@ -1,5 +1,7 @@
 package login;
 
+import object.User;
+
 public interface UserinfoRepository {
 	int countById(String id);
 	int userInsert(String id, String pw, String name, String mbti, String gender);

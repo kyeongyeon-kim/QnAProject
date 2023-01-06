@@ -4,6 +4,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
+
+import mbti.MbtiDialog;
+import mbti.MbtiImageManager;
+
 import javax.swing.JTextPane;
 
 import java.awt.Color;
@@ -14,12 +18,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 
-public class JoinDialog extends JDialog implements FocusListener {
+public class JoinDialog extends JDialog implements FocusListener, MouseListener {
 	private JPanel contentPane;
 	private JTextField tfName;
 	private JTextField tfId;
@@ -29,7 +37,18 @@ public class JoinDialog extends JDialog implements FocusListener {
 	private JButton btnNext;
 	private JRadioButton btnWoman;
 	private JRadioButton btnMan;
-
+	private JButton btnMbti;
+	MbtiImageManager im = new MbtiImageManager();
+	
+	public JTextField getTfMbti() {
+		return tfMbti;
+	}
+	public void setTfMbti(JTextField tfMbti) {
+		this.tfMbti = tfMbti;
+	}
+	public static void main(String[] args) {
+		new JoinDialog().setVisible(true);
+	}
 	public JoinDialog() {
 		setModal(true);
 		setBounds(700, 180, 361, 566);
@@ -40,6 +59,7 @@ public class JoinDialog extends JDialog implements FocusListener {
 		contentPane.setLayout(null);
 		
 		JTextPane textPane = new JTextPane();
+		
 		textPane.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		textPane.setText("회원가입");
 		textPane.setEditable(false);
@@ -58,10 +78,19 @@ public class JoinDialog extends JDialog implements FocusListener {
 		tfMbti.setBounds(63, 245, 220, 39);
 		tfSetting(tfMbti);
 		
-	
-		
-		
-		
+		btnMbti = new JButton(); // mbti 물음표버튼
+		btnMbti.setIcon(new ImageIcon(im.getqImage()));
+		btnMbti.setBounds(185, 5, 30, 30);
+		btnMbti.setBorderPainted(false);
+		btnMbti.setBackground(null);
+		tfMbti.add(btnMbti);
+		btnMbti.addMouseListener(this);
+		btnMbti.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MbtiDialog(tfMbti).setVisible(true);
+			}
+		});
 		
 		tfPw = new JTextField("비밀번호");
 		tfPw.setBounds(63, 295, 220, 39);
@@ -118,7 +147,9 @@ public class JoinDialog extends JDialog implements FocusListener {
 				} else if (btnWoman.isSelected()) {
 					gender = "여";
 				}
-				checkInput(id, pw, name, mbti, gender);
+				if (checkNotInput(id, pw, name, mbti, gender)) {
+					checkInput(id, pw, name, mbti, gender);
+				}
 			}
 		});
 	}
@@ -161,6 +192,25 @@ public class JoinDialog extends JDialog implements FocusListener {
 		}
 	}
 	
+	// 입력값 없는지 확인
+	public boolean checkNotInput(String id, String pw, String name, String mbti, String gender) {
+		if (name.equals("이름")) {
+			lblResult.setText("이름를 입력해주세요.");
+			return false;
+		} else if (id.equals("아이디")) {
+			lblResult.setText("아이디를 입력해주세요.");
+			return false;
+		} else if (mbti.equals("MBTI")) {
+			lblResult.setText("MBTI를 입력해주세요.");
+			return false;
+		} else if (pw.equals("비밀번호")) {
+			lblResult.setText("비밀번호를 입력해주세요.");
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	public void checkInput(String id, String pw, String name, String mbti, String gender) {
 		Join join = new Join();
 		int result = join.checkInput(id, pw, name, mbti, gender);
@@ -179,5 +229,32 @@ public class JoinDialog extends JDialog implements FocusListener {
 		} else if (result == join.joinFailByPw) {
 			lblResult.setText("비밀번호 입력이 잘못되었습니다.(4~20자)");
 		} 
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override 
+	public void mouseEntered(MouseEvent e) {
+		if (e.getSource() == btnMbti) {
+			btnMbti.setIcon(new ImageIcon(im.getqImage2()));
+		}
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		if (e.getSource() == btnMbti) {
+			btnMbti.setIcon(new ImageIcon(im.getqImage()));
+		}
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

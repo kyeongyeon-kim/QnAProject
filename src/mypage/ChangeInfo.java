@@ -1,8 +1,8 @@
 package mypage;
 
-import login.User;
 import login.UserinfoRepositoryImpl;
 import login.UserinfoService;
+import object.User;
 
 public class ChangeInfo {
 	private User user;
@@ -15,7 +15,7 @@ public class ChangeInfo {
 
 	public ChangeInfo(User user) { // 로비에서 user 받기
 		this.user = user;
-		new ChangeInfoDialog(user).setVisible(true);
+		new ChangeInfoDialog(user, ChangeInfo.this).setVisible(true);
 	}
 
 	// 입력값 확인

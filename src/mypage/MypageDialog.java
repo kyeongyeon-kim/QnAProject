@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import login.User;
+import object.User;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -30,7 +30,7 @@ public class MypageDialog extends JDialog implements ActionListener {
 
 	public MypageDialog(User user) {
 		setModal(true);
-		setBounds(555, 175, 602, 567);
+		setBounds(580, 195, 602, 567);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -1,5 +1,7 @@
 package login;
 
+import object.User;
+
 public class Join {
 	private User user;
 	private UserinfoService userinfoService = new UserinfoService(new UserinfoRepositoryImpl());
