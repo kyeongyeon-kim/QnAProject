@@ -20,6 +20,7 @@ import javax.swing.table.TableRowSorter;
 import com.mysql.cj.x.protobuf.MysqlxCrud.CollectionOrBuilder;
 
 import dbutil.ConnectionProvider;
+import login.User;
 import object.Attacker;
 import rankingInquiry.UserRankDialog;
 
@@ -32,16 +33,19 @@ public class LobbyServiceImpl implements LobbyService {
 	}
 	
 	@Override
-	public void readUserinfo(DefaultTableModel model) {
-		String sql = "SELECT name, gender, id, mbti FROM userinfo";
+	public void readUserinfo(DefaultTableModel model, User user) {
+		String sql = "SELECT name, gender, id, mbti FROM userinfo WHERE id <> ?";
 		try (Connection conn = ConnectionProvider.makeConnection();
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql)) {
-
-			while (rs.next()) {
-				String[] inputStr = lst.makeUserinfoArr(rs);
-				model.addRow(inputStr);
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, user.getId());
+			
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+					String[] inputStr = lst.makeUserinfoArr(rs);
+					model.addRow(inputStr);
+				}
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
