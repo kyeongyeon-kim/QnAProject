@@ -33,6 +33,7 @@ import login.UserinfoRepositoryImpl;
 import login.UserinfoService;
 import mypage.MypageInfo;
 import object.Attacker;
+import object.User;
 import rankingInquiry.UserRankDialog;
 
 public class LobbyFrame extends JFrame implements ActionListener {
@@ -151,7 +152,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		sorter = new TableRowSorter<TableModel>(model);
 		table.setRowSorter(sorter);
 
-		lsi.readUserinfo(model);
+		lsi.readUserinfo(model, user);
 
 		setLocationRelativeTo(null);
 	}

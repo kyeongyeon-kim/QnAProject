@@ -7,8 +7,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import login.User;
 import object.Attacker;
+import object.User;
 import rankingInquiry.UserRankDialog;
 
 public interface LobbyService {

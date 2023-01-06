@@ -17,7 +17,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import login.User;
+import object.User;
+
+
 
 public class UserRankDialog extends JDialog implements ActionListener {
 	private DefaultTableModel model;
