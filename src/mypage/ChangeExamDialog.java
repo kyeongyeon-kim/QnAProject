@@ -16,9 +16,12 @@ import javax.swing.border.EmptyBorder;
 
 import dbutil.ConnectionProvider;
 import exam.examServiceImpl;
+import object.User;
 
 import javax.swing.JScrollBar;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,7 +40,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
-public class ChangeExamFrame extends JFrame implements ActionListener {
+public class ChangeExamDialog extends JDialog implements ActionListener {
 
 	private JScrollPane scrollPane;
 	private JPanel contentPane;
@@ -54,25 +57,25 @@ public class ChangeExamFrame extends JFrame implements ActionListener {
 	private List<Integer> IdxNum;
 	
 
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
+//
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					ChangeExamFrame frame = new ChangeExamFrame();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ChangeExamFrame frame = new ChangeExamFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public ChangeExamFrame() {
+	public ChangeExamDialog(User user) {
 		esi = new examServiceImpl();
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 549, 723);
+		setModal(true);
+//		setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
+		setBounds(650, 170, 549, 723);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -168,17 +171,17 @@ public class ChangeExamFrame extends JFrame implements ActionListener {
 		}
 		
 		//이름으로 질문지 답변 가져오기 (수정)
-		String name = "도연"; 
+		String name = user.getName(); 
 		missionOut = esi.readMissionNum(name);
 		System.out.println("가져온값"+missionOut);
 		
 		
 		
-		for(int i=0;i<10;i++) {
-			int a = missionOut.get(i);
-			radiobtn[a].setSelected(true);
-		}
-		
+//		for(int i=0;i<10;i++) {
+//			int a = missionOut.get(i);
+//			radiobtn[a].setSelected(true);
+//		}
+//		
 		
 		
 		

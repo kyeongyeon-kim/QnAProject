@@ -95,6 +95,12 @@ public class MypageDialog extends JDialog implements ActionListener {
 		JButton btnChangeAns = new JButton("질문지 답변 수정");
 		btnSetting(btnChangeAns);
 		btnChangeAns.setBounds(230, 456, 130, 35);
+		btnChangeAns.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ChangeExamDialog(user).setVisible(true);
+			}
+		});
 		
 		JButton btnBefore = new JButton("이전화면");
 		btnSetting(btnBefore);

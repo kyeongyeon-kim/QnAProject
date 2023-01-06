@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import dbutil.ConnectionProvider;
+import login.Login;
 
 import javax.swing.JScrollBar;
 import javax.swing.JButton;
@@ -36,7 +37,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
-public class examFrame extends JFrame implements ActionListener {
+public class ExamFrame extends JFrame implements ActionListener {
 
 	private JScrollPane scrollPane;
 	private JPanel contentPane;
@@ -50,21 +51,21 @@ public class examFrame extends JFrame implements ActionListener {
 	static List<Integer> selectNum = new ArrayList<>();
 	private JLabel lblNewLabel;
 
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
+//
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					ExamFrame frame = new ExamFrame();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					examFrame frame = new examFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public examFrame() {
+	public ExamFrame() {
 		esi = new examServiceImpl();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -177,6 +178,7 @@ public class examFrame extends JFrame implements ActionListener {
 			
 			if(selectNum.size()==10) {
 				esi.signUp(selectNum);
+				new Login();
 				dispose();
 			}else {
 				System.out.println(selectNum.size());

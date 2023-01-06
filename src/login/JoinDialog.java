@@ -5,8 +5,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
+import exam.ExamFrame;
 import mbti.MbtiDialog;
 import mbti.MbtiImageManager;
+import mypage.ChangeExamDialog;
 
 import javax.swing.JTextPane;
 
@@ -218,6 +220,8 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener 
 			System.out.println("회원가입 완료");
 			lblResult.setText("");
 			join.insert();
+			new ExamFrame().setVisible(true);
+			dispose();
 		} else if (result == join.joinFailByName) {
 			lblResult.setText("이름 입력이 잘못되었습니다.(1~15자)");
 		} else if (result == join.joinFailByDuplicate) {
