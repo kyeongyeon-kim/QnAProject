@@ -68,9 +68,9 @@ public class LobbyFrame extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (lsi.isRowSelected(table)) {
 					int seletedRow = table.getSelectedRow();
-					// attacker 정보도 나중에 GameFrame안에 넣어야해서 만들어놓음
-//					Object userId = table.getValueAt(seletedRow, 2);
-					GameFrame gf = new GameFrame(user);
+					Object userId = table.getValueAt(seletedRow, 2);
+					User defender = repo.loginUser((String)userId);
+					GameFrame gf = new GameFrame(user, defender);
 					gf.setVisible(true);
 					dispose();
 				}
@@ -181,7 +181,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		if (command.equals("랭킹 조회")) {
 			if (lsi.isRowSelected(table)) {
 				int seletedRow = table.getSelectedRow();
-				Object userId = table.getValueAt(seletedRow, 2);
+				String userId = (String) table.getValueAt(seletedRow, 2);
 				User user = repo.loginUser((String) userId);
 				UserRankDialog urd = new UserRankDialog(user);
 				List<Attacker> attackerList = lsi.makeAttackerList(userId);

@@ -77,7 +77,7 @@ public class LobbyServiceImpl implements LobbyService {
 	}
 
 	@Override
-	public List<Attacker> makeAttackerList(Object userId) {
+	public List<Attacker> makeAttackerList(String userId) {
 		String sql = "SELECT choice FROM mission WHERE id = ?";
 		String sql2 = "SELECT defender, attacker FROM answer GROUP BY attacker HAVING defender = ?";
 		List<Integer> missionList = new ArrayList<>();
@@ -86,8 +86,8 @@ public class LobbyServiceImpl implements LobbyService {
 		try (Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
-			stmt.setString(1, (String) userId);
-			stmt2.setString(1, (String) userId);
+			stmt.setString(1, userId);
+			stmt2.setString(1, userId);
 
 			missionList = lst.makeChoiceList(missionList, stmt);
 			attackerNameList = lst.makeAttackerList(attackerNameList, stmt2);

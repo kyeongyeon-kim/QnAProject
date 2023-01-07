@@ -15,6 +15,6 @@ public interface LobbyService {
 	public void readUserinfo(DefaultTableModel model, User user);
 	public void infomationFiltering(String getText, TableRowSorter<TableModel> sorter);
 	public boolean isRowSelected(JTable table);
-	public List<Attacker> makeAttackerList(Object userId);
+	public List<Attacker> makeAttackerList(String userId);
 	public void setUserRanking(UserRankDialog urd, List<Attacker> attackerList);
 }

@@ -9,5 +9,7 @@ public interface examService {
 		public List<String> readFixOption();
 		public void signUp(List<Integer> e);
 		public List<Integer> readMissionNum(String n);
+		public List<String> readOptionByExamNo(int examNo);
+		public int countOptionByExamNo(int examNo);
 		
 }
