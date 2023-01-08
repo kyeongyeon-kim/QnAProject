@@ -69,8 +69,9 @@ public class LobbyFrame extends JFrame implements ActionListener {
 				if (lsi.isRowSelected(table)) {
 					int seletedRow = table.getSelectedRow();
 					// attacker 정보도 나중에 GameFrame안에 넣어야해서 만들어놓음
-//					Object userId = table.getValueAt(seletedRow, 2);
-					GameFrame gf = new GameFrame(user);
+					Object userId = table.getValueAt(seletedRow, 2);
+					User attacker = repo.loginUser((String) userId);
+					GameFrame gf = new GameFrame(user, attacker);
 					gf.setVisible(true);
 					dispose();
 				}

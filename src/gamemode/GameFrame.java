@@ -21,7 +21,7 @@ public class GameFrame extends JFrame {
 	JLabel label;
 	int currentImageIndex = 0;
 	
-	public GameFrame(User user) {
+	public GameFrame(User defender, User attacker) {
 		GameModeServiceImpl gms = new GameModeServiceImpl(new GameModeServiceToolImpl());
 		ImageServiceImpl isi = new ImageServiceImpl(new ImageServiceToolImpl());
 		
@@ -34,7 +34,7 @@ public class GameFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				currentImageIndex = (currentImageIndex + 1) % isi.readIntro().size();
 				label.setIcon(new ImageIcon(isi.readIntro().get(currentImageIndex)));
-				if (user.getGender().equals("남") && currentImageIndex == 0) {
+				if (attacker.getGender().equals("남") && currentImageIndex == 0) {
 					currentImageIndex = (currentImageIndex + 1) % isi.readIntro().size();
 					label.setIcon(new ImageIcon(isi.readKatalkMan().get(currentImageIndex)));
 				}
@@ -57,7 +57,7 @@ public class GameFrame extends JFrame {
 			
 			@Override
 			public void windowClosed(WindowEvent e) {
-				LobbyFrame lf = new LobbyFrame(user);
+				LobbyFrame lf = new LobbyFrame(defender);
 				lf.setVisible(true);
 			}
 			

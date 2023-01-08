@@ -108,7 +108,7 @@ public class examServiceImpl implements examService {
 			missionIn.add(c);
 		}
 		
-		System.out.println("db들어갈 값"+missionIn);
+//		System.out.println("db들어갈 값"+missionIn);
 		
 		
 			String sql = "INSERT INTO mission (id,choice) VALUES ('완희',?)";
@@ -117,7 +117,8 @@ public class examServiceImpl implements examService {
 				
 				for(int i=0;i<10;i++) {
 					pstmt.setInt(1, missionIn.get(i));
-					System.out.println(pstmt.executeUpdate());
+					pstmt.executeUpdate();
+//					System.out.println(pstmt.executeUpdate());
 				}
 				
 			} catch (SQLException ee) {
