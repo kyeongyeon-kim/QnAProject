@@ -1,4 +1,4 @@
-package stylemanagement;
+package style;
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ImageServiceToolImpl implements ImageServiceTool {
 	private Toolkit kit = Toolkit.getDefaultToolkit();
-	private ClassLoader classLoader = getClass().getClassLoader();;
+	private ClassLoader classLoader = getClass().getClassLoader();
 	
 	@Override
 	public List<Image> readImages(String path, int count) {

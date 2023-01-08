@@ -27,14 +27,14 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import gamemode.GameFrame;
+import game.GameFrame;
 import login.Login;
 import login.UserinfoRepositoryImpl;
 import login.UserinfoService;
 import mypage.MypageInfo;
 import object.Attacker;
 import object.User;
-import rankingInquiry.UserRankDialog;
+import ranking.UserRankDialog;
 
 public class LobbyFrame extends JFrame implements ActionListener {
 	private JPanel contentPane;
@@ -68,10 +68,9 @@ public class LobbyFrame extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (lsi.isRowSelected(table)) {
 					int seletedRow = table.getSelectedRow();
-					// attacker 정보도 나중에 GameFrame안에 넣어야해서 만들어놓음
 					Object userId = table.getValueAt(seletedRow, 2);
-					User attacker = repo.loginUser((String) userId);
-					GameFrame gf = new GameFrame(user, attacker);
+					User defender = repo.loginUser((String)userId);
+					GameFrame gf = new GameFrame(user, defender);
 					gf.setVisible(true);
 					dispose();
 				}
@@ -182,10 +181,10 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		if (command.equals("랭킹 조회")) {
 			if (lsi.isRowSelected(table)) {
 				int seletedRow = table.getSelectedRow();
-				Object userId = table.getValueAt(seletedRow, 2);
+				String userId = (String) table.getValueAt(seletedRow, 2);
 				User user = repo.loginUser((String) userId);
 				UserRankDialog urd = new UserRankDialog(user);
-				List<Attacker> attackerList = lsi.makeAttackerList(userId);
+				List<Attacker> attackerList = lsi.makeAttackerList(user);
 				lsi.setUserRanking(urd, attackerList);
 				urd.setVisible(true);
 			}

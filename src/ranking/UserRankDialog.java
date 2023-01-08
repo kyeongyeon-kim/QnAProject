@@ -1,13 +1,15 @@
-package rankingInquiry;
+package ranking;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import object.User;
 
@@ -23,7 +26,16 @@ import object.User;
 
 public class UserRankDialog extends JDialog implements ActionListener {
 	private DefaultTableModel model;
+	private JTable table;
 	
+	public JTable getTable() {
+		return table;
+	}
+
+	public void setTable(JTable table) {
+		this.table = table;
+	}
+
 	public DefaultTableModel getModel() {
 		return model;
 	}
@@ -49,10 +61,11 @@ public class UserRankDialog extends JDialog implements ActionListener {
 		mainPanel.setLayout(new BorderLayout());
 		String[] header = { "랭킹", "아이디", "점수" };
 		model = new DefaultTableModel(header, 0);
-		JTable table = new JTable(model);
+		table = new JTable(model);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setDefaultEditor(Object.class, null);
 		table.setPreferredSize(new Dimension(270, 450));
+		
 		mainPanel.add(table);
 		JScrollPane scrollPane = new JScrollPane(table);
 		mainPanel.add(scrollPane, "Center");

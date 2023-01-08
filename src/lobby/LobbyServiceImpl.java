@@ -23,7 +23,7 @@ import dbutil.ConnectionProvider;
 
 import object.Attacker;
 import object.User;
-import rankingInquiry.UserRankDialog;
+import ranking.UserRankDialog;
 
 public class LobbyServiceImpl implements LobbyService {
 	private LobbyServiceTool lst;
@@ -77,23 +77,18 @@ public class LobbyServiceImpl implements LobbyService {
 	}
 
 	@Override
-	public List<Attacker> makeAttackerList(Object userId) {
-		String sql = "SELECT choice FROM mission WHERE id = ?";
+	public List<Attacker> makeAttackerList(User user) {
 		String sql2 = "SELECT defender, attacker FROM answer GROUP BY attacker HAVING defender = ?";
-		List<Integer> missionList = new ArrayList<>();
 		List<String> attackerNameList = new ArrayList<>();
 		List<Attacker> attackerList = new ArrayList<>();
 		try (Connection conn = ConnectionProvider.makeConnection();
-				PreparedStatement stmt = conn.prepareStatement(sql);
 				PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
-			stmt.setString(1, (String) userId);
-			stmt2.setString(1, (String) userId);
+			stmt2.setString(1, user.getId());
 
-			missionList = lst.makeChoiceList(missionList, stmt);
 			attackerNameList = lst.makeAttackerList(attackerNameList, stmt2);
 
 			for (String attacker : attackerNameList) {
-				Attacker a = lst.attackerCaculationScore((String) userId, attacker, conn);
+				Attacker a = lst.attackerCaculationScore((String) user.getId(), attacker, conn);
 				attackerList.add(a);
 			}
 
@@ -111,6 +106,22 @@ public class LobbyServiceImpl implements LobbyService {
 		}
 		return attackerList;
 	}
+	
+	@Override
+	public List<Integer> makeMissonList(User user) {
+		String sql = "SELECT choice FROM mission WHERE id = ?";
+		List<Integer> missionList = new ArrayList<>();
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, user.getId());
+
+			missionList = lst.makeChoiceList(missionList, stmt);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return missionList;
+	}
 
 	@Override
 	public void setUserRanking(UserRankDialog urd, List<Attacker> attackerList) {
@@ -124,4 +135,5 @@ public class LobbyServiceImpl implements LobbyService {
 			rankingNum++;
 		}
 	}
+
 }

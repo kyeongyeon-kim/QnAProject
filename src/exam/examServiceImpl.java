@@ -147,4 +147,47 @@ public class examServiceImpl implements examService {
 		}
 		return missionOut;
 	}
+
+
+	@Override
+	public List<String> readOptionByExamNo(int examNo) {
+		String sql = "SELECT `option` FROM exam_option WHERE examNo = ?";
+		List<String> optionList = new ArrayList<>();
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, examNo);
+			
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+					String option = rs.getString(1);
+					optionList.add(option);
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return optionList;
+	}
+
+
+	@Override
+	public int countOptionByExamNo(int examNo) {
+		String sql = "SELECT count(*) AS 'optionNum' FROM exam_option group by examNo HAVING examNo = ?";
+		int count = 0;
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, examNo);
+			
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					count = rs.getInt(1);
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
 }

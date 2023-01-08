@@ -1,4 +1,4 @@
-package rankingInquiry;
+package ranking;
 
 public class showRankServiceImpl implements showRankService {
 

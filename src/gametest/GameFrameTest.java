@@ -19,8 +19,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import gamemode.GameModeServiceImpl;
-import gamemode.GameModeServiceToolImpl;
+import game.GameModeServiceImpl;
+import game.GameModeServiceToolImpl;
 
 class SelectAnswer {
 	public SelectAnswer(String asga) {
