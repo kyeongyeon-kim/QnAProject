@@ -1,4 +1,4 @@
-package gamemode;
+package object;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -10,31 +10,35 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import exam.examServiceImpl;
+import game.GameFrame;
 
-public class OptionPanel extends JPanel implements ActionListener {
+public class OptionPanel extends JPanel {
+	private List<JButton> btns;
+	
 	
 	public OptionPanel(int examNo) {
-		setPreferredSize(new Dimension(500, 370));
 		setLayout(null);
-		
+		setOpaque(false);
 		examServiceImpl esi = new examServiceImpl();
 		int optionNum = esi.countOptionByExamNo(examNo);
 		List<String> optionList = esi.readOptionByExamNo(examNo);
-		List<JButton> btns = new ArrayList<>();
-		int[] y = {130, 190, 70, 250, 10, 310};
-		
+		btns = new ArrayList<>();
+		int[] y = { 130, 190, 70, 250, 10, 310 };
+
 		for (int i = 0; i < optionNum; i++) {
 			btns.add(new JButton());
 			btns.get(i).setBounds(12, y[i], 476, 50);
 			btns.get(i).setOpaque(true);
 			btns.get(i).setText(optionList.get(i));
-			btns.get(i).addActionListener(this);
 			add(btns.get(i));
 		}
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		this.setVisible(false);
+	public List<JButton> getBtns() {
+		return btns;
+	}
+
+	public void setBtns(List<JButton> btns) {
+		this.btns = btns;
 	}
 }

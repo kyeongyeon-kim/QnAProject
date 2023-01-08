@@ -16,7 +16,7 @@ public class MypageInfo {
 	// 테이블 정보 얻어오기
 	public void getRankingTable() {
 		LobbyService lobbyService = new LobbyServiceImpl(new LobbyServiceToolImpl());
-		lobbyService.makeAttackerList(user.getId()); // List<Attacker>
+		lobbyService.makeAttackerList(user); // List<Attacker>
 //		System.out.println(lobbyService.makeAttackerList(user.getId()));
 	}
 	public static void main(String[] args) {

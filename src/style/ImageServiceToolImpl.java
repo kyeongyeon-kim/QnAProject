@@ -1,4 +1,4 @@
-package stylemanagement;
+package style;
 
 import java.awt.Image;
 import java.awt.Toolkit;

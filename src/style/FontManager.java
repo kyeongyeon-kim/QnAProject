@@ -1,4 +1,4 @@
-package stylemanagement;
+package style;
 
 public class FontManager {
 

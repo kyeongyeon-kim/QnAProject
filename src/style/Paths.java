@@ -1,4 +1,4 @@
-package stylemanagement;
+package style;
 
 public interface Paths {
 	String INTRO = "images/01_intro";

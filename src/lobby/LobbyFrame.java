@@ -27,14 +27,14 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import gamemode.GameFrame;
+import game.GameFrame;
 import login.Login;
 import login.UserinfoRepositoryImpl;
 import login.UserinfoService;
 import mypage.MypageInfo;
 import object.Attacker;
 import object.User;
-import rankingInquiry.UserRankDialog;
+import ranking.UserRankDialog;
 
 public class LobbyFrame extends JFrame implements ActionListener {
 	private JPanel contentPane;
@@ -184,7 +184,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 				String userId = (String) table.getValueAt(seletedRow, 2);
 				User user = repo.loginUser((String) userId);
 				UserRankDialog urd = new UserRankDialog(user);
-				List<Attacker> attackerList = lsi.makeAttackerList(userId);
+				List<Attacker> attackerList = lsi.makeAttackerList(user);
 				lsi.setUserRanking(urd, attackerList);
 				urd.setVisible(true);
 			}

@@ -1,4 +1,4 @@
-package gamemode;
+package game;
 
 public interface GameModeServiceTool {
 
