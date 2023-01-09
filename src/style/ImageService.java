@@ -8,11 +8,11 @@ public interface ImageService {
 	int HEIGHT = 810;
 	
 	public List<Image> readIntro(String Path);
-	public List<Image> readKatalkMan();
-	public List<Image> readKatalkWoman();
-	public List<Image> getLikeAbilityMan();
-	public List<Image> getLikeAbilityWoman();
-	public List<Image> failedLikeAbilityMan();
-	public List<Image> failedLikeAbilityWoman();
+	public List<Image> readKatalkMan(String Path);
+	public List<Image> readKatalkWoman(String Path);
+	public List<Image> getLikeAbilityMan(String Path);
+	public List<Image> getLikeAbilityWoman(String Path);
+	public List<Image> failedLikeAbilityMan(String Path);
+	public List<Image> failedLikeAbilityWoman(String Path);
 	public boolean isProtocolFile(String path);
 }

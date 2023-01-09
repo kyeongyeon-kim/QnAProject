@@ -45,7 +45,6 @@ public class GameFrame extends JFrame {
 		missonList = lobbyService.makeMissonList(defender);
 		JPanel pnl = new JPanel();
 		pnl.setLayout(null);
-
 		label = new JLabel(new ImageIcon(resultImages.get(currentImageIndex)));
 		label.setBounds(0, 0, 944, 701);
 		pnl.add(label);
