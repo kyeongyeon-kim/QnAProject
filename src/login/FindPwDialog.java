@@ -48,9 +48,9 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 		this.tfMbti = tfMbti;
 	}
 
-	public static void main(String[] args) {
-		new FindPwDialog().setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		new FindPwDialog().setVisible(true);
+//	}
 
 	public FindPwDialog() {
 		setModal(true);
@@ -177,10 +177,7 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 
 	public String checkInput(String id, String name) {
 		String pw = "";
-		if (checkId.getIcon().equals(new ImageIcon(im.getChecked())) && 
-				checkName.getIcon().equals(new ImageIcon(im.getChecked()))) {
-			pw = rep.loginUser(id).getPw();
-		}
+		pw = rep.loginUser(id).getPw();
 		return pw;
 	}
 

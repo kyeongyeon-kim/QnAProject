@@ -99,6 +99,12 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 		btnFind.setBackground(Color.WHITE);
 		btnFind.setBounds(163, 308, 100, 23);
 		contentPane.add(btnFind);
+		btnFind.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new FindPwDialog().setVisible(true);
+			}
+		});
 	}
 	
 	// 텍스트필드 설정
