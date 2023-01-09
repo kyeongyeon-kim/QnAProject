@@ -42,7 +42,7 @@ import javax.swing.BoxLayout;
 
 public class ChangeExamDialog extends JDialog implements ActionListener {
 
-	private JScrollPane scrollPane;
+	
 	private JPanel contentPane;
 	private static JRadioButton radiobtn[] = new JRadioButton[41];
 	private static JLabel lblTest[] = new JLabel[10];
@@ -52,9 +52,9 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 	private List<Integer> examEachNum;
 	private List<String> fixOptionList;
 	static List<Integer> selectNum = new ArrayList<>();
-	private JLabel lblNewLabel;
+	private JLabel noSelectlbl;
 	private List<Integer> missionOut;
-	private List<Integer> IdxNum;
+
 	
 
 //	public static void main(String[] args) {
@@ -62,7 +62,7 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 //		EventQueue.invokeLater(new Runnable() {
 //			public void run() {
 //				try {
-//					ChangeExamFrame frame = new ChangeExamFrame();
+//					ChangeExamDialog frame = new ChangeExamDialog();
 //					frame.setVisible(true);
 //				} catch (Exception e) {
 //					e.printStackTrace();
@@ -99,25 +99,25 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 		editButton.addActionListener(this);
 
 		// 스크롤
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(12, 80, 509, 514);
-		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		contentPane.add(scrollPane_1);
-		scrollPane_1.getVerticalScrollBar().setUnitIncrement(16);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 80, 509, 514);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		contentPane.add(scrollPane);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		scrollPane_1.setViewportView(panel);
+		scrollPane.setViewportView(panel);
 		panel.setPreferredSize(new Dimension(405, 200 * 13 - 85));
 		panel.setLayout(null);
 		
-		lblNewLabel = new JLabel("");
-		lblNewLabel.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		lblNewLabel.setBounds(172, 604, 193, 15);
-		lblNewLabel.setBorder(null);
-		lblNewLabel.setForeground(Color.RED);
-		contentPane.add(lblNewLabel);
+		noSelectlbl = new JLabel("");
+		noSelectlbl.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		noSelectlbl.setBounds(172, 604, 193, 15);
+		noSelectlbl.setBorder(null);
+		noSelectlbl.setForeground(Color.RED);
+		contentPane.add(noSelectlbl);
 		
 		
 		
@@ -130,6 +130,7 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 			//질문지 패널
 			JPanel panel_i = new JPanel();
 			panel_i.setBounds(12, 10 + (250 * (i - 1)), 470, 240);
+			panel_i.setBackground(new Color(240, 248, 253));
 			panel.add(panel_i);
 			panel_i.setLayout(null);
 			panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -157,6 +158,7 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 				radiobtn[j].setText(fixOptionList.get(j));
 				radiobtn[j].setBounds(40 , 53 +(30*z), 400, 23);
 				radiobtn[j].setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+				radiobtn[j].setOpaque(false); 
 				panel_i.add(radiobtn[j]);
 				z++;
 			}
@@ -171,22 +173,15 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 		}
 		
 		//이름으로 질문지 답변 가져오기 (수정)
-		String name = user.getName(); 
-		missionOut = esi.readMissionNum(name);
-//		System.out.println("가져온값"+missionOut);
+		String id = user.getId(); 
+		missionOut = esi.readMissionNum(id);
+		System.out.println("가져온값"+missionOut);
 		
-		
-		
-//		for(int i=0;i<10;i++) {
-//			int a = missionOut.get(i);
-//			radiobtn[a].setSelected(true);
-//		}
-//		
-		
-		
-		
-		
-		
+		//mission에서 가져온 인덱스 질문지 표시 
+		for(int i=0;i<10;i++) {
+			int a = missionOut.get(i);
+			radiobtn[a-1].setSelected(true);
+		}
 	}
 
 	@Override
@@ -194,6 +189,10 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 		
 		//수정하기 버튼 눌렸을 때
 		if(editButton.equals(e.getSource())) {
+			
+//			User user = new User();
+//			System.out.println("사람"+ user.getId());
+			
 			selectNum.removeAll(selectNum);
 			//버튼 선택된거 
 			for(int i =0; i < radiobtn.length; i++) {
@@ -201,6 +200,7 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 					selectNum.add(i);
 				}
 			}
+			System.out.println("다시 선택된값"+selectNum);
 			
 			if(selectNum.size()==10) {
 				esi.signUp(selectNum);
@@ -208,10 +208,9 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 			}else {
 //				System.out.println(selectNum.size());
 //				System.out.println("선택 되지 않은 항목이 잇음 ");
-				lblNewLabel.setText("선택되지 않은 문항이 있습니다.");
+				noSelectlbl.setText("선택되지 않은 문항이 있습니다.");
 
 			}
-	
 		}
 	}
 }

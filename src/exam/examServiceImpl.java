@@ -25,7 +25,7 @@ public class examServiceImpl implements examService {
 	static List<Integer> examEachNum = new ArrayList<>();
 	static List<Integer> missionIn = new ArrayList<>();
 	static List<Integer> missionOut = new ArrayList<>();
-//  static List<Integer> selectNum = new ArrayList<Integer>(Arrays.asList(0,5,7,11,16,22,25,29,33,37));
+	static List<Integer> selectNum = new ArrayList<>();
 	
 	@Override
 	public List<String> readQuestion() {
@@ -97,14 +97,14 @@ public class examServiceImpl implements examService {
 	public void signUp(List<Integer> e) {
 		
 		//받아온 리스트로 값 변환해서 다른 리스트에 넣어서 DB에 넣기 
-		int a = e.get(0) +11;
+		int a = e.get(0) +10;
 		missionIn.add(a);
 		
 		int count=0;
 		for(int i=1; i<10; i++) {
 			int b = examEachNum.get(i-1);  
 			count+=b;
-			int c = e.get(i) - count + 1 + (i+1)*10;
+			int c = e.get(i) - count + (i+1)*10;
 			missionIn.add(c);
 		}
 		
@@ -140,12 +140,27 @@ public class examServiceImpl implements examService {
 				
 				missionOut.add(choice);
 			}
+			
+			System.out.println("가져와서 저장"+missionOut);
+			System.out.println("저장되잇나?"+examEachNum);
+			int a = missionOut.get(0) - 10;
+			selectNum.add(a);
+			
+			int count=0;
+			for(int i=1; i<10; i++) {
+				int b = examEachNum.get(i-1);  
+				count+=b;
+				int c = missionOut.get(i) + count - (i+1)*10;
+				selectNum.add(c);
+			
+			}
+			
 		}
 			
 		} catch (SQLException ee) {
 			ee.printStackTrace();
 		}
-		return missionOut;
+		return selectNum;
 	}
 
 
@@ -189,5 +204,12 @@ public class examServiceImpl implements examService {
 			e.printStackTrace();
 		}
 		return count;
+	}
+
+
+	@Override
+	public void editUp(List<Integer> e) {
+		String sql = "UPDATE mission SET name = ?, phone_Number = ?,address = ?,score = ? WHERE id = ?";
+		
 	}
 }

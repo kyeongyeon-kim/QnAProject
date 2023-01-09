@@ -39,17 +39,18 @@ import javax.swing.BoxLayout;
 
 public class ExamFrame extends JFrame implements ActionListener {
 
-	private JScrollPane scrollPane;
+	
 	private JPanel contentPane;
 	private static JRadioButton radiobtn[] = new JRadioButton[41];
-	private static JLabel lblTest[] = new JLabel[10];
+	private static JLabel lblquestion[] = new JLabel[10];
 	private static JLabel number = new JLabel();
 	private JButton signUpButton;
 	private examServiceImpl esi;
 	private List<Integer> examEachNum;
 	private List<String> fixOptionList;
 	static List<Integer> selectNum = new ArrayList<>();
-	private JLabel lblNewLabel;
+	private JLabel noSelectlbl;
+	private List<String> QuestionList;
 
 //	public static void main(String[] args) {
 //
@@ -93,42 +94,43 @@ public class ExamFrame extends JFrame implements ActionListener {
 		signUpButton.addActionListener(this);
 
 		// 스크롤
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(12, 80, 509, 514);
-		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		contentPane.add(scrollPane_1);
-		scrollPane_1.getVerticalScrollBar().setUnitIncrement(16);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 80, 509, 514);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		contentPane.add(scrollPane);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		scrollPane_1.setViewportView(panel);
+		scrollPane.setViewportView(panel);
 		panel.setPreferredSize(new Dimension(405, 200 * 13 - 85));
 		panel.setLayout(null);
 		
-		lblNewLabel = new JLabel("");
-		lblNewLabel.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		lblNewLabel.setBounds(172, 604, 193, 15);
-		lblNewLabel.setBorder(null);
-		lblNewLabel.setForeground(Color.RED);
-		contentPane.add(lblNewLabel);
+		noSelectlbl = new JLabel("");
+		noSelectlbl.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		noSelectlbl.setBounds(172, 604, 193, 15);
+		noSelectlbl.setBorder(null);
+		noSelectlbl.setForeground(Color.RED);
+		contentPane.add(noSelectlbl);
 		
 		
-		
-		int count = 0;
 		examEachNum = esi.readEachNum();
 	//	System.out.println("리스트"+ examEachNum);
 		fixOptionList = esi.readFixOption();
+		QuestionList = esi.readQuestion();
 		
+		int count = 0;
 		for (int i = 1; i < 11; i++) {
 			//질문지 패널
 			JPanel panel_i = new JPanel();
 			panel_i.setBounds(12, 10 + (250 * (i - 1)), 470, 240);
+			panel_i.setBackground(new Color(240, 248, 253));
 			panel.add(panel_i);
 			panel_i.setLayout(null);
 			panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 			
-			List<String> QuestionList = esi.readQuestion();
+			
 			
 			//질문지 라벨
 			number = new JLabel();
@@ -137,11 +139,11 @@ public class ExamFrame extends JFrame implements ActionListener {
 			number.setBounds(28, 18, 295, 25);
 			panel_i.add(number);
 			
-			lblTest[i - 1] = new JLabel();
-			lblTest[i - 1].setText(QuestionList.get(i-1));
-			lblTest[i - 1].setFont(new Font("맑은 고딕", Font.BOLD, 14));
-			lblTest[i - 1].setBounds(50, 18, 295, 25);
-			panel_i.add(lblTest[i - 1]);
+			lblquestion[i - 1] = new JLabel();
+			lblquestion[i - 1].setText(QuestionList.get(i-1));
+			lblquestion[i - 1].setFont(new Font("맑은 고딕", Font.BOLD, 14));
+			lblquestion[i - 1].setBounds(50, 18, 295, 25);
+			panel_i.add(lblquestion[i - 1]);
 
 			
 			//라디오버튼
@@ -151,6 +153,7 @@ public class ExamFrame extends JFrame implements ActionListener {
 				radiobtn[j].setText(fixOptionList.get(j));
 				radiobtn[j].setBounds(40 , 53 +(30*z), 400, 23);
 				radiobtn[j].setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+				radiobtn[j].setOpaque(false); 
 				panel_i.add(radiobtn[j]);
 				z++;
 			}
@@ -175,6 +178,7 @@ public class ExamFrame extends JFrame implements ActionListener {
 					selectNum.add(i);
 				}
 			}
+			System.out.println("선택된번호"+selectNum);
 			
 			if(selectNum.size()==10) {
 				esi.signUp(selectNum);
@@ -182,8 +186,7 @@ public class ExamFrame extends JFrame implements ActionListener {
 				dispose();
 			}else {
 //				System.out.println(selectNum.size());
-//				System.out.println("선택 되지 않은 항목이 잇음 ");
-				lblNewLabel.setText("선택되지 않은 문항이 있습니다.");
+				noSelectlbl.setText("선택되지 않은 문항이 있습니다.");
 
 			}
 	
