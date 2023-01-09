@@ -8,5 +8,4 @@ public interface Paths {
 	String LIKE_ABILITY_SUCCESS_WOMAN = ("images/03_likeability_Woman");
 	String LIKE_ABILITY_FAIL_MAN = ("images/03_likeability_Fail_Man");
 	String LIKE_ABILITY_FAIL_WOMAN = ("images/03_likeability_Fail_Woman");
-
 }

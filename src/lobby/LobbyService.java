@@ -17,5 +17,5 @@ public interface LobbyService {
 	public boolean isRowSelected(JTable table);
 	public List<Attacker> makeAttackerList(User user);
 	public void setUserRanking(UserRankDialog urd, List<Attacker> attackerList);
-	public List<Integer> makeMissonList(User userId);
+	public List<Integer> makeMissonList(User user);
 }

@@ -1,5 +1,7 @@
 package game;
 
-public interface GameModeServiceTool {
+import object.User;
 
+public interface GameModeServiceTool {
+	public void deleteAnswer(User user, User defender);
 }

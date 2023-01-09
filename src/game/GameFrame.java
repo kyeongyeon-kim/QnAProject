@@ -18,6 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import lobby.LobbyFrame;
+import lobby.LobbyService;
+import lobby.LobbyServiceImpl;
+import lobby.LobbyServiceToolImpl;
 import object.OptionButtonListener;
 import object.OptionPanel;
 import object.User;
@@ -32,10 +35,14 @@ public class GameFrame extends JFrame {
 	private boolean selectedMode = false;
 	private OptionButtonListener listener = new OptionButtonListener(this);
 	private List<Integer> missonList = new ArrayList<>();
+	private List<Integer> choiceList = new ArrayList<>();
+	private int score = 0;
 	
 	public GameFrame(User user, User defender) {
-		GameModeServiceImpl gms = new GameModeServiceImpl(new GameModeServiceToolImpl());
-		resultImages = gms.makeFirstHalfList(defender);
+		GameModeServiceImpl gameModeService = new GameModeServiceImpl(new GameModeServiceToolImpl());
+		resultImages = gameModeService.makeFirstHalfList(defender);
+		LobbyService lobbyService = new LobbyServiceImpl(new LobbyServiceToolImpl());
+		missonList = lobbyService.makeMissonList(defender);
 		JPanel pnl = new JPanel();
 		pnl.setLayout(null);
 
@@ -51,7 +58,12 @@ public class GameFrame extends JFrame {
 					int lastImageNum = resultImages.size() - 1;
 					if (currentImageIndex == lastImageNum) {
 						dispose();
-						gms.gameComplete(user, defender);
+						if (gameModeService.isUserPlayedGameBefore(user, defender)) {
+							
+						} else {
+							gameModeService.dataTransferToDB(user, defender, GameFrame.this);
+						}
+						gameModeService.gameComplete(user, defender);
 					}
 
 					// 맞춘 개수에 따른 2부 결정
@@ -59,7 +71,7 @@ public class GameFrame extends JFrame {
 						nextImage();
 						boolean startSecondHalf = currentImageIndex == 44;
 						if (startSecondHalf) {
-							gms.decideSecondHalf(defender, resultImages, 60);
+							gameModeService.decideSecondHalf(defender, resultImages, score);
 						}
 					}
 
@@ -136,5 +148,30 @@ public class GameFrame extends JFrame {
 	public void setOptionPanel(OptionPanel optionPanel) {
 		this.optionPanel = optionPanel;
 	}
+
+	public List<Integer> getMissonList() {
+		return missonList;
+	}
+
+	public void setMissonList(List<Integer> missonList) {
+		this.missonList = missonList;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public List<Integer> getChoiceList() {
+		return choiceList;
+	}
+
+	public void setChoiceList(List<Integer> choiceList) {
+		this.choiceList = choiceList;
+	}
+	
 	
 }

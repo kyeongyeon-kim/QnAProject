@@ -10,4 +10,8 @@ public interface GameModeService {
 	public List<Image> makeSecondHalfList(User user, int score);
 	public void decideSecondHalf(User attacker, List<Image> resultImages, int score);
 	public void gameComplete(User user, User defender);
+	public int selectByOption(String option);
+	public void dataTransferToDB(User user, User defender ,GameFrame gameFrame);
+	public boolean isUserPlayedGameBefore(User user, User defender);
+	public void dataUpdateToDB(User user, User defender ,GameFrame gameFrame);
 }

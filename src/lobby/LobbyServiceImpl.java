@@ -88,7 +88,7 @@ public class LobbyServiceImpl implements LobbyService {
 			attackerNameList = lst.makeAttackerList(attackerNameList, stmt2);
 
 			for (String attacker : attackerNameList) {
-				Attacker a = lst.attackerCaculationScore((String) user.getId(), attacker, conn);
+				Attacker a = lst.attackerCaculationScore(user, attacker, conn);
 				attackerList.add(a);
 			}
 

@@ -48,7 +48,7 @@ public class UserRankDialog extends JDialog implements ActionListener {
 		getContentPane().setBackground(Color.WHITE);
 		getContentPane().setLayout(null);
 		setModal(true);
-		String resultText = "<HTML><body style='text-align:center;'>" + user.getId() + "님 <br>Attacker 랭킹</body></HTML>";
+		String resultText = "<HTML><body style='text-align:center;'>" + user.getId() + "님 <br>공략 랭킹</body></HTML>";
 		JLabel rankingLabel = new JLabel(resultText);
 		rankingLabel.setBackground(Color.BLACK);
 		rankingLabel.setHorizontalAlignment(SwingConstants.CENTER);

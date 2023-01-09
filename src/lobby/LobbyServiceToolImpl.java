@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import object.Attacker;
+import object.User;
 
 public class LobbyServiceToolImpl implements LobbyServiceTool {
 
@@ -43,32 +44,27 @@ public class LobbyServiceToolImpl implements LobbyServiceTool {
 	}
 
 	@Override
-	public Attacker attackerCaculationScore(String id, String attacker, Connection conn) throws SQLException {
-		String sql = "SELECT choice FROM mission WHERE id = ?";
-		String sql2 = "SELECT choice FROM answer WHERE attacker = ?";
-		List<Integer> missionList = new ArrayList<>();
+	public Attacker attackerCaculationScore(User user, String attacker, Connection conn) throws SQLException {
+		String sql2 = "SELECT choice FROM answer WHERE defender = ? AND attacker = ?";
+		LobbyServiceImpl lobbyService = new LobbyServiceImpl(new LobbyServiceToolImpl());
+		List<Integer> missionList = lobbyService.makeMissonList(user);
 		List<Integer> answerList = new ArrayList<>();
 
-		try (PreparedStatement stmt = conn.prepareStatement(sql);
-				PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
-			stmt.setString(1, id);
-			stmt2.setString(1, attacker);
+		try (PreparedStatement stmt = conn.prepareStatement(sql2)) {
+			stmt.setString(1, user.getId());
+			stmt.setString(2, attacker);
 
-			try (ResultSet rs = stmt.executeQuery();
-				ResultSet rs2 = stmt2.executeQuery()) {
+			try (ResultSet rs = stmt.executeQuery()) {
 
 				while (rs.next()) {
-					int mission = rs.getInt(1);
-					missionList.add(mission);
-				}
-
-				while (rs2.next()) {
-					int answer = rs2.getInt(1);
+					int answer = rs.getInt(1);
 					answerList.add(answer);
 				}
 
 				int count = 0;
-				for (int i = 0; i < missionList.size(); i++) {
+				System.out.println("misson : " + missionList);
+				System.out.println("answer : " + answerList);
+				for (int i = 0; i < answerList.size(); i++) {
 					if (missionList.get(i) == answerList.get(i)) {
 						count++;
 					}

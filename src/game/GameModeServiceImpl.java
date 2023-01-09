@@ -1,9 +1,15 @@
 package game;
 
 import java.awt.Image;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import dbutil.ConnectionProvider;
 import lobby.LobbyFrame;
 import lobby.LobbyServiceImpl;
 import lobby.LobbyServiceToolImpl;
@@ -77,5 +83,77 @@ public class GameModeServiceImpl implements GameModeService {
 		urd.setVisible(true);
 		LobbyFrame lf = new LobbyFrame(user);
 		lf.setVisible(true);
+	}
+
+	@Override
+	public int selectByOption(String option) {
+		String sql = "SELECT choice FROM exam_option WHERE `option` = ?";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, option);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					int choice = rs.getInt(1);
+					return choice;
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	@Override
+	public void dataTransferToDB(User user, User defender, GameFrame gameFrame) {
+		List<Integer> choiceList = gameFrame.getChoiceList();
+		String sql = "INSERT INTO answer VALUES (?, ?, ?);";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);) {
+			for (Integer option : choiceList) {
+				stmt.setString(1, defender.getId());
+				stmt.setString(2, user.getId());
+				stmt.setInt(3, option);
+				stmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public boolean isUserPlayedGameBefore(User user, User defender) {
+		String sql = "SELECT defender, attacker FROM answer GROUP BY attacker HAVING defender = ? AND attacker = ?";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, defender.getId());
+			stmt.setString(2, user.getId());
+
+			int playedBefore = stmt.executeUpdate();
+			if (playedBefore > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public void dataUpdateToDB(User user, User defender, GameFrame gameFrame) {
+		String sql = "UPDATE userinfo SET pw = ?, name = ?, mbti = ?, gender = ? WHERE id = ?";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
+			stmt.setString(1, user.getPw());
+			stmt.setString(2, user.getName());
+			stmt.setString(3, user.getMbti());
+			stmt.setString(4, user.getGender());
+			stmt.setString(5, user.getId());
+
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

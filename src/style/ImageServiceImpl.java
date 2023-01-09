@@ -52,7 +52,4 @@ public class ImageServiceImpl implements ImageService {
 		int countIntro = ist.countFiles(Paths.LIKE_ABILITY_FAIL_WOMAN);
 		return ist.readImages("images/03_likeability_Fail_Woman/여자호감도실패", countIntro);
 	}
-
-	
-	
 }
