@@ -28,6 +28,5 @@ public class OptionButtonListener implements ActionListener {
 		if (answer) {
 			gameFrame.setScore(gameFrame.getScore() + 10);
 		}
-		System.out.println(gameFrame.getChoiceList());
 	}
 }

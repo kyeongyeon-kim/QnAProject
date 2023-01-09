@@ -51,9 +51,9 @@ public class GameModeServiceImpl implements GameModeService {
 		List<Image> secondHalfList = new ArrayList<>();
 		ImageServiceImpl isi = new ImageServiceImpl(new ImageServiceToolImpl());
 		if (user.getGender().equals("남")) {
-			secondHalfList = score >= 60 ? isi.getLikeAbilityWoman(Paths.LIKE_ABILITY_SUCCESS_WOMAN) : isi.failedLikeAbilityWoman(Paths.LIKE_ABILITY_FAIL_WOMAN);
-		} else {
 			secondHalfList = score >= 60 ? isi.getLikeAbilityMan(Paths.LIKE_ABILITY_SUCCESS_MAN) : isi.failedLikeAbilityMan(Paths.LIKE_ABILITY_FAIL_MAN);
+		} else {
+			secondHalfList = score >= 60 ? isi.getLikeAbilityWoman(Paths.LIKE_ABILITY_SUCCESS_WOMAN) : isi.failedLikeAbilityWoman(Paths.LIKE_ABILITY_FAIL_WOMAN);
 		}
 		for (Image secondHalf : secondHalfList) {
 			secondHalfImages.add(secondHalf);

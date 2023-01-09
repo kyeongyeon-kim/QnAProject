@@ -62,8 +62,8 @@ public class LobbyServiceToolImpl implements LobbyServiceTool {
 				}
 				
 				int count = 0;
-				for (int i = 0; i < answerList.size(); i++) {
-					if (missionList.get(i) == answerList.get(i)) {
+				for (Integer answer : answerList) {
+					if (missionList.contains(answer)) {
 						count++;
 					}
 				}

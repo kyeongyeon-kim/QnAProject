@@ -219,7 +219,6 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 			btnNext.doClick();
 		}
 		checkInputImage(e);
-
 	}
 
 	@Override

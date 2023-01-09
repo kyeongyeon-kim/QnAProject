@@ -29,7 +29,7 @@ public class Vibration {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				lbl.setLocation(x, 0);
-				lbl.repaint(); 
+				lbl.repaint();
 
 				x += dx;
 				

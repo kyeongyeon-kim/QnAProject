@@ -16,7 +16,7 @@ public class GameModeServiceToolImpl implements GameModeServiceTool {
 		try (Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, defender.getId());
-			stmt.setString(1, user.getId());
+			stmt.setString(2, user.getId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
