@@ -1,7 +1,5 @@
 package mypage;
 
-
-
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;

@@ -47,16 +47,19 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 	private JLabel checkName;
 	private JLabel checkMbti;
 	private MbtiImageManager im = new MbtiImageManager();
-	
+
 	public JTextField getTfMbti() {
 		return tfMbti;
 	}
+
 	public void setTfMbti(JTextField tfMbti) {
 		this.tfMbti = tfMbti;
 	}
+
 	public static void main(String[] args) {
 		new JoinDialog().setVisible(true);
 	}
+
 	public JoinDialog() {
 		setModal(true);
 		setBounds(700, 180, 378, 635);
@@ -65,14 +68,14 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JTextPane textPane = new JTextPane();
 		textPane.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		textPane.setText("회원가입");
 		textPane.setEditable(false);
 		textPane.setBounds(123, 60, 131, 39);
 		contentPane.add(textPane);
-		
+
 		JLabel lblId = new JLabel("아이디");
 		lblId.setBounds(66, 130, 100, 32);
 		lblSetting(lblId);
@@ -80,7 +83,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		tfId.setBounds(63, 159, 234, 33);
 		tfSetting(tfId);
 		checkId = checkImage(lblId, 38);
-		
+
 		JLabel lblPw = new JLabel("비밀번호");
 		lblPw.setBounds(66, 195, 100, 32);
 		lblSetting(lblPw);
@@ -88,7 +91,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		pfPw.setBounds(63, 224, 234, 33);
 		tfSetting(pfPw);
 		checkPw = checkImage(lblPw, 48);
-		
+
 		JLabel lblName = new JLabel("이름");
 		lblName.setBounds(66, 260, 100, 32);
 		lblSetting(lblName);
@@ -96,7 +99,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		tfName.setBounds(63, 289, 234, 33);
 		tfSetting(tfName);
 		checkName = checkImage(lblName, 26);
-		
+
 		JLabel lblMbti = new JLabel("MBTI");
 		lblMbti.setBounds(66, 325, 100, 32);
 		lblSetting(lblMbti);
@@ -104,7 +107,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		tfMbti.setBounds(63, 354, 234, 33);
 		tfSetting(tfMbti);
 		checkMbti = checkImage(lblMbti, 34);
-		
+
 		btnMbti = new JButton(); // mbti 물음표버튼
 		btnMbti.setIcon(new ImageIcon(im.getqImage()));
 		btnMbti.setBounds(201, 1, 30, 30);
@@ -112,40 +115,41 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		btnMbti.setBackground(null);
 		tfMbti.add(btnMbti);
 		btnMbti.addMouseListener(this);
+		btnMbti.addFocusListener(this);
 		btnMbti.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MbtiDialog(tfMbti).setVisible(true);
 			}
 		});
-		
+
 		JLabel lblGender = new JLabel("성별");
 		lblGender.setBounds(66, 390, 100, 32);
 		lblSetting(lblGender);
-	
+
 		JToggleButton btnMan = new JToggleButton("남자");
 		btnMan.setBounds(63, 419, 117, 31);
 		btnSetting(btnMan);
 		btnMan.setSelected(true);
-		
+
 		JToggleButton btnWoman = new JToggleButton("여자");
 		btnWoman.setBounds(180, 419, 117, 31);
 		btnSetting(btnWoman);
-		
+
 		ButtonGroup group = new ButtonGroup();
 		group.add(btnMan);
 		group.add(btnWoman);
-		
+
 		lblResult = new JLabel("");
 		lblResult.setBounds(64, 455, 220, 39);
 		lblResult.setFont(new Font("맑은 고딕", Font.BOLD, 11));
 		lblResult.setBorder(null);
 		lblResult.setForeground(Color.RED);
 		contentPane.add(lblResult);
-		
+
 		btnNext = new JButton("다음");
 		btnNext.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		btnNext.setBackground(new Color(96,182,230));
+		btnNext.setBackground(new Color(96, 182, 230));
 		btnNext.setBorderPainted(false);
 		btnNext.setForeground(Color.white);
 		btnNext.setBounds(62, 488, 236, 39);
@@ -170,11 +174,11 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 			}
 		});
 	}
-	
+
 	// 텍스트필드 설정
 	private void tfSetting(JTextField tf) {
 		tf.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		tf.setBackground(new Color(240,241,242));
+		tf.setBackground(new Color(240, 241, 242));
 		tf.setForeground(Color.gray);
 		tf.setBorder(new EmptyBorder(0, 7, 0, 7));
 		tf.setColumns(20);
@@ -182,7 +186,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		tf.addKeyListener(this);
 		contentPane.add(tf);
 	}
-	
+
 	// 라벨 설정
 	private void lblSetting(JLabel lbl) {
 		lbl.setFont(new Font("맑은 고딕", Font.BOLD, 11));
@@ -190,7 +194,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		lbl.setForeground(Color.DARK_GRAY);
 		contentPane.add(lbl);
 	}
-	
+
 	// 성별 토글버튼 설정
 	private void btnSetting(JToggleButton btn) {
 		btn.setFont(new Font("맑은 고딕", Font.BOLD, 11));
@@ -199,7 +203,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		btn.addKeyListener(this);
 		contentPane.add(btn);
 	}
-	
+
 	// 비밀번호값 구하기
 	private String getPassword(JPasswordField pfPw) {
 		char[] c = pfPw.getPassword();
@@ -209,7 +213,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		}
 		return pw;
 	}
-	
+
 	// 체크이미지(입력값 확인)
 	private JLabel checkImage(JLabel lbl, int i) {
 		JLabel lblCheck = new JLabel();
@@ -219,7 +223,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		lbl.add(lblCheck);
 		return lblCheck;
 	}
-	
+
 	// 입력값 확인 후 체크이미지 변경
 	private void checkInputImage(KeyEvent e) {
 		if (e.getSource() == tfId) {
@@ -248,7 +252,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 			}
 		}
 	}
-	
+
 	// 입력값 없는지 확인
 	public boolean checkNotInput(String id, String pw, String name, String mbti, String gender) {
 		if (name.equals("이름")) {
@@ -267,14 +271,14 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 			return true;
 		}
 	}
-	
+
 	public void checkInput(String id, String pw, String name, String mbti, String gender) {
 		int result = join.checkInput(id, pw, name, mbti, gender);
 		if (result == join.joinComplete) {
 			System.out.println("회원가입 완료");
 			lblResult.setText("");
-			join.insert();
-			new ExamFrame().setVisible(true);
+//			join.insert();
+			new ExamFrame(join.getUser()).setVisible(true);
 			dispose();
 		} else if (result == join.joinFailByName) {
 			lblResult.setText("이름 입력이 잘못되었습니다.(1~15자)");
@@ -286,9 +290,9 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 			lblResult.setText("MBTI 입력이 잘못되었습니다.(ex.INFP)");
 		} else if (result == join.joinFailByPw) {
 			lblResult.setText("비밀번호 입력이 잘못되었습니다.(4~20자)");
-		} 
+		}
 	}
-	
+
 	@Override
 	public void focusGained(FocusEvent e) { // 입력시 초기값 지우기
 		if (e.getSource() == tfName && tfName.getText().equals("이름")) {
@@ -299,7 +303,14 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 			tfMbti.setText("");
 		} else if (e.getSource() == pfPw && getPassword(pfPw).equals("비밀번호")) {
 			pfPw.setText("");
-		} 
+		}
+		if (e.getSource() == btnMbti) {
+			if (join.checkMbti(tfMbti.getText())) {
+				checkMbti.setIcon(new ImageIcon(im.getChecked()));
+			} else {
+				checkMbti.setIcon(new ImageIcon(im.getUnchecked()));
+			}
+		}
 	}
 
 	@Override
@@ -312,44 +323,47 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 			tfMbti.setText("MBTI");
 		} else if (e.getSource() == pfPw && getPassword(pfPw).equals("")) {
 			pfPw.setText("비밀번호");
-		} 
+		}
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 	}
-	
-	@Override 
+
+	@Override
 	public void mouseEntered(MouseEvent e) {
 		if (e.getSource() == btnMbti) {
 			btnMbti.setIcon(new ImageIcon(im.getqImage2()));
 		}
 	}
-	
+
 	@Override
 	public void mouseExited(MouseEvent e) {
 		if (e.getSource() == btnMbti) {
 			btnMbti.setIcon(new ImageIcon(im.getqImage()));
 		}
 	}
-	
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 	}
-	
+
 	@Override
 	public void mouseReleased(MouseEvent e) {
 	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			btnNext.doClick();
 		}
 	}
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		checkInputImage(e);
 	}
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		checkInputImage(e);

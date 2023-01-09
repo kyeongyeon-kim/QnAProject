@@ -13,6 +13,14 @@ public class Join {
 	public final int joinFailByPw = 15;
 	public final int joinFail = 16;
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	// 입력값 확인
 	public int checkInput(String id, String pw, String name, String mbti, String gender) {
 		if (!userinfoService.verifyName(name)) {

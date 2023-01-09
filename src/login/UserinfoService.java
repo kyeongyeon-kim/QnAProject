@@ -45,7 +45,7 @@ public class UserinfoService {
 		Pattern p = Pattern.compile("[I|E]{1}[S|N]{1}[T|F]{1}[J|P]{1}");
 		Pattern p2= Pattern.compile("선택안함");
 		Matcher m = p.matcher(mbti);
-		Matcher m2 = p2.matcher(mbti);
+		Matcher m2 = p2.matcher(str);
 		if (m.matches() || m2.matches()) {
 			return true;
 		}
