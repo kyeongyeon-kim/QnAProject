@@ -36,7 +36,7 @@ public class MypageDialog extends JDialog implements ActionListener {
 	private JPanel attackDefendPanel;
 	private DefaultTableModel modelAttack;
 	private DefaultTableModel modelDefend;
-
+	
 	
 	public DefaultTableModel getModelAttack() {
 		return modelAttack;
@@ -143,7 +143,7 @@ public class MypageDialog extends JDialog implements ActionListener {
 		
 		JButton btnChangeInfo = new JButton("개인 정보 수정");
 		btnSetting(btnChangeInfo);
-		btnChangeInfo.setBounds(62, 456, 130, 35);
+		btnChangeInfo.setBounds(50, 456, 120, 35);
 		btnChangeInfo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -153,7 +153,7 @@ public class MypageDialog extends JDialog implements ActionListener {
 		
 		JButton btnChangeAns = new JButton("질문지 답변 수정");
 		btnSetting(btnChangeAns);
-		btnChangeAns.setBounds(230, 456, 130, 35);
+		btnChangeAns.setBounds(180, 456, 130, 35);
 		btnChangeAns.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -163,7 +163,17 @@ public class MypageDialog extends JDialog implements ActionListener {
 		
 		JButton btnBefore = new JButton("이전화면");
 		btnSetting(btnBefore);
-		btnBefore.setBounds(392, 456, 130, 35);
+		btnBefore.setBounds(320, 456, 100, 35);
+		
+		JButton btnSecession = new JButton("회원 탈퇴");
+		btnSetting(btnSecession);
+		btnSecession.setBounds(430, 456, 100, 35);
+		btnSecession.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new SecessionDialog(user).setVisible(true);
+			}
+		});
 	}
 	
 	// 버튼 설정
