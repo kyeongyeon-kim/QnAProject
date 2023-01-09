@@ -26,6 +26,7 @@ public class SecessionDialog extends JDialog  {
 	private JLabel checkPw;
 	private MbtiImageManager im = new MbtiImageManager();
 	private JButton btnSecession;
+	private JLabel noPw;
 	
 //	public static void main(String[] args) {
 
@@ -104,6 +105,13 @@ public class SecessionDialog extends JDialog  {
 	//	checkPw = checkImage(lblPw, 130);
 
 		
+		noPw = new JLabel("");
+		noPw.setBounds(66, 270, 170, 32);
+		noPw.setFont(new Font("맑은 고딕", Font.BOLD, 11));
+		noPw.setBackground(Color.white);
+		noPw.setForeground(Color.RED);
+		contentPane.add(noPw);
+		
 		btnSecession = new JButton("탈퇴하기");
 		btnSecession.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		btnSecession.setBackground(new Color(96,182,230));
@@ -114,17 +122,14 @@ public class SecessionDialog extends JDialog  {
 	//	btnSecession.addKeyListener(this);
 		btnSecession.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
+				
 				String a = user.getPw();
-				if(a == pfPw.getText()) {
+				
+				if(a.equals(pfPw.getText())) {
 					System.out.println("탈퇴완료");
 				}else {
-					JLabel noPw = new JLabel("실패");
-					noPw.setBounds(66, 270, 100, 32);
-					noPw.setFont(new Font("맑은 고딕", Font.BOLD, 11));
-					noPw.setBackground(Color.white);
-					noPw.setForeground(Color.RED);
-					contentPane.add(noPw);
+					noPw.setText("비밀번호를 잘못 입력하였습니다.");
 				}
 			}
 			
