@@ -28,6 +28,21 @@ public class examServiceImpl implements examService {
 	static List<Integer> missionOut = new ArrayList<>();
 	static List<Integer> selectNum = new ArrayList<>();
 
+	// 인덱스 값 mission값으로 바꾸기
+	public List<Integer> indexChange(List<Integer> e) {
+		int a = e.get(0) + 11;
+		missionIn.add(a);
+
+		int count = 0;
+		for (int i = 1; i < 10; i++) {
+			int b = examEachNum.get(i - 1);
+			count += b;
+			int c = e.get(i) - count + 1 + (i + 1) * 10;
+			missionIn.add(c);
+		}
+		return missionIn;
+	}
+
 	@Override
 	public List<String> readQuestion() {
 		try (Connection conn = ConnectionProvider.makeConnection();
@@ -93,27 +108,17 @@ public class examServiceImpl implements examService {
 	public void signUp(List<Integer> e, User user) {
 
 		// 받아온 리스트로 값 변환해서 다른 리스트에 넣어서 DB에 넣기
-		int a = e.get(0) + 11;
-		missionIn.add(a);
+		indexChange(e);
 
-		int count = 0;
-		for (int i = 1; i < 10; i++) {
-			int b = examEachNum.get(i - 1);
-			count += b;
-			int c = e.get(i) - count +1 + (i + 1) * 10;
-			missionIn.add(c);
-		}
+//		System.out.println("db들어갈 값"+missionIn);
 
-		System.out.println("db들어갈 값"+missionIn);
 		String userId = user.getId();
-		String sql = "INSERT INTO mission (id,choice) VALUES ('" + userId +"', ?)";
+		String sql = "INSERT INTO mission (id,choice) VALUES ('" + userId + "', ?)";
 		try (Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//			pstmt.setString(1, user.getId());
 			for (int i = 0; i < 10; i++) {
 				pstmt.setInt(1, missionIn.get(i));
 				pstmt.executeUpdate();
-//					System.out.println(pstmt.executeUpdate());
 			}
 
 		} catch (SQLException ee) {
@@ -123,6 +128,8 @@ public class examServiceImpl implements examService {
 
 	@Override
 	public List<Integer> readMissionNum(String n) {
+		missionOut.removeAll(missionOut);
+		selectNum.removeAll(selectNum);
 		String sql = "SELECT * FROM mission WHERE id = ?";
 		try (Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -130,25 +137,25 @@ public class examServiceImpl implements examService {
 
 			try (ResultSet rs = pstmt.executeQuery();) {
 				while (rs.next()) {
-					int choice = rs.getInt("choice"); // 13
+					int choice = rs.getInt("choice");
 
 					missionOut.add(choice);
 				}
 
-				System.out.println("가져와서 저장" + missionOut);
-				System.out.println("저장되잇나?" + examEachNum);
-				int a = missionOut.get(0) - 10;
+//				System.out.println("가져와서 저장" + missionOut);
+//				System.out.println("저장되잇나?" + examEachNum);
+				int a = missionOut.get(0) - 11;
 				selectNum.add(a);
 
 				int count = 0;
 				for (int i = 1; i < 10; i++) {
 					int b = examEachNum.get(i - 1);
 					count += b;
-					int c = missionOut.get(i) + count - (i + 1) * 10;
+					int c = missionOut.get(i) + count - 1 - (i + 1) * 10;
 					selectNum.add(c);
 
 				}
-
+//				System.out.println("다시가져온값 :" +selectNum);
 			}
 
 		} catch (SQLException ee) {
@@ -200,7 +207,23 @@ public class examServiceImpl implements examService {
 
 	@Override
 	public void editUp(List<Integer> e, User user) {
-		String sql = "UPDATE mission SET name = ?, phone_Number = ?,address = ?,score = ? WHERE id = ?";
-		
+
+		missionIn.removeAll(missionIn);
+
+		// 삭제하고
+		String sql = "DELETE FROM mission WHERE id = ?";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, user.getId());
+			System.out.println(pstmt.executeUpdate());
+
+		} catch (SQLException ee) {
+			ee.printStackTrace();
+		}
+
+		// 다시 추가
+		signUp(e, user);
+
 	}
+
 }

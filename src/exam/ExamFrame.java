@@ -45,16 +45,16 @@ import javax.swing.BoxLayout;
 public class ExamFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
+	private JButton signUpButton;
 	private static JRadioButton radiobtn[] = new JRadioButton[41];
 	private static JLabel lblquestion[] = new JLabel[10];
 	private static JLabel number = new JLabel();
-	private JButton signUpButton;
-	private examServiceImpl esi;
+	private JLabel noSelectlbl;
 	private List<Integer> examEachNum;
 	private List<String> fixOptionList;
 	static List<Integer> selectNum = new ArrayList<>();
-	private JLabel noSelectlbl;
 	private List<String> QuestionList;
+	private examServiceImpl esi;
 	private User user;
 
 //	public static void main(String[] args) {
@@ -119,10 +119,9 @@ public class ExamFrame extends JFrame implements ActionListener {
 		noSelectlbl.setForeground(Color.RED);
 		contentPane.add(noSelectlbl);
 
-		examEachNum = esi.readEachNum();
-		// System.out.println("리스트"+ examEachNum);
-		fixOptionList = esi.readFixOption();
-		QuestionList = esi.readQuestion();
+		examEachNum = esi.readEachNum(); // 각 문제 문항 갯수 리스트 (5,2,4,5~)
+		fixOptionList = esi.readFixOption(); // 각 답 문항 글자 리스트 (SG워너비~,)
+		QuestionList = esi.readQuestion(); // 각 질문 문항 글자 리스트 (노래 선택지~,)
 
 		int count = 0;
 		for (int i = 1; i < 11; i++) {
@@ -179,7 +178,7 @@ public class ExamFrame extends JFrame implements ActionListener {
 					selectNum.add(i);
 				}
 			}
-//			System.out.println("선택된번호" + selectNum);
+//			System.out.println("가입하기 선택된번호" + selectNum);
 
 			if (selectNum.size() == 10) {
 				UserinfoRepository userinfoRep = new UserinfoRepositoryImpl();

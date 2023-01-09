@@ -14,5 +14,4 @@ public interface examService {
 		public void editUp(List<Integer> e, User user);
 		public List<String> readOptionByExamNo(int examNo);
 		public int countOptionByExamNo(int examNo);
-		
 }

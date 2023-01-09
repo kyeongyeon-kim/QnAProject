@@ -52,6 +52,7 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 	private List<Integer> examEachNum;
 	private List<String> fixOptionList;
 	static List<Integer> selectNum = new ArrayList<>();
+	private List<String> QuestionList;
 	private JLabel noSelectlbl;
 	private List<Integer> missionOut;
 	private User user;
@@ -69,6 +70,14 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 //			}
 //		});
 //	}
+
+	// 리스트 값 질문지 표시
+	public void selectBtn(List<Integer> e) {
+		for (int i = 0; i < 10; i++) {
+			int a = e.get(i);
+			radiobtn[a].setSelected(true);
+		}
+	}
 
 	public ChangeExamDialog(User user) {
 		this.user = user;
@@ -120,8 +129,8 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 
 		int count = 0;
 		examEachNum = esi.readEachNum();
-		// System.out.println("리스트"+ examEachNum);
 		fixOptionList = esi.readFixOption();
+		QuestionList = esi.readQuestion();
 
 		for (int i = 1; i < 11; i++) {
 			// 질문지 패널
@@ -131,8 +140,6 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 			panel.add(panel_i);
 			panel_i.setLayout(null);
 			panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-			List<String> QuestionList = esi.readQuestion();
 
 			// 질문지 라벨
 			number = new JLabel();
@@ -169,13 +176,11 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 		// 이름으로 질문지 답변 가져오기 (수정)
 		String id = user.getId();
 		missionOut = esi.readMissionNum(id);
-		System.out.println("가져온값" + missionOut);
+//		System.out.println("가져온값" + missionOut);
 
 		// mission에서 가져온 인덱스 질문지 표시
-		for (int i = 0; i < 10; i++) {
-			int a = missionOut.get(i);
-			radiobtn[a - 1].setSelected(true);
-		}
+		selectBtn(missionOut);
+
 	}
 
 	@Override
@@ -184,24 +189,21 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 		// 수정하기 버튼 눌렸을 때
 		if (editButton.equals(e.getSource())) {
 
-			selectNum.removeAll(selectNum);
 			// 버튼 선택된거
+			selectNum.removeAll(selectNum);
 			for (int i = 0; i < radiobtn.length; i++) {
 				if (radiobtn[i].isSelected()) {
 					selectNum.add(i);
 				}
 			}
-			System.out.println("다시 선택된값" + selectNum);
-
+//			System.out.println("다시 선택된값" + selectNum);
 			if (selectNum.size() == 10) {
 				esi.editUp(selectNum, user);
 				dispose();
 			} else {
-//				System.out.println(selectNum.size());
-//				System.out.println("선택 되지 않은 항목이 잇음 ");
 				noSelectlbl.setText("선택되지 않은 문항이 있습니다.");
-
 			}
+
 		}
 	}
 }
