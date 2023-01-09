@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.CollectionOrBuilder;
+//import com.mysql.cj.x.protobuf.MysqlxCrud.CollectionOrBuilder;
 
 import dbutil.ConnectionProvider;
 import mypage.MypageDialog;
@@ -96,7 +96,7 @@ public class LobbyServiceImpl implements LobbyService {
 				@Override
 				public int compare(Object o1, Object o2) {
 					if (((Attacker) o1).getScore() == ((Attacker) o2).getScore()) {
-						return ((CollectionOrBuilder) o1).getName().compareTo(((CollectionOrBuilder) o2).getName());
+//						return ((CollectionOrBuilder) o1).getName().compareTo(((CollectionOrBuilder) o2).getName());
 					}
 					return ((Attacker) o2).getScore() - ((Attacker) o1).getScore();
 				}

@@ -45,17 +45,17 @@ public class MbtiImageManager {
 		ClassLoader classLoader = getClass().getClassLoader();
 		images = new ArrayList<>();
 		for (int i = 0; i < 16; i++) {
-			images.add(kit.getImage(classLoader.getResource("imagesMbti//" + mbti[i] + ".png")));
+			images.add(kit.getImage(classLoader.getResource(mbti[i] + ".png")));
 		}
 		
 		imagesSelect = new ArrayList<>();
 		for (int i = 0; i < 16; i++) {
-			imagesSelect.add(kit.getImage(classLoader.getResource("imagesMbti//" + mbti[i] + "-01.png")));
+			imagesSelect.add(kit.getImage(classLoader.getResource(mbti[i] + "-01.png")));
 		}
-		qImage = kit.getImage(classLoader.getResource("imagesMbti//Q.png"));
-		qImage2 = kit.getImage(classLoader.getResource("imagesMbti//Q2.png"));
-		unchecked = kit.getImage(classLoader.getResource("imagesMbti//unchecked.png"));
-		checked = kit.getImage(classLoader.getResource("imagesMbti//checked.png"));
+		qImage = kit.getImage(classLoader.getResource("Q.png"));
+		qImage2 = kit.getImage(classLoader.getResource("Q2.png"));
+		unchecked = kit.getImage(classLoader.getResource("unchecked.png"));
+		checked = kit.getImage(classLoader.getResource("checked.png"));
 		
 	}
 
