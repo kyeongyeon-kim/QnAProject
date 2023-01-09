@@ -8,8 +8,6 @@ import object.User;
 public class MypageInfo {
 	private User user;
 	private MypageDialog mypageDialog;
-//	private DefaultTableModel model;
-	
 	
 	public MypageInfo(User user) {
 		this.user = user;

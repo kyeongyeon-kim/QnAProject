@@ -88,7 +88,8 @@ public class LobbyServiceToolImpl implements LobbyServiceTool {
 			stmt2.setString(1, defenderId);
 			stmt2.setString(2, myId);
 
-			try (ResultSet rs = stmt.executeQuery(); ResultSet rs2 = stmt2.executeQuery()) {
+			try (ResultSet rs = stmt.executeQuery(); 
+					ResultSet rs2 = stmt2.executeQuery()) {
 
 				while (rs.next()) {
 					int mission = rs.getInt(1);
