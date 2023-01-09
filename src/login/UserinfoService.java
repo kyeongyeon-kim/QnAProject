@@ -14,7 +14,7 @@ public class UserinfoService {
 	}
 
 	public boolean verifyId(String id) {
-		Pattern p = Pattern.compile("[a-zA-Zㄱ-힣0-9]{1,20}");
+		Pattern p = Pattern.compile("[a-zA-Zㄱ-힣0-9!@#$%^&*()]{1,20}");
 		Matcher m = p.matcher(id);
 		if (m.matches()) {
 			return true;
@@ -23,7 +23,7 @@ public class UserinfoService {
 	}
 
 	public boolean verifyPw(String pw) {
-		Pattern p = Pattern.compile("[a-zA-Zㄱ-힣0-9]{4,20}");
+		Pattern p = Pattern.compile("[a-zA-Zㄱ-힣0-9!@#$%^&*()]{4,20}");
 		Matcher m = p.matcher(pw);
 		if (m.matches()) {
 			return true;
@@ -32,7 +32,7 @@ public class UserinfoService {
 	}
 
 	public boolean verifyName(String name) {
-		Pattern p = Pattern.compile("[a-zA-Zㄱ-힣0-9]{1,15}");
+		Pattern p = Pattern.compile("[a-zA-Zㄱ-힣0-9!@#$%^&*()]{1,15}");
 		Matcher m = p.matcher(name);
 		if (m.matches()) {
 			return true;
@@ -45,7 +45,7 @@ public class UserinfoService {
 		Pattern p = Pattern.compile("[I|E]{1}[S|N]{1}[T|F]{1}[J|P]{1}");
 		Pattern p2= Pattern.compile("선택안함");
 		Matcher m = p.matcher(mbti);
-		Matcher m2 = p2.matcher(mbti);
+		Matcher m2 = p2.matcher(str);
 		if (m.matches() || m2.matches()) {
 			return true;
 		}

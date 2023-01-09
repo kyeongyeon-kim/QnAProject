@@ -8,6 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -43,13 +45,14 @@ public class MbtiDialog extends JDialog implements ItemListener {
 				btn.setIcon(new ImageIcon(im.getImages().get(i * 4 + j)));
 				btn.setSelectedIcon(new ImageIcon(im.getImagesSelect().get(i * 4 + j)));
 				btn.setBorderPainted(false);
+				btn.setBorder(new LineBorder(Color.WHITE, 10));
 				btn.setBounds(33 + (200 * j), 90 + (130 * i), 187, 120);
 				btn.addItemListener(this);
 				contentPanel.add(btn);
 				btnMbti[i][j] = btn;
 			}
 		}
-		
+	
 		JLabel lblMbti = new JLabel("MBTI");
 		lblMbti.setFont(new Font("맑은 고딕", Font.BOLD, 32));
 		lblMbti.setBounds(333, 20, 200, 45);
@@ -80,7 +83,7 @@ public class MbtiDialog extends JDialog implements ItemListener {
 		btnOk.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				tfMbti.setText(getSelectMbti());
+				tfMbti.setText(getSelectMbti(tfMbti));
 				dispose();
 			}
 		});
@@ -101,7 +104,7 @@ public class MbtiDialog extends JDialog implements ItemListener {
 			}
 		}
 	}
-	public String getSelectMbti() {
+	public String getSelectMbti(JTextField tfMbti) {
 		for (int i = 0; i < btnMbti.length; i++) {
 			for (int j = 0; j < btnMbti[i].length; j++) {
 				if (btnMbti[i][j].isSelected()) {
@@ -109,6 +112,6 @@ public class MbtiDialog extends JDialog implements ItemListener {
 				}
 			}
 		}
-		return "선택안함";
+		return tfMbti.getText();
 	}
 }
