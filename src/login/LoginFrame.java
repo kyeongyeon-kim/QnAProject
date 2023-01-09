@@ -88,6 +88,7 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 			public void actionPerformed(ActionEvent e) {
 				joinDialog = new JoinDialog();
 				joinDialog.setVisible(true);
+				dispose();
 			}
 		});
 		contentPane.add(btnJoin);
