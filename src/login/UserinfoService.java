@@ -14,7 +14,7 @@ public class UserinfoService {
 	}
 
 	public boolean verifyId(String id) {
-		Pattern p = Pattern.compile("[a-zA-Zㄱ-힣0-9]{1,20}");
+		Pattern p = Pattern.compile("[a-zA-Zㄱ-힣0-9!@#$%^&*()]{1,20}");
 		Matcher m = p.matcher(id);
 		if (m.matches()) {
 			return true;
@@ -23,7 +23,7 @@ public class UserinfoService {
 	}
 
 	public boolean verifyPw(String pw) {
-		Pattern p = Pattern.compile("[a-zA-Zㄱ-힣0-9]{4,20}");
+		Pattern p = Pattern.compile("[a-zA-Zㄱ-힣0-9!@#$%^&*()]{4,20}");
 		Matcher m = p.matcher(pw);
 		if (m.matches()) {
 			return true;
@@ -32,7 +32,7 @@ public class UserinfoService {
 	}
 
 	public boolean verifyName(String name) {
-		Pattern p = Pattern.compile("[a-zA-Zㄱ-힣0-9]{1,15}");
+		Pattern p = Pattern.compile("[a-zA-Zㄱ-힣0-9!@#$%^&*()]{1,15}");
 		Matcher m = p.matcher(name);
 		if (m.matches()) {
 			return true;

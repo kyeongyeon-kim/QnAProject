@@ -20,9 +20,6 @@ public class MypageInfo {
 //		System.out.println(lobbyService.makeAttackerList(user.getId()));
 	}
 	public static void main(String[] args) {
-//		new MypageInfo(new User("은진", "1234", "이은진", "ISTJ", "여")); // 테스트용
-		
-//		MypageInfo m = new MypageInfo();
 		new MypageInfo(new User("은진", "1234", "이은진", "ISTJ", "여")).getRankingTable();
 	}
 }

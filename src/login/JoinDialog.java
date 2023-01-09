@@ -2,8 +2,9 @@ package login;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import exam.ExamFrame;
 import mbti.MbtiDialog;
@@ -11,6 +12,7 @@ import mbti.MbtiImageManager;
 import mypage.ChangeExamDialog;
 
 import javax.swing.JTextPane;
+import javax.swing.JToggleButton;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -20,27 +22,31 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 
-public class JoinDialog extends JDialog implements FocusListener, MouseListener {
+public class JoinDialog extends JDialog implements FocusListener, MouseListener, KeyListener {
 	private JPanel contentPane;
 	private JTextField tfName;
 	private JTextField tfId;
 	private JTextField tfMbti;
-	private JTextField tfPw;
+	private JPasswordField pfPw;
 	private JLabel lblResult;
 	private JButton btnNext;
-	private JRadioButton btnWoman;
-	private JRadioButton btnMan;
 	private JButton btnMbti;
-	MbtiImageManager im = new MbtiImageManager();
+	private Join join = new Join();
+	private JLabel checkId;
+	private JLabel checkPw;
+	private JLabel checkName;
+	private JLabel checkMbti;
+	private MbtiImageManager im = new MbtiImageManager();
 	
 	public JTextField getTfMbti() {
 		return tfMbti;
@@ -53,7 +59,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener 
 	}
 	public JoinDialog() {
 		setModal(true);
-		setBounds(700, 180, 361, 566);
+		setBounds(700, 180, 378, 635);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,28 +67,47 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener 
 		contentPane.setLayout(null);
 		
 		JTextPane textPane = new JTextPane();
-		
 		textPane.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		textPane.setText("회원가입");
 		textPane.setEditable(false);
-		textPane.setBounds(115, 60, 131, 39);
+		textPane.setBounds(123, 60, 131, 39);
 		contentPane.add(textPane);
 		
-		tfName = new JTextField("이름");
-		tfName.setBounds(63, 145, 220, 39);
-		tfSetting(tfName);
-		
+		JLabel lblId = new JLabel("아이디");
+		lblId.setBounds(66, 130, 100, 32);
+		lblSetting(lblId);
 		tfId = new JTextField("아이디");
-		tfId.setBounds(63, 195, 220, 39);
+		tfId.setBounds(63, 159, 234, 33);
 		tfSetting(tfId);
+		checkId = checkImage(lblId, 38);
 		
+		JLabel lblPw = new JLabel("비밀번호");
+		lblPw.setBounds(66, 195, 100, 32);
+		lblSetting(lblPw);
+		pfPw = new JPasswordField("비밀번호");
+		pfPw.setBounds(63, 224, 234, 33);
+		tfSetting(pfPw);
+		checkPw = checkImage(lblPw, 48);
+		
+		JLabel lblName = new JLabel("이름");
+		lblName.setBounds(66, 260, 100, 32);
+		lblSetting(lblName);
+		tfName = new JTextField("이름");
+		tfName.setBounds(63, 289, 234, 33);
+		tfSetting(tfName);
+		checkName = checkImage(lblName, 26);
+		
+		JLabel lblMbti = new JLabel("MBTI");
+		lblMbti.setBounds(66, 325, 100, 32);
+		lblSetting(lblMbti);
 		tfMbti = new JTextField("MBTI");
-		tfMbti.setBounds(63, 245, 220, 39);
+		tfMbti.setBounds(63, 354, 234, 33);
 		tfSetting(tfMbti);
+		checkMbti = checkImage(lblMbti, 34);
 		
 		btnMbti = new JButton(); // mbti 물음표버튼
 		btnMbti.setIcon(new ImageIcon(im.getqImage()));
-		btnMbti.setBounds(185, 5, 30, 30);
+		btnMbti.setBounds(201, 1, 30, 30);
 		btnMbti.setBorderPainted(false);
 		btnMbti.setBackground(null);
 		tfMbti.add(btnMbti);
@@ -94,36 +119,25 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener 
 			}
 		});
 		
-		tfPw = new JTextField("비밀번호");
-		tfPw.setBounds(63, 295, 220, 39);
-		tfSetting(tfPw);
-		
-		JLabel lblGender = new JLabel();
-		lblGender.setBackground(Color.WHITE);
-		lblGender.setText("성별");
-		lblGender.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		lblGender.setBounds(71, 354, 116, 21);
-		contentPane.add(lblGender);
-		
-		btnMan = new JRadioButton("남자");
-		btnMan.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		btnMan.setBackground(Color.WHITE);
-		btnMan.setBounds(133, 354, 60, 21);
+		JLabel lblGender = new JLabel("성별");
+		lblGender.setBounds(66, 390, 100, 32);
+		lblSetting(lblGender);
+	
+		JToggleButton btnMan = new JToggleButton("남자");
+		btnMan.setBounds(63, 419, 117, 31);
+		btnSetting(btnMan);
 		btnMan.setSelected(true);
-		contentPane.add(btnMan);
 		
-		btnWoman = new JRadioButton("여자");
-		btnWoman.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		btnWoman.setBackground(Color.WHITE); 
-		btnWoman.setBounds(201, 354, 80, 21);
-		contentPane.add(btnWoman);	
+		JToggleButton btnWoman = new JToggleButton("여자");
+		btnWoman.setBounds(180, 419, 117, 31);
+		btnSetting(btnWoman);
 		
 		ButtonGroup group = new ButtonGroup();
 		group.add(btnMan);
 		group.add(btnWoman);
 		
 		lblResult = new JLabel("");
-		lblResult.setBounds(64, 380, 220, 39);
+		lblResult.setBounds(64, 455, 220, 39);
 		lblResult.setFont(new Font("맑은 고딕", Font.BOLD, 11));
 		lblResult.setBorder(null);
 		lblResult.setForeground(Color.RED);
@@ -134,13 +148,14 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener 
 		btnNext.setBackground(new Color(96,182,230));
 		btnNext.setBorderPainted(false);
 		btnNext.setForeground(Color.white);
-		btnNext.setBounds(63, 413, 220, 39);
+		btnNext.setBounds(62, 488, 236, 39);
 		contentPane.add(btnNext);
+		btnNext.addKeyListener(this);
 		btnNext.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String id = tfId.getText();
-				String pw = tfPw.getText();
+				String pw = getPassword(pfPw);
 				String name = tfName.getText();
 				String mbti = tfMbti.getText().toUpperCase();
 				String gender = "";
@@ -157,40 +172,80 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener 
 	}
 	
 	// 텍스트필드 설정
-	private void tfSetting(JTextField j) {
-		j.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		j.setBackground(new Color(240,241,242));
-		j.setForeground(new Color(88,89,91));
-		j.setBorder(null);
-		j.setBorder(new EmptyBorder(0, 7, 0, 7));
-		j.setColumns(20);
-		j.addFocusListener(this);
-		contentPane.add(j);
+	private void tfSetting(JTextField tf) {
+		tf.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		tf.setBackground(new Color(240,241,242));
+		tf.setForeground(Color.gray);
+		tf.setBorder(new EmptyBorder(0, 7, 0, 7));
+		tf.setColumns(20);
+		tf.addFocusListener(this);
+		tf.addKeyListener(this);
+		contentPane.add(tf);
 	}
-
-	@Override
-	public void focusGained(FocusEvent e) { // 입력시 초기값 지우기
-		if (e.getSource() == tfName && tfName.getText().equals("이름")) {
-			tfName.setText("");
-		} else if (e.getSource() == tfId && tfId.getText().equals("아이디")) {
-			tfId.setText("");
-		} else if (e.getSource() == tfMbti && tfMbti.getText().equals("MBTI")) {
-			tfMbti.setText("");
-		} else if (e.getSource() == tfPw && tfPw.getText().equals("비밀번호")) {
-			tfPw.setText("");
+	
+	// 라벨 설정
+	private void lblSetting(JLabel lbl) {
+		lbl.setFont(new Font("맑은 고딕", Font.BOLD, 11));
+		lbl.setBackground(Color.white);
+		lbl.setForeground(Color.DARK_GRAY);
+		contentPane.add(lbl);
+	}
+	
+	// 성별 토글버튼 설정
+	private void btnSetting(JToggleButton btn) {
+		btn.setFont(new Font("맑은 고딕", Font.BOLD, 11));
+		btn.setBackground(Color.WHITE);
+		btn.setBorder(new LineBorder(Color.lightGray));
+		btn.addKeyListener(this);
+		contentPane.add(btn);
+	}
+	
+	// 비밀번호값 구하기
+	private String getPassword(JPasswordField pfPw) {
+		char[] c = pfPw.getPassword();
+		String pw = "";
+		for (int i = 0; i < c.length; i++) {
+			pw += c[i];
 		}
+		return pw;
 	}
-
-	@Override
-	public void focusLost(FocusEvent e) { // 내용을 지우면 초기값 설정
-		if (e.getSource() == tfName && tfName.getText().equals("")) {
-			tfName.setText("이름");
-		} else if (e.getSource() == tfId && tfId.getText().equals("")) {
-			tfId.setText("아이디");
-		} else if (e.getSource() == tfMbti && tfMbti.getText().equals("")) {
-			tfMbti.setText("MBTI");
-		} else if (e.getSource() == tfPw && tfPw.getText().equals("")) {
-			tfPw.setText("비밀번호");
+	
+	// 체크이미지(입력값 확인)
+	private JLabel checkImage(JLabel lbl, int i) {
+		JLabel lblCheck = new JLabel();
+		lblCheck.setIcon(new ImageIcon(im.getUnchecked()));
+		lblCheck.setBounds(i, 10, 15, 15);
+		lblCheck.setBackground(null);
+		lbl.add(lblCheck);
+		return lblCheck;
+	}
+	
+	// 입력값 확인 후 체크이미지 변경
+	private void checkInputImage(KeyEvent e) {
+		if (e.getSource() == tfId) {
+			if (join.checkId(tfId.getText())) {
+				checkId.setIcon(new ImageIcon(im.getChecked()));
+			} else {
+				checkId.setIcon(new ImageIcon(im.getUnchecked()));
+			}
+		} else if (e.getSource() == pfPw) {
+			if (join.checkPw(getPassword(pfPw))) {
+				checkPw.setIcon(new ImageIcon(im.getChecked()));
+			} else {
+				checkPw.setIcon(new ImageIcon(im.getUnchecked()));
+			}
+		} else if (e.getSource() == tfName) {
+			if (join.checkName(tfName.getText())) {
+				checkName.setIcon(new ImageIcon(im.getChecked()));
+			} else {
+				checkName.setIcon(new ImageIcon(im.getUnchecked()));
+			}
+		} else if (e.getSource() == tfMbti) {
+			if (join.checkMbti(tfMbti.getText())) {
+				checkMbti.setIcon(new ImageIcon(im.getChecked()));
+			} else {
+				checkMbti.setIcon(new ImageIcon(im.getUnchecked()));
+			}
 		}
 	}
 	
@@ -214,7 +269,6 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener 
 	}
 	
 	public void checkInput(String id, String pw, String name, String mbti, String gender) {
-		Join join = new Join();
 		int result = join.checkInput(id, pw, name, mbti, gender);
 		if (result == join.joinComplete) {
 			System.out.println("회원가입 완료");
@@ -234,31 +288,70 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener 
 			lblResult.setText("비밀번호 입력이 잘못되었습니다.(4~20자)");
 		} 
 	}
+	
+	@Override
+	public void focusGained(FocusEvent e) { // 입력시 초기값 지우기
+		if (e.getSource() == tfName && tfName.getText().equals("이름")) {
+			tfName.setText("");
+		} else if (e.getSource() == tfId && tfId.getText().equals("아이디")) {
+			tfId.setText("");
+		} else if (e.getSource() == tfMbti && tfMbti.getText().equals("MBTI")) {
+			tfMbti.setText("");
+		} else if (e.getSource() == pfPw && getPassword(pfPw).equals("비밀번호")) {
+			pfPw.setText("");
+		} 
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) { // 내용을 지우면 초기값 설정
+		if (e.getSource() == tfName && tfName.getText().equals("")) {
+			tfName.setText("이름");
+		} else if (e.getSource() == tfId && tfId.getText().equals("")) {
+			tfId.setText("아이디");
+		} else if (e.getSource() == tfMbti && tfMbti.getText().equals("")) {
+			tfMbti.setText("MBTI");
+		} else if (e.getSource() == pfPw && getPassword(pfPw).equals("")) {
+			pfPw.setText("비밀번호");
+		} 
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
+	
 	@Override 
 	public void mouseEntered(MouseEvent e) {
 		if (e.getSource() == btnMbti) {
 			btnMbti.setIcon(new ImageIcon(im.getqImage2()));
 		}
 	}
+	
 	@Override
 	public void mouseExited(MouseEvent e) {
 		if (e.getSource() == btnMbti) {
 			btnMbti.setIcon(new ImageIcon(im.getqImage()));
 		}
 	}
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
+	
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			btnNext.doClick();
+		}
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		checkInputImage(e);
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		checkInputImage(e);
 	}
 }

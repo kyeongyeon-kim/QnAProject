@@ -81,7 +81,7 @@ public class MbtiDialog extends JDialog implements ItemListener {
 		btnOk.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				tfMbti.setText(getSelectMbti());
+				tfMbti.setText(getSelectMbti(tfMbti));
 				dispose();
 			}
 		});
@@ -102,7 +102,7 @@ public class MbtiDialog extends JDialog implements ItemListener {
 			}
 		}
 	}
-	public String getSelectMbti() {
+	public String getSelectMbti(JTextField tfMbti) {
 		for (int i = 0; i < btnMbti.length; i++) {
 			for (int j = 0; j < btnMbti[i].length; j++) {
 				if (btnMbti[i][j].isSelected()) {
@@ -110,6 +110,6 @@ public class MbtiDialog extends JDialog implements ItemListener {
 				}
 			}
 		}
-		return "선택안함";
+		return tfMbti.getText();
 	}
 }

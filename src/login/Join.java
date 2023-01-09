@@ -31,6 +31,41 @@ public class Join {
 		}
 	}
 	
+	public boolean checkId(String id) {
+		if (!userinfoService.duplicateId(id)) {
+			return false; 
+		} else if (!userinfoService.verifyId(id)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public boolean checkPw(String pw) {
+		if (!userinfoService.verifyPw(pw)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public boolean checkName(String name) {
+		if (!userinfoService.verifyName(name)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public boolean checkMbti(String mbti) {
+		if (!userinfoService.verifyMbti(mbti)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	
 	// 입력값 db 저장
 	public void insert() {
 		userinfoService.userInsert(user);

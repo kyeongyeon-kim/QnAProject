@@ -13,8 +13,25 @@ public class MbtiImageManager {
 			, "ESTP", "ESFP", "ENFP", "ENTP", "ESTJ", "ESFJ", "ENFJ", "ENTJ" };
 	Image qImage;
 	Image qImage2;
+	Image unchecked;
+	Image checked;
 	
-	
+	public Image getUnchecked() {
+		return unchecked;
+	}
+
+	public void setUnchecked(Image unchecked) {
+		this.unchecked = unchecked;
+	}
+
+	public Image getChecked() {
+		return checked;
+	}
+
+	public void setChecked(Image checked) {
+		this.checked = checked;
+	}
+
 	public String[] getMbti() {
 		return mbti;
 	}
@@ -37,6 +54,8 @@ public class MbtiImageManager {
 		}
 		qImage = kit.getImage(classLoader.getResource("imagesMbti//Q.png"));
 		qImage2 = kit.getImage(classLoader.getResource("imagesMbti//Q2.png"));
+		unchecked = kit.getImage(classLoader.getResource("imagesMbti//unchecked.png"));
+		checked = kit.getImage(classLoader.getResource("imagesMbti//checked.png"));
 		
 	}
 

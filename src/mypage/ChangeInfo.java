@@ -15,7 +15,6 @@ public class ChangeInfo {
 
 	public ChangeInfo(User user) { // 로비에서 user 받기
 		this.user = user;
-		new ChangeInfoDialog(user, ChangeInfo.this).setVisible(true);
 	}
 
 	// 입력값 확인
@@ -29,6 +28,30 @@ public class ChangeInfo {
 		} else {
 			user = new User(user.getId(), pw, name, mbti, gender);
 			return updateComplete;
+		}
+	}
+
+	public boolean checkPw(String pw) {
+		if (!userinfoService.verifyPw(pw)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public boolean checkName(String name) {
+		if (!userinfoService.verifyName(name)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public boolean checkMbti(String mbti) {
+		if (!userinfoService.verifyMbti(mbti)) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 

@@ -88,7 +88,7 @@ public class MypageDialog extends JDialog implements ActionListener {
 		btnChangeInfo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ChangeInfo(user);
+				new ChangeInfoDialog(user).setVisible(true);
 			}
 		});
 		
@@ -105,7 +105,6 @@ public class MypageDialog extends JDialog implements ActionListener {
 		JButton btnBefore = new JButton("이전화면");
 		btnSetting(btnBefore);
 		btnBefore.setBounds(392, 456, 130, 35);
-
 	}
 	
 	// 버튼 설정
