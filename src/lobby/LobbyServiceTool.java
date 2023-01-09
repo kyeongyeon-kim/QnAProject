@@ -13,4 +13,5 @@ public interface LobbyServiceTool {
 	public List<Integer> makeChoiceList(List<Integer> list, PreparedStatement stmt) throws SQLException;
 	public List<String> makeAttackerList(List<String> list, PreparedStatement stmt) throws SQLException;
 	public Attacker attackerCaculationScore(String id, String attacker, Connection conn) throws SQLException;
+	public Attacker myAttackCaculationScore(String defenderId, String myId, Connection conn) throws SQLException;
 }

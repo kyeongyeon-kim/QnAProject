@@ -92,11 +92,11 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 		});
 		contentPane.add(btnJoin);
 		
-		btnFind = new JButton("ID/PW 찾기");
+		btnFind = new JButton("비밀번호찾기");
 		btnFind.setFont(new Font("맑은 고딕", Font.BOLD, 11));
 		btnFind.setBorderPainted(false);
 		btnFind.setBackground(Color.WHITE);
-		btnFind.setBounds(155, 308, 95, 23);
+		btnFind.setBounds(163, 308, 100, 23);
 		contentPane.add(btnFind);
 	}
 	

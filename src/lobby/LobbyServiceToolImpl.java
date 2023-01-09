@@ -30,7 +30,7 @@ public class LobbyServiceToolImpl implements LobbyServiceTool {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public List<String> makeAttackerList(List<String> list, PreparedStatement stmt) throws SQLException {
 		try (ResultSet rs = stmt.executeQuery()) {
@@ -54,8 +54,7 @@ public class LobbyServiceToolImpl implements LobbyServiceTool {
 			stmt.setString(1, id);
 			stmt2.setString(1, attacker);
 
-			try (ResultSet rs = stmt.executeQuery();
-				ResultSet rs2 = stmt2.executeQuery()) {
+			try (ResultSet rs = stmt.executeQuery(); ResultSet rs2 = stmt2.executeQuery()) {
 
 				while (rs.next()) {
 					int mission = rs.getInt(1);
@@ -75,8 +74,43 @@ public class LobbyServiceToolImpl implements LobbyServiceTool {
 				}
 				return new Attacker(attacker, count * 10);
 			}
-
 		}
 
+	}
+
+	@Override
+	public Attacker myAttackCaculationScore(String defenderId, String myId, Connection conn) throws SQLException {
+		String sql = "SELECT choice FROM mission WHERE id = ?";
+		String sql2 = "SELECT choice FROM answer WHERE defender = ? AND attacker = ?";
+		List<Integer> missionList = new ArrayList<>();
+		List<Integer> answerList = new ArrayList<>();
+
+		try (PreparedStatement stmt = conn.prepareStatement(sql);
+				PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
+			stmt.setString(1, defenderId);
+			stmt2.setString(1, defenderId);
+			stmt2.setString(2, myId);
+
+			try (ResultSet rs = stmt.executeQuery(); ResultSet rs2 = stmt2.executeQuery()) {
+
+				while (rs.next()) {
+					int mission = rs.getInt(1);
+					missionList.add(mission);
+				}
+
+				while (rs2.next()) {
+					int answer = rs2.getInt(1);
+					answerList.add(answer);
+				}
+
+				int count = 0;
+				for (int i = 0; i < missionList.size(); i++) {
+					if (missionList.get(i) == answerList.get(i)) {
+						count++;
+					}
+				}
+				return new Attacker(defenderId, count * 10);
+			}
+		}
 	}
 }

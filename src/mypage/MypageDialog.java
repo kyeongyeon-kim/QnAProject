@@ -8,15 +8,24 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import lobby.LobbyServiceImpl;
+import lobby.LobbyServiceToolImpl;
+import login.UserinfoRepositoryImpl;
+import object.Attacker;
 import object.User;
+import ranking.UserRankDialog;
 
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class MypageDialog extends JDialog implements ActionListener {
@@ -25,6 +34,41 @@ public class MypageDialog extends JDialog implements ActionListener {
 	private JTable tableAttack;
 	private JTable tableDefend;
 	private JPanel attackDefendPanel;
+	private DefaultTableModel modelAttack;
+	private DefaultTableModel modelDefend;
+
+	
+	public DefaultTableModel getModelAttack() {
+		return modelAttack;
+	}
+
+	public void setModelAttack(DefaultTableModel modelAttack) {
+		this.modelAttack = modelAttack;
+	}
+
+	public DefaultTableModel getModelDefend() {
+		return modelDefend;
+	}
+
+	public void setModelDefend(DefaultTableModel modelDefend) {
+		this.modelDefend = modelDefend;
+	}
+
+	public JTable getTableAttack() {
+		return tableAttack;
+	}
+
+	public void setTableAttack(JTable tableAttack) {
+		this.tableAttack = tableAttack;
+	}
+
+	public JTable getTableDefend() {
+		return tableDefend;
+	}
+
+	public void setTableDefend(JTable tableDefend) {
+		this.tableDefend = tableDefend;
+	}
 
 	public MypageDialog(User user) {
 		setModal(true);
@@ -46,7 +90,7 @@ public class MypageDialog extends JDialog implements ActionListener {
 		contentPanel.add(attackDefendPanel);
 		attackDefendPanel.setLayout(null);
 		
-		
+		// 내가 공략한 사람
 		JTextField tfAttack = new JTextField("내가 공략한 사람");
 		tfSetting(tfAttack);
 		tfAttack.setBounds(75, 12, 130, 35);
@@ -56,15 +100,23 @@ public class MypageDialog extends JDialog implements ActionListener {
 		attackPane.setBounds(17, 55, 245, 275);
 		attackDefendPanel.add(attackPane);
 		
-		String[] header = { "랭킹", "아이디", "점수" };
-		
-		tableAttack = new JTable();
-		tableAttack.setModel(new DefaultTableModel(header,10
-				));
+		String[] header1 = { "랭킹", "아이디", "나의점수" };
+		modelAttack = new DefaultTableModel(header1, 0);
+		tableAttack = new JTable(modelAttack);
+		tableAttack.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableAttack.setDefaultEditor(Object.class, null);
 		tableAttack.getColumnModel().getColumn(0).setPreferredWidth(30);
 		tableAttack.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+		tableAttack.setPreferredSize(new Dimension(270, 450));
 		attackPane.setViewportView(tableAttack);
 		
+		LobbyServiceImpl lsi = new LobbyServiceImpl(new LobbyServiceToolImpl());
+		List<Attacker> attakList = lsi.makeMyAttackList(user);
+		lsi.setAttackRanking(this, attakList);
+		// 내가 공략한 사람 여기까지
+		
+		
+		// 나를 공략한 사람
 		JTextField tfDefend = new JTextField("나를 공략한 사람");
 		tfSetting(tfDefend);
 		tfDefend.setBounds(343, 12, 130, 35);
@@ -73,12 +125,21 @@ public class MypageDialog extends JDialog implements ActionListener {
 		defendPane.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
 		defendPane.setBounds(282, 55, 245, 275);
 		attackDefendPanel.add(defendPane);
-	
-		tableDefend = new JTable();
-		tableDefend.setModel(new DefaultTableModel(header, 0));
+		
+		String[] header2 = { "랭킹", "아이디", "점수" };
+		modelDefend = new DefaultTableModel(header2, 0);
+		tableDefend = new JTable(modelDefend);
+		tableDefend.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableDefend.setDefaultEditor(Object.class, null);
 		tableDefend.getColumnModel().getColumn(0).setPreferredWidth(30);
 		tableDefend.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+		tableDefend.setPreferredSize(new Dimension(270, 450));
 		defendPane.setViewportView(tableDefend);
+		
+		List<Attacker> defendList = lsi.makeAttackerList(user);
+		lsi.setDefendRanking(this, defendList);
+		// 나를 공략한 사람 여기까지
+		
 		
 		JButton btnChangeInfo = new JButton("개인 정보 수정");
 		btnSetting(btnChangeInfo);

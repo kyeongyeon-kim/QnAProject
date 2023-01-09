@@ -59,7 +59,7 @@ public class MbtiImageManager {
 		
 	}
 
-	public List<Image> getImages() {
+	public List<Image> getImages() { 
 		return images;
 	}
 
