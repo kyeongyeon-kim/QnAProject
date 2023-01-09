@@ -40,7 +40,6 @@ public class MbtiDialog extends JDialog implements ItemListener {
 				JToggleButton btn = new JToggleButton();
 				btn.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 				btn.setBackground(Color.white);
-				System.out.println(i* 4 + j);
 				btn.setIcon(new ImageIcon(im.getImages().get(i * 4 + j)));
 				btn.setSelectedIcon(new ImageIcon(im.getImagesSelect().get(i * 4 + j)));
 				btn.setBorderPainted(false);

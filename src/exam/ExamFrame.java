@@ -181,8 +181,8 @@ public class ExamFrame extends JFrame implements ActionListener {
 				new Login();
 				dispose();
 			}else {
-				System.out.println(selectNum.size());
-				System.out.println("선택 되지 않은 항목이 잇음 ");
+//				System.out.println(selectNum.size());
+//				System.out.println("선택 되지 않은 항목이 잇음 ");
 				lblNewLabel.setText("선택되지 않은 문항이 있습니다.");
 
 			}

@@ -173,7 +173,7 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 		//이름으로 질문지 답변 가져오기 (수정)
 		String name = user.getName(); 
 		missionOut = esi.readMissionNum(name);
-		System.out.println("가져온값"+missionOut);
+//		System.out.println("가져온값"+missionOut);
 		
 		
 		
@@ -206,8 +206,8 @@ public class ChangeExamDialog extends JDialog implements ActionListener {
 				esi.signUp(selectNum);
 				dispose();
 			}else {
-				System.out.println(selectNum.size());
-				System.out.println("선택 되지 않은 항목이 잇음 ");
+//				System.out.println(selectNum.size());
+//				System.out.println("선택 되지 않은 항목이 잇음 ");
 				lblNewLabel.setText("선택되지 않은 문항이 있습니다.");
 
 			}
