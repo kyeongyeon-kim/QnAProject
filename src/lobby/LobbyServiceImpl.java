@@ -123,15 +123,15 @@ public class LobbyServiceImpl implements LobbyService {
 				attackerList.add(a);
 			}
 
-			Collections.sort(attackerList, new Comparator<Object>() {
-				@Override
-				public int compare(Object o1, Object o2) {
-					if (((Attacker) o1).getScore() == ((Attacker) o2).getScore()) {
-						return ((CollectionOrBuilder) o1).getName().compareTo(((CollectionOrBuilder) o2).getName());
-					}
-					return ((Attacker) o2).getScore() - ((Attacker) o1).getScore();
-				}
-			});
+//			Collections.sort(attackerList, new Comparator<Object>() {
+//				@Override
+//				public int compare(Object o1, Object o2) {
+//					if (((Attacker) o1).getScore() == ((Attacker) o2).getScore()) {
+//						return ((CollectionOrBuilder) o1).getName().compareTo(((CollectionOrBuilder) o2).getName());
+//					}
+//					return ((Attacker) o2).getScore() - ((Attacker) o1).getScore();
+//				}
+//			});
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

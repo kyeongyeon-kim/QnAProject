@@ -37,9 +37,9 @@ public class GameFrame extends JFrame {
 	private List<Integer> missonList = new ArrayList<>();
 	private List<Integer> choiceList = new ArrayList<>();
 	private int score = 0;
-	
+
 	public GameFrame(User user, User defender) {
-		GameModeServiceImpl gameModeService = new GameModeServiceImpl(new GameModeServiceToolImpl());
+		GameModeService gameModeService = new GameModeServiceImpl(new GameModeServiceToolImpl());
 		resultImages = gameModeService.makeFirstHalfList(defender);
 		LobbyService lobbyService = new LobbyServiceImpl(new LobbyServiceToolImpl());
 		missonList = lobbyService.makeMissonList(defender);
@@ -58,11 +58,7 @@ public class GameFrame extends JFrame {
 					int lastImageNum = resultImages.size() - 1;
 					if (currentImageIndex == lastImageNum) {
 						dispose();
-						if (gameModeService.isUserPlayedGameBefore(user, defender)) {
-							
-						} else {
-							gameModeService.dataTransferToDB(user, defender, GameFrame.this);
-						}
+						gameModeService.dataTransferToDB(user, defender, GameFrame.this);
 						gameModeService.gameComplete(user, defender);
 					}
 
@@ -130,8 +126,6 @@ public class GameFrame extends JFrame {
 		currentImageIndex += 1;
 		label.setIcon(new ImageIcon(resultImages.get(currentImageIndex)));
 	}
-	
-	
 
 	public boolean isSelectedMode() {
 		return selectedMode;
@@ -172,6 +166,5 @@ public class GameFrame extends JFrame {
 	public void setChoiceList(List<Integer> choiceList) {
 		this.choiceList = choiceList;
 	}
-	
-	
+
 }

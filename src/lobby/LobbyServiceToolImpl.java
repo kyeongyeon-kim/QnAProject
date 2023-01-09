@@ -60,10 +60,8 @@ public class LobbyServiceToolImpl implements LobbyServiceTool {
 					int answer = rs.getInt(1);
 					answerList.add(answer);
 				}
-
+				
 				int count = 0;
-				System.out.println("misson : " + missionList);
-				System.out.println("answer : " + answerList);
 				for (int i = 0; i < answerList.size(); i++) {
 					if (missionList.get(i) == answerList.get(i)) {
 						count++;
@@ -101,14 +99,13 @@ public class LobbyServiceToolImpl implements LobbyServiceTool {
 				}
 
 				int count = 0;
-				for (int i = 0; i < missionList.size(); i++) {
-					if (missionList.get(i) == answerList.get(i)) {
+				for (Integer answer : answerList) {
+					if (missionList.contains(answer)) {
 						count++;
 					}
 				}
 				return new Attacker(defenderId, count * 10);
 			}
 		}
-
 	}
 }

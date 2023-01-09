@@ -13,5 +13,4 @@ public interface GameModeService {
 	public int selectByOption(String option);
 	public void dataTransferToDB(User user, User defender ,GameFrame gameFrame);
 	public boolean isUserPlayedGameBefore(User user, User defender);
-	public void dataUpdateToDB(User user, User defender ,GameFrame gameFrame);
 }
