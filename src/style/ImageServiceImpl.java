@@ -77,7 +77,7 @@ public class ImageServiceImpl implements ImageService {
 
 	@Override
 	public List<Image> theDayWeMeet3(boolean answer, User user) {
-		List<Image> list = user.getGender().equals("남") ? ist.readImages("강준의데이트3_", 6) : ist.readImages("강준의데이트3_", 6);
+		List<Image> list = user.getGender().equals("남") ? ist.readImages("강준의데이트3_", 6) : ist.readImages("소희의데이트3_", 6);
 		if (answer == true) {
 			list.remove(1);
 		} else {
@@ -88,12 +88,17 @@ public class ImageServiceImpl implements ImageService {
 
 	@Override
 	public List<Image> theDayWeMeet4(boolean answer, User user) {
-		List<Image> list = user.getGender().equals("남") ? ist.readImages("강준의데이트4_", 3) : ist.readImages("강준의데이트4_", 3);
+		List<Image> list = user.getGender().equals("남") ? ist.readImages("강준의데이트4_", 3) : ist.readImages("소희의데이트4_", 3);
 		if (answer == true) {
 			list.remove(1);
 		} else {
 			list.remove(0);
 		}
 		return list;
+	}
+
+	@Override
+	public List<Image> gameOver() {
+		return ist.readImages("gameOver", 1);
 	}
 }

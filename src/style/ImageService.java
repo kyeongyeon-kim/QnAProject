@@ -17,6 +17,7 @@ public interface ImageService {
 	public List<Image> failedLikeAbilityMan();
 	public List<Image> failedLikeAbilityWoman();
 	public List<Image> theDayWeMeet();
+	public List<Image> gameOver();
 	public List<Image> theDayWeMeet1(boolean answer, User user);
 	public List<Image> theDayWeMeet2(boolean answer, User user);
 	public List<Image> theDayWeMeet3(boolean answer, User user);

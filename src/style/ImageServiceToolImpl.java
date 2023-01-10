@@ -76,40 +76,4 @@ public class ImageServiceToolImpl implements ImageServiceTool {
 		jarPath = getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
 		return jarPath;
 	}
-	
-//	@Override
-//	public int countFiles(String path) {
-//		int count = 0;
-////		System.out.println(path);
-//		URL url = classLoader.getResource(path);
-////		System.out.println(url);
-//		String pathJar = url.getPath();
-//
-//		if (path.contains(".jar!")) {
-//		    // resource is packaged inside a JAR file
-//		    String[] parts = pathJar.split(".jar!");
-//		    String jarFilePath = parts[0] + ".jar";
-//		    try (JarFile jarFile = new JarFile(URLDecoder.decode(jarFilePath, "UTF-8"))) {
-//		        Enumeration<JarEntry> entries = jarFile.entries();
-//		        while (entries.hasMoreElements()) {
-//		            JarEntry entry = entries.nextElement();
-//		            String entryName = entry.getName();
-//		            // do something with the resource
-//		            count++;
-//		        }
-//		    } catch (IOException e) {
-//		        // handle exception
-//		    }
-//		} else {
-//		    // resource is not packaged inside a JAR file
-//			File file = new File(url.getFile());
-//			File[] files = file.listFiles();
-//			for (File f : files) {
-////			    System.out.println(f.getName());
-//			    count++;
-//			}
-//		}
-//		return count;
-//	}
-
 }

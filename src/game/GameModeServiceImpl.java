@@ -49,18 +49,24 @@ public class GameModeServiceImpl implements GameModeService {
 	public List<Image> makeSecondHalfList(User user, int score) {
 		List<Image> secondHalfImages = new ArrayList<>();
 		List<Image> secondHalfList = new ArrayList<>();
+		System.out.println(score);
+		int passScore = 0;
 		ImageServiceImpl isi = new ImageServiceImpl(new ImageServiceToolImpl());
 		if (user.getGender().equals("남")) {
-			secondHalfList = score >= 30 ? isi.getLikeAbilityMan() : isi.failedLikeAbilityMan();
+			secondHalfList = score >= passScore ? isi.getLikeAbilityMan() : isi.failedLikeAbilityMan();
 		} else {
-			secondHalfList = score >= 30 ? isi.getLikeAbilityWoman() : isi.failedLikeAbilityWoman();
+			secondHalfList = score >= passScore ? isi.getLikeAbilityWoman() : isi.failedLikeAbilityWoman();
 		}
 		for (Image secondHalf : secondHalfList) {
 			secondHalfImages.add(secondHalf);
 		}
-		if (score >= 30) {
+		if (score >= passScore) {
 			for (Image date : isi.theDayWeMeet()) {
 				secondHalfImages.add(date);
+			}
+		} else {
+			for (Image gameOver : isi.gameOver()) {
+				secondHalfImages.add(gameOver);
 			}
 		}
 		return secondHalfImages;
@@ -117,6 +123,7 @@ public class GameModeServiceImpl implements GameModeService {
 			gmst.deleteAnswer(user, defender);
 		}
 		List<Integer> choiceList = gameFrame.getChoiceList();
+		System.out.println(choiceList);
 		String sql = "INSERT INTO answer VALUES (?, ?, ?);";
 		try (Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);) {
