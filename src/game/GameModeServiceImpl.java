@@ -1,5 +1,7 @@
 package game;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JLabel;
 
 import dbutil.ConnectionProvider;
 import lobby.LobbyFrame;
@@ -49,7 +53,6 @@ public class GameModeServiceImpl implements GameModeService {
 	public List<Image> makeSecondHalfList(User user, int score) {
 		List<Image> secondHalfImages = new ArrayList<>();
 		List<Image> secondHalfList = new ArrayList<>();
-		System.out.println(score);
 		int passScore = 0;
 		ImageServiceImpl isi = new ImageServiceImpl(new ImageServiceToolImpl());
 		if (user.getGender().equals("남")) {
@@ -159,5 +162,17 @@ public class GameModeServiceImpl implements GameModeService {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public void setTextByImageIndex(GameFrame gameFrame) {
+		JLabel lbl = new JLabel();
+		int currentImageIndex = gameFrame.getCurrentImageIndex();
+		if (currentImageIndex == 0) {
+			lbl.setText(gameFrame.getUser().getId());
+			lbl.setBounds(200, 300, 400, 300);
+			lbl.setFont(new Font("맑은고딕", Font.BOLD, 20));
+			gameFrame.getLabel().add(lbl);
+		}
 	}
 }

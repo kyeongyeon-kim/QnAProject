@@ -39,6 +39,7 @@ public class GameFrame extends JFrame {
 	private List<Integer> missonList = new ArrayList<>();
 	private List<Integer> choiceList = new ArrayList<>();
 	private User defender;
+	private User user;
 	private int score = 0;
 
 	public GameFrame(User user, User defender) {
@@ -47,6 +48,7 @@ public class GameFrame extends JFrame {
 		LobbyService lobbyService = new LobbyServiceImpl(new LobbyServiceToolImpl());
 		missonList = lobbyService.makeMissonList(defender);
 		this.defender = defender;
+		this.user = user;
 		JPanel pnl = new JPanel();
 		pnl.setLayout(null);
 		label = new JLabel(new ImageIcon(resultImages.get(currentImageIndex)));
@@ -159,9 +161,27 @@ public class GameFrame extends JFrame {
 	public void setDefender(User defender) {
 		this.defender = defender;
 	}
+	
+
+	public JLabel getLabel() {
+		return label;
+	}
+
+	public void setLabel(JLabel label) {
+		this.label = label;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public void gameOn(User user, User defender, GameModeService gameModeService) {
 		if (selectedMode == false) {
+			gameModeService.setTextByImageIndex(this);
 			int lastImageNum = resultImages.size() - 1;
 			if (currentImageIndex == lastImageNum) {
 				dispose();
@@ -195,6 +215,7 @@ public class GameFrame extends JFrame {
 				Vibration vibe = new Vibration(label);
 				vibe.getTimer().start();
 			}
+			System.out.println("이미지 번호 : " + currentImageIndex);
 		}
 	}
 	
