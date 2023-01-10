@@ -32,8 +32,8 @@ public class GameModeServiceImpl implements GameModeService {
 	public List<Image> makeFirstHalfList(User user) {
 		List<Image> firstHalfImages = new ArrayList<>();
 		ImageServiceImpl isi = new ImageServiceImpl(new ImageServiceToolImpl());
-		List<Image> introList = isi.readIntro(Paths.INTRO);
-		List<Image> firstHalfList = user.getGender().equals("남") ? isi.readKatalkMan(Paths.KATALK_MAN) : isi.readKatalkWoman(Paths.KATALK_WOMAN);
+		List<Image> introList = isi.readIntro();
+		List<Image> firstHalfList = user.getGender().equals("남") ? isi.readKatalkMan() : isi.readKatalkWoman();
 		for (Image intro : introList) {
 			firstHalfImages.add(intro);
 		}
@@ -51,12 +51,17 @@ public class GameModeServiceImpl implements GameModeService {
 		List<Image> secondHalfList = new ArrayList<>();
 		ImageServiceImpl isi = new ImageServiceImpl(new ImageServiceToolImpl());
 		if (user.getGender().equals("남")) {
-			secondHalfList = score >= 60 ? isi.getLikeAbilityMan(Paths.LIKE_ABILITY_SUCCESS_MAN) : isi.failedLikeAbilityMan(Paths.LIKE_ABILITY_FAIL_MAN);
+			secondHalfList = score >= 30 ? isi.getLikeAbilityMan() : isi.failedLikeAbilityMan();
 		} else {
-			secondHalfList = score >= 60 ? isi.getLikeAbilityWoman(Paths.LIKE_ABILITY_SUCCESS_WOMAN) : isi.failedLikeAbilityWoman(Paths.LIKE_ABILITY_FAIL_WOMAN);
+			secondHalfList = score >= 30 ? isi.getLikeAbilityWoman() : isi.failedLikeAbilityWoman();
 		}
 		for (Image secondHalf : secondHalfList) {
 			secondHalfImages.add(secondHalf);
+		}
+		if (score >= 30) {
+			for (Image date : isi.theDayWeMeet()) {
+				secondHalfImages.add(date);
+			}
 		}
 		return secondHalfImages;
 	}

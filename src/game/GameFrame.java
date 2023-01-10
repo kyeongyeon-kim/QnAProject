@@ -17,6 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.sun.corba.se.impl.orbutil.DenseIntMapImpl;
+
 import lobby.LobbyFrame;
 import lobby.LobbyService;
 import lobby.LobbyServiceImpl;
@@ -30,12 +32,13 @@ public class GameFrame extends JFrame {
 	private JLabel label;
 	private int currentImageIndex = 0;
 	private List<Image> resultImages;
-	private List<Integer> examNo = new ArrayList<>(Arrays.asList(17, 22, 28, 37, 41));
+	private List<Integer> examNo = new ArrayList<>(Arrays.asList(17, 22, 28, 37, 41, 48, 57, 65, 69, 74));
 	private OptionPanel optionPanel;
 	private boolean selectedMode = false;
 	private OptionButtonListener listener = new OptionButtonListener(this);
 	private List<Integer> missonList = new ArrayList<>();
 	private List<Integer> choiceList = new ArrayList<>();
+	private User defender;
 	private int score = 0;
 
 	public GameFrame(User user, User defender) {
@@ -43,6 +46,7 @@ public class GameFrame extends JFrame {
 		resultImages = gameModeService.makeFirstHalfList(defender);
 		LobbyService lobbyService = new LobbyServiceImpl(new LobbyServiceToolImpl());
 		missonList = lobbyService.makeMissonList(defender);
+		this.defender = defender;
 		JPanel pnl = new JPanel();
 		pnl.setLayout(null);
 		label = new JLabel(new ImageIcon(resultImages.get(currentImageIndex)));
@@ -53,41 +57,7 @@ public class GameFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// 게임 정상적으로 완료 시 동작
-				if (selectedMode == false) {
-					int lastImageNum = resultImages.size() - 1;
-					if (currentImageIndex == lastImageNum) {
-						dispose();
-						gameModeService.dataTransferToDB(user, defender, GameFrame.this);
-						gameModeService.gameComplete(user, defender);
-					}
-
-					// 맞춘 개수에 따른 2부 결정
-					if (currentImageIndex != lastImageNum) {
-						nextImage();
-						boolean startSecondHalf = currentImageIndex == 44;
-						if (startSecondHalf) {
-							gameModeService.decideSecondHalf(defender, resultImages, score);
-						}
-					}
-
-					// 선택지 발생 필요시 동작
-					if (examNo.contains(currentImageIndex)) {
-						int optionSceneNum = examNo.indexOf(currentImageIndex) + 1;
-						optionPanel = new OptionPanel(optionSceneNum);
-						optionPanel.setBounds(200, 200, 500, 370);
-						for (JButton btn : optionPanel.getBtns()) {
-							btn.addActionListener(listener);
-						}
-						label.add(optionPanel);
-						selectedMode = true;
-					}
-					// 8페이지 진동효과 동작
-					boolean phoneScene = currentImageIndex == 8;
-					if (phoneScene) {
-						Vibration vibe = new Vibration(label);
-						vibe.getTimer().start();
-					}
-				}
+				gameOn(user, defender, gameModeService);
 			}
 		});
 
@@ -96,8 +66,8 @@ public class GameFrame extends JFrame {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					// mouseClicked메소드와 똑같이 들어가면 됨
+				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+					gameOn(user, defender, gameModeService);
 				}
 			}
 		});
@@ -166,4 +136,66 @@ public class GameFrame extends JFrame {
 		this.choiceList = choiceList;
 	}
 
+	public int getCurrentImageIndex() {
+		return currentImageIndex;
+	}
+
+	public void setCurrentImageIndex(int currentImageIndex) {
+		this.currentImageIndex = currentImageIndex;
+	}
+
+	public List<Image> getResultImages() {
+		return resultImages;
+	}
+
+	public void setResultImages(List<Image> resultImages) {
+		this.resultImages = resultImages;
+	}
+
+	public User getDefender() {
+		return defender;
+	}
+
+	public void setDefender(User defender) {
+		this.defender = defender;
+	}
+
+	public void gameOn(User user, User defender, GameModeService gameModeService) {
+		if (selectedMode == false) {
+			int lastImageNum = resultImages.size() - 1;
+			if (currentImageIndex == lastImageNum) {
+				dispose();
+				gameModeService.dataTransferToDB(user, defender, GameFrame.this);
+				gameModeService.gameComplete(user, defender);
+			}
+
+			// 맞춘 개수에 따른 2부 결정
+			if (currentImageIndex != lastImageNum) {
+				nextImage();
+				boolean startSecondHalf = currentImageIndex == 44;
+				if (startSecondHalf) {
+					gameModeService.decideSecondHalf(defender, resultImages, score);
+				}
+			}
+
+			// 선택지 발생 필요시 동작
+			if (examNo.contains(currentImageIndex)) {
+				int optionSceneNum = examNo.indexOf(currentImageIndex) + 1;
+				optionPanel = new OptionPanel(optionSceneNum);
+				optionPanel.setBounds(200, 200, 500, 370);
+				for (JButton btn : optionPanel.getBtns()) {
+					btn.addActionListener(listener);
+				}
+				label.add(optionPanel);
+				selectedMode = true;
+			}
+			// 8페이지 진동효과 동작
+			boolean phoneScene = currentImageIndex == 8;
+			if (phoneScene) {
+				Vibration vibe = new Vibration(label);
+				vibe.getTimer().start();
+			}
+		}
+	}
+	
 }
