@@ -46,7 +46,7 @@ public class OptionPanel extends JPanel {
 			btns.get(i).setOpaque(true);
 			lbls.add(new JLabel(stickerImgIcon));
 			lbls.get(i).setBounds(0, 0, 600, 80);
-//			btns.get(i).setText(optionList.get(i));
+			btns.get(i).setText(optionList.get(i));
 			txtlbls.add(new JLabel());
 			txtlbls.get(i).setText(optionList.get(i));
 			txtlbls.get(i).setFont(font);

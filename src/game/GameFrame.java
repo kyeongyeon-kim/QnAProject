@@ -41,6 +41,8 @@ public class GameFrame extends JFrame {
 	private User user;
 	private int score = 0;
 	private JLabel textLbl = new JLabel();
+	private JLabel textLbl2 = new JLabel();
+	private String selectOption = "";
 
 	public GameFrame(User user, User defender) {
 		GameModeService gameModeService = new GameModeServiceImpl(new GameModeServiceToolImpl());
@@ -178,13 +180,40 @@ public class GameFrame extends JFrame {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+
+	public JLabel getTextLbl() {
+		return textLbl;
+	}
+
+	public void setTextLbl(JLabel textLbl) {
+		this.textLbl = textLbl;
+	}
+
+	public JLabel getTextLbl2() {
+		return textLbl2;
+	}
+
+	public void setTextLbl2(JLabel textLbl2) {
+		this.textLbl2 = textLbl2;
+	}
+
+	public String getSelectOption() {
+		return selectOption;
+	}
+
+	public void setSelectOption(String selectOption) {
+		this.selectOption = selectOption;
+	}
 
 	public void gameOn(User user, User defender, GameModeService gameModeService) {
 		if (selectedMode == false) {
-			if (textLbl.isVisible()) {
+			if (textLbl.isVisible() || textLbl2.isVisible()) {
 				textLbl.setVisible(false);
+				textLbl2.setVisible(false);
 			}
 			textLbl = gameModeService.setTextByImageIndex(this);
+			textLbl2 = gameModeService.setTextByImageIndex2(this);
 			int lastImageNum = resultImages.size() - 1;
 			if (currentImageIndex == lastImageNum) {
 				dispose();

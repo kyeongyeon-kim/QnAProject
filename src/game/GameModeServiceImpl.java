@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -26,6 +27,8 @@ import style.Paths;
 
 public class GameModeServiceImpl implements GameModeService {
 	private GameModeServiceTool gmst;
+	private int[] attackerIndex = {0,3,8,51,54,60,63,65,71};
+	private int[] defenderIndex = {49,50,53,55,57,59,66,67,69,70,72,75};
 
 	public GameModeServiceImpl(GameModeServiceTool gmst) {
 		super();
@@ -167,11 +170,60 @@ public class GameModeServiceImpl implements GameModeService {
 	@Override
 	public JLabel setTextByImageIndex(GameFrame gameFrame) {
 		JLabel lbl = new JLabel();
+		List<Integer> nameList = new ArrayList<>(Arrays.asList(11, 12, 13, 14, 15, 17, 18, 19, 20));
+		int y = 55;
 		Font font = new Font("맑은 고딕", Font.BOLD, 20);
 		int currentImageIndex = gameFrame.getCurrentImageIndex();
-		if (currentImageIndex == 0) {
-			lbl.setText(gameFrame.getUser().getId());
-			lbl.setBounds(200, 300, 400, 300);
+		for(int i=0; i<attackerIndex.length; i++) {
+			if (currentImageIndex == attackerIndex[i]) {
+				lbl.setText(gameFrame.getUser().getId());
+				lbl.setBounds(173, 287, 400, 300);
+				lbl.setFont(font);
+				gameFrame.getLabel().add(lbl);
+				
+			}
+		}
+		for(int i=0; i<defenderIndex.length; i++) {
+			if (currentImageIndex == defenderIndex[i]) {
+				lbl.setText(gameFrame.getDefender().getId());
+				lbl.setBounds(173, 287, 400, 300);
+				lbl.setFont(font);
+				gameFrame.getLabel().add(lbl);
+				
+			}
+		}
+		if (currentImageIndex == 46) {
+			lbl.setText("나는 ...");
+			
+			lbl.setBounds(150, 380, 400, 300);
+			lbl.setFont(new Font("맑은 고딕", Font.BOLD, 33));
+			gameFrame.getLabel().add(lbl);
+		}
+		if (nameList.contains(currentImageIndex)) {
+			if (currentImageIndex == 19) {
+				y -= 70;
+			}
+			lbl.setText(gameFrame.getDefender().getId());
+			lbl.setBounds(370, y, 400, 300);
+			lbl.setFont(font);
+			gameFrame.getLabel().add(lbl);
+		}
+		return lbl;
+	}
+
+	@Override
+	public JLabel setTextByImageIndex2(GameFrame gameFrame) {
+		JLabel lbl = new JLabel();
+		List<Integer> choiceList = new ArrayList<>(Arrays.asList(17, 18, 19, 20));
+		int y = 350;
+		Font font = new Font("맑은 고딕", Font.BOLD, 20);
+		int currentImageIndex = gameFrame.getCurrentImageIndex();
+		if (choiceList.contains(currentImageIndex)) {
+			if (currentImageIndex == 19) {
+				y -= 70;
+			}
+			lbl.setText(gameFrame.getSelectOption());
+			lbl.setBounds(370, y, 400, 300);
 			lbl.setFont(font);
 			gameFrame.getLabel().add(lbl);
 		}
