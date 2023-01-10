@@ -274,13 +274,6 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		if (result == join.joinComplete) {
 			System.out.println("회원가입 완료");
 			lblResult.setText("");
-<<<<<<< HEAD
-
-=======
-//			join.insert();
-
-			
->>>>>>> branch 'master' of https://github.com/yeon966/QnAProject.git
 			new ExamDialog(join.getUser()).setVisible(true);
 			dispose();
 
