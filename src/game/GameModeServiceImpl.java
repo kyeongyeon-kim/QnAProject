@@ -167,11 +167,12 @@ public class GameModeServiceImpl implements GameModeService {
 	@Override
 	public JLabel setTextByImageIndex(GameFrame gameFrame) {
 		JLabel lbl = new JLabel();
+		Font font = new Font("맑은 고딕", Font.BOLD, 20);
 		int currentImageIndex = gameFrame.getCurrentImageIndex();
 		if (currentImageIndex == 0) {
 			lbl.setText(gameFrame.getUser().getId());
 			lbl.setBounds(200, 300, 400, 300);
-			lbl.setFont(new Font("맑은고딕", Font.BOLD, 20));
+			lbl.setFont(font);
 			gameFrame.getLabel().add(lbl);
 		}
 		return lbl;
