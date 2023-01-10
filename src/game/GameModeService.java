@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.Event;
+import java.awt.Font;
 import java.awt.Image;
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface GameModeService {
 	public boolean isUserPlayedGameBefore(User user, User defender);
 	public JLabel setTextByImageIndex(GameFrame gameFrame);
 	public JLabel setTextByImageIndex2(GameFrame gameFrame);
+	public void makeSelectOption(GameFrame gameFrame);
 }

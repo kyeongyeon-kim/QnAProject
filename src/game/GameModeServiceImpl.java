@@ -27,9 +27,19 @@ import style.Paths;
 
 public class GameModeServiceImpl implements GameModeService {
 	private GameModeServiceTool gmst;
-	private int[] attackerIndex = {0,3,8,51,54,60,63,65,71};
-	private int[] defenderIndex = {49,50,53,55,57,59,66,67,69,70,72,75};
-	private int[] bread= {37,38,39};
+	private int[] attackerIndex = { 0, 3, 8, 51, 54, 60, 63, 65, 71 };
+	private int[] defenderIndex = { 49, 50, 53, 55, 57, 59, 66, 67, 69, 70, 72, 75 };
+	private int[] bread = { 37, 38, 39 };
+	private Font font = new Font("맑은 고딕", Font.BOLD, 18);
+	private Font font2 = new Font("맑은 고딕", Font.BOLD, 27);
+	private Font font3 = new Font("맑은 고딕", Font.BOLD, 33);
+	private String userName;
+	private String defenderName;
+	private String optionSong;
+	private String optionIE;
+	private String optionHobby;
+	private String optionMeal;
+	private String optionBenefit;
 
 	public GameModeServiceImpl(GameModeServiceTool gmst) {
 		super();
@@ -147,6 +157,9 @@ public class GameModeServiceImpl implements GameModeService {
 
 	@Override
 	public boolean isUserPlayedGameBefore(User user, User defender) {
+		userName = user.getName();
+		defenderName = defender.getName();
+		
 		String sql = "SELECT EXISTS "
 				+ "(SELECT defender, attacker FROM answer GROUP BY attacker HAVING defender = ? AND attacker = ?)"
 				+ " AS `isNOTNULL`;";
@@ -171,40 +184,37 @@ public class GameModeServiceImpl implements GameModeService {
 	@Override
 	public JLabel setTextByImageIndex(GameFrame gameFrame) {
 		JLabel lbl = new JLabel();
-		List<Integer> nameList = new ArrayList<>(Arrays.asList(11, 12, 13, 14, 15, 17, 18, 19, 20));
-		int y = 55;
-		Font font = new Font("맑은 고딕", Font.BOLD, 20);
-		Font font2 = new Font("맑은 고딕", Font.BOLD, 27);
-		Font font3 = new Font("맑은 고딕", Font.BOLD, 33);
+		List<Integer> nameList = new ArrayList<>(Arrays.asList(11, 12, 13, 14, 15, 17, 18, 19));
+		int y = 53;
 		int currentImageIndex = gameFrame.getCurrentImageIndex();
-		for(int i=0; i<attackerIndex.length; i++) {
+		
+		for (int i = 0; i < attackerIndex.length; i++) { // 사용자 이름 고정 라벨
 			if (currentImageIndex == attackerIndex[i]) {
 				lbl.setText(gameFrame.getUser().getId());
 				lbl.setBounds(173, 287, 400, 300);
 				lbl.setFont(font2);
 				gameFrame.getLabel().add(lbl);
-				
 			}
 		}
-		for(int i=0; i<defenderIndex.length; i++) {
+		for (int i = 0; i < defenderIndex.length; i++) { // defender 이름 고정 라벨
 			if (currentImageIndex == defenderIndex[i]) {
 				lbl.setText(gameFrame.getDefender().getId());
 				lbl.setBounds(173, 287, 400, 300);
 				lbl.setFont(font2);
 				gameFrame.getLabel().add(lbl);
-				
 			}
 		}
-		if (currentImageIndex == 46) {
+		if (currentImageIndex == 46) { // 나는... 라벨
 			lbl.setText("나는 ...");
-			
 			lbl.setBounds(150, 380, 400, 300);
 			lbl.setFont(font3);
 			gameFrame.getLabel().add(lbl);
 		}
-		if (nameList.contains(currentImageIndex)) {
+		
+		// ------ 카톡 화면 라벨 ------
+		if (nameList.contains(currentImageIndex)) { // 이름라벨
 			if (currentImageIndex == 19) {
-				y -= 70;
+				y -= 85;
 			}
 			lbl.setText(gameFrame.getDefender().getId());
 			lbl.setBounds(370, y, 400, 300);
@@ -212,38 +222,75 @@ public class GameModeServiceImpl implements GameModeService {
 			gameFrame.getLabel().add(lbl);
 		}
 		
-		for(int i =0; i<bread.length; i++) {
+		for (int i = 0; i < bread.length; i++) { // 음식메뉴라벨
 			if (currentImageIndex == bread[i]) {
-				
 				lbl.setText(gameFrame.getSelectOption());
-				lbl.setForeground(new Color(48,56,72));
-				lbl.setBounds(475, 475 - i*55 , 400, 300);
-				
+				lbl.setForeground(new Color(48, 56, 72));
+				lbl.setBounds(475, 475 - i * 55, 400, 300);
 				lbl.setFont(font);
 				gameFrame.getLabel().add(lbl);
 			}
 		}
-		
 		return lbl;
 	}
 
 	@Override
-	public JLabel setTextByImageIndex2(GameFrame gameFrame) {
+	public JLabel setTextByImageIndex2(GameFrame gameFrame) { // 라벨 두개필요할때 사용
 		JLabel lbl = new JLabel();
-		List<Integer> choiceList = new ArrayList<>(Arrays.asList(17, 18, 19, 20));
-		int y = 350;
-		Font font = new Font("맑은 고딕", Font.BOLD, 20);
 		int currentImageIndex = gameFrame.getCurrentImageIndex();
+		List<Integer> choiceList = new ArrayList<>(Arrays.asList(17, 18, 19, 20, 22));
+		int y = 175;
 		if (choiceList.contains(currentImageIndex)) {
 			if (currentImageIndex == 19) {
-				y -= 70;
+				y -= 85;
+			} else if (currentImageIndex == 20) {
+				y -= 165;
+			} 
+			else if (currentImageIndex == 22) {
+				y -= 255;
 			}
-			lbl.setText(gameFrame.getSelectOption());
-			lbl.setBounds(370, y, 400, 300);
+			
+			String[] str = gameFrame.getSelectOption().split("-");
+			String option = "";
+			for (int i = 0; i < str.length; i++) {
+				option += str[i] + "<br>";
+			}
+			option = "<HTML><body>" + option + "</body></HTML>";
+			lbl.setText(option);
+			lbl.setBounds(355, y, 400, 700);
 			lbl.setFont(font);
 			gameFrame.getLabel().add(lbl);
 		}
 		
 		return lbl;
 	}
+
+	@Override
+	public void makeSelectOption(GameFrame gameFrame) {
+		
+		int currentImageIndex = gameFrame.getCurrentImageIndex();         
+		if (currentImageIndex == 17) {
+			String[] str = gameFrame.getSelectOption().split("-");
+			optionSong = "";
+			for (int i = 0; i < str.length; i++) {
+				optionSong += str[i] + "<br>";
+			}
+			optionSong = "<HTML><body>" + optionSong + "</body></HTML>";
+			System.out.println(optionSong);
+		}
+//		if (currentImageIndex == ) {
+//			optionIE;
+//		}
+//		if (currentImageIndex == ) {
+//			optionHobby;
+//		}
+		
+		if (currentImageIndex == 37) {
+			optionMeal = gameFrame.getSelectOption();
+		}
+//		if (currentImageIndex == ) {
+//			optionBenefit;
+//		}	
+	}
+
 }
