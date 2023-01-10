@@ -2,47 +2,30 @@ package exam;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
-import dbutil.ConnectionProvider;
-import login.Join;
 import login.Login;
 import login.UserinfoRepository;
 import login.UserinfoRepositoryImpl;
 import object.User;
 
-import javax.swing.JScrollBar;
-import javax.swing.JButton;
-import java.awt.ScrollPane;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.ScrollPaneConstants;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-
-public class ExamFrame extends JFrame implements ActionListener {
+public class ExamDialog extends JDialog implements ActionListener {
 
 	private JPanel contentPane;
 	private JButton signUpButton;
@@ -71,12 +54,13 @@ public class ExamFrame extends JFrame implements ActionListener {
 //		});
 //	}
 
-	public ExamFrame(User user) {
+	public ExamDialog(User user) {
+		setModal(true);
 		this.user = user;
 		esi = new examServiceImpl();
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 549, 723);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(560, 150, 549, 723);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

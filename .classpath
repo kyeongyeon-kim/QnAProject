@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="jgoodies-forms-1.8.0-sources.jar"/>
 	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Dbutil"/>
+	<classpathentry kind="lib" path="D:/mysql-connector-j-8.0.31/mysql-connector-j-8.0.31.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

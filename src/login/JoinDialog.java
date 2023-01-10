@@ -6,7 +6,7 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import exam.ExamFrame;
+import exam.ExamDialog;
 import mbti.MbtiDialog;
 import mbti.MbtiImageManager;
 import mypage.ChangeExamDialog;
@@ -278,7 +278,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 			System.out.println("회원가입 완료");
 			lblResult.setText("");
 //			join.insert();
-			new ExamFrame(join.getUser()).setVisible(true);
+			new ExamDialog(join.getUser()).setVisible(true);
 			dispose();
 		} else if (result == join.joinFailByName) {
 			lblResult.setText("이름 입력이 잘못되었습니다.(1~15자)");
