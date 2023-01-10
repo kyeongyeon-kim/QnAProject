@@ -150,7 +150,10 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		mypageBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new MypageInfo(user);
+				MypageInfo mi = new MypageInfo(user);
+				if (mi.mypageDispose()) {
+					dispose();
+				}
 			}
 		});
 		contentPane.add(mypageBtn);

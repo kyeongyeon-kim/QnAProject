@@ -23,18 +23,25 @@ import login.UserinfoRepositoryImpl;
 import mbti.MbtiImageManager;
 import object.User;
 
-public class SecessionDialog extends JDialog  {
+public class SecessionDialog extends JDialog {
 	private JPanel contentPane;
 	private JTextField tfId;
 	private JTextField pfPw;
-	private JLabel checkPw;
-	private MbtiImageManager im = new MbtiImageManager();
+//	private JLabel checkPw;
+//	private MbtiImageManager im = new MbtiImageManager();
 	private JButton btnSecession;
 	private JLabel noPw;
 	private UserinfoRepositoryImpl uri = new UserinfoRepositoryImpl();
-	
+	public boolean sucessionDispose = false;
 
-	
+	public boolean isSucessionDispose() {
+		return sucessionDispose;
+	}
+
+	public void setSucessionDispose(boolean sucessionDispose) {
+		this.sucessionDispose = sucessionDispose;
+	}
+
 	// 라벨 설정
 	private void lblSetting(JLabel lbl) {
 		lbl.setFont(new Font("맑은 고딕", Font.BOLD, 11));
@@ -96,42 +103,43 @@ public class SecessionDialog extends JDialog  {
 		pfPw = new JTextField();
 		pfPw.setBounds(63, 224, 234, 33);
 		tfSetting(pfPw);
-	//	checkPw = checkImage(lblPw, 130);
+		// checkPw = checkImage(lblPw, 130);
 
-		
 		noPw = new JLabel("");
 		noPw.setBounds(66, 270, 170, 32);
 		noPw.setFont(new Font("맑은 고딕", Font.BOLD, 11));
 		noPw.setBackground(Color.white);
 		noPw.setForeground(Color.RED);
 		contentPane.add(noPw);
-		
+
 		btnSecession = new JButton("탈퇴하기");
 		btnSecession.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		btnSecession.setBackground(new Color(96,182,230));
+		btnSecession.setBackground(new Color(96, 182, 230));
 		btnSecession.setBorderPainted(false);
 		btnSecession.setForeground(Color.white);
 		btnSecession.setBounds(62, 300, 236, 39);
 		contentPane.add(btnSecession);
-	//	btnSecession.addKeyListener(this);
+		// btnSecession.addKeyListener(this);
 		btnSecession.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				String a = user.getPw();
-				
-				if(a.equals(pfPw.getText())) {
+
+				if (a.equals(pfPw.getText())) {
 					uri.userDelete(user);
-					JOptionPane.showMessageDialog(null, "탈퇴가 완료되었습니다.");
-					
-				}else {
+					new CheckDialog().setVisible(true);
+					sucessionDispose = true;
+					dispose();
+//					JOptionPane.showMessageDialog(null, "탈퇴가 완료되었습니다.");
+
+				} else {
 					noPw.setText("비밀번호를 잘못 입력하였습니다.");
 				}
 			}
-			
-		});
-		
-	}
 
+		});
+
+	}
 
 }

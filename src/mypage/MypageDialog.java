@@ -36,8 +36,15 @@ public class MypageDialog extends JDialog implements ActionListener {
 	private JPanel attackDefendPanel;
 	private DefaultTableModel modelAttack;
 	private DefaultTableModel modelDefend;
-	
-	
+	public boolean mypageDispose = false;
+	public boolean isMypageDispose() {
+		return mypageDispose;
+	}
+
+	public void setMypageDispose(boolean mypageDispose) {
+		this.mypageDispose = mypageDispose;
+	}
+
 	public DefaultTableModel getModelAttack() {
 		return modelAttack;
 	}
@@ -171,10 +178,17 @@ public class MypageDialog extends JDialog implements ActionListener {
 		btnSecession.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new SecessionDialog(user).setVisible(true);
+				SecessionDialog sd = new SecessionDialog(user);
+				sd.setVisible(true);
+				if (sd.isSucessionDispose()) {
+					dispose();
+					mypageDispose = true;
+				}
 			}
 		});
 	}
+
+	
 	
 	// 버튼 설정
 	private void btnSetting(JButton btn) {

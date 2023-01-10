@@ -1,6 +1,10 @@
 package mypage;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -8,9 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import lobby.LobbyFrame;
+import login.Login;
+
 public class CheckDialog extends JDialog {
-	private final JPanel contentPanel = new JPanel();
-	
+	private final JPanel contentPane = new JPanel();
+//	private MypageDialog mypageDialog;
+//	private LobbyFrame lobbyFrame;
 	public static void main(String[] args) {
 		try {
 			CheckDialog dialog = new CheckDialog();
@@ -21,20 +29,43 @@ public class CheckDialog extends JDialog {
 		}
 	}
 	public CheckDialog() {
-		setBounds(100, 100, 292, 193);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(null);
-		{
-			JButton cancelButton = new JButton("Cancel");
-			cancelButton.setBounds(74, 83, 134, 39);
-			contentPanel.add(cancelButton);
-			cancelButton.setActionCommand("Cancel");
-		}
 		
-		JLabel lblNewLabel = new JLabel("탈퇴되었습니다.");
-		lblNewLabel.setBounds(36, 34, 210, 39);
-		contentPanel.add(lblNewLabel);
+		setModal(true);
+		setBounds(800, 300, 292, 193);
+		getContentPane().setLayout(new BorderLayout());
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(Color.WHITE);
+		getContentPane().add(contentPane, BorderLayout.CENTER);
+		contentPane.setLayout(null);
+		
+		JLabel label = new JLabel("탈퇴 완료되었습니다.");
+		label.setFont(new Font("맑은 고딕", Font.BOLD, 14));
+		label.setBounds(75, 30, 210, 39);
+		contentPane.add(label);
+		
+		JButton OkButton = new JButton("확인");
+		OkButton.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		OkButton.setBackground(new Color(96,182,230));
+		OkButton.setBorderPainted(false);
+		OkButton.setForeground(Color.white);
+		OkButton.setBounds(74, 83, 134, 39);
+		contentPane.add(OkButton);
+		OkButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				
+//				MypageDialog.dispose();
+//				SecessionDialog.dispose();
+//				MypageDialog.dispose();
+//				LobbyFrame.dispose();
+//				System.exit(0);
+				new Login();
+			}
+			
+		});
+		
+		
+		
 	}
 }
