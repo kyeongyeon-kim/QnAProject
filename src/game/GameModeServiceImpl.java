@@ -173,12 +173,14 @@ public class GameModeServiceImpl implements GameModeService {
 		List<Integer> nameList = new ArrayList<>(Arrays.asList(11, 12, 13, 14, 15, 17, 18, 19, 20));
 		int y = 55;
 		Font font = new Font("맑은 고딕", Font.BOLD, 20);
+		Font font2 = new Font("맑은 고딕", Font.BOLD, 27);
+		Font font3 = new Font("맑은 고딕", Font.BOLD, 33);
 		int currentImageIndex = gameFrame.getCurrentImageIndex();
 		for(int i=0; i<attackerIndex.length; i++) {
 			if (currentImageIndex == attackerIndex[i]) {
 				lbl.setText(gameFrame.getUser().getId());
 				lbl.setBounds(173, 287, 400, 300);
-				lbl.setFont(font);
+				lbl.setFont(font2);
 				gameFrame.getLabel().add(lbl);
 				
 			}
@@ -187,7 +189,7 @@ public class GameModeServiceImpl implements GameModeService {
 			if (currentImageIndex == defenderIndex[i]) {
 				lbl.setText(gameFrame.getDefender().getId());
 				lbl.setBounds(173, 287, 400, 300);
-				lbl.setFont(font);
+				lbl.setFont(font2);
 				gameFrame.getLabel().add(lbl);
 				
 			}
@@ -196,7 +198,7 @@ public class GameModeServiceImpl implements GameModeService {
 			lbl.setText("나는 ...");
 			
 			lbl.setBounds(150, 380, 400, 300);
-			lbl.setFont(new Font("맑은 고딕", Font.BOLD, 33));
+			lbl.setFont(font3);
 			gameFrame.getLabel().add(lbl);
 		}
 		if (nameList.contains(currentImageIndex)) {
@@ -205,6 +207,15 @@ public class GameModeServiceImpl implements GameModeService {
 			}
 			lbl.setText(gameFrame.getDefender().getId());
 			lbl.setBounds(370, y, 400, 300);
+			lbl.setFont(font);
+			gameFrame.getLabel().add(lbl);
+		}
+		if (currentImageIndex == 37) {
+				
+			lbl.setText(gameFrame.getSelectOption());
+			lbl.setForeground(new Color(48,56,72));
+			lbl.setBounds(475, 482, 400, 300);
+			
 			lbl.setFont(font);
 			gameFrame.getLabel().add(lbl);
 		}
@@ -227,6 +238,7 @@ public class GameModeServiceImpl implements GameModeService {
 			lbl.setFont(font);
 			gameFrame.getLabel().add(lbl);
 		}
+		
 		return lbl;
 	}
 }
