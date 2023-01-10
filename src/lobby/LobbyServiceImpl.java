@@ -8,7 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.PatternSyntaxException;
 
 import javax.swing.JTable;
@@ -61,7 +63,7 @@ public class LobbyServiceImpl implements LobbyService {
 			try {
 				sorter.setRowFilter(RowFilter.regexFilter(getText));
 			} catch (PatternSyntaxException pse) {
-				System.out.println("Bad regex pattern");
+//				System.out.println("Bad regex pattern");
 			}
 		}
 	}
@@ -78,20 +80,31 @@ public class LobbyServiceImpl implements LobbyService {
 
 	@Override
 	public List<Attacker> makeAttackerList(User user) {
-		String sql2 = "SELECT defender, attacker FROM answer GROUP BY attacker HAVING defender = ?";
-		List<String> attackerNameList = new ArrayList<>();
+//		String sql2 = "SELECT defender, attacker FROM answer GROUP BY attacker HAVING defender = ?";
+		String sql2 = "SELECT defender, attacker FROM answer WHERE defender = ?";
+//		List<String> attackerNameList = new ArrayList<>();
 		List<Attacker> attackerList = new ArrayList<>();
+		Set<String> attackerNameSet = new HashSet<>();
+		
 		try (Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
 			stmt2.setString(1, user.getId());
-
-			attackerNameList = lst.makeAttackerList(attackerNameList, stmt2);
-
-			for (String attacker : attackerNameList) {
+			
+			try (ResultSet rs = stmt2.executeQuery()) {
+				while (rs.next()) {
+					String attackerName = rs.getString(2);
+					attackerNameSet.add(attackerName);
+				}
+			}
+			
+			for (String attacker : attackerNameSet) {
 				Attacker a = lst.attackerCaculationScore(user, attacker, conn);
 				attackerList.add(a);
 			}
-
+			
+			System.out.println(user.getId() + "의 attackerList: " + attackerList);
+			System.out.println(attackerList.size());
+			
 			Collections.sort(attackerList, new Comparator<Object>() {
 				@Override
 				public int compare(Object o1, Object o2) {
@@ -109,29 +122,37 @@ public class LobbyServiceImpl implements LobbyService {
 
 	@Override
 	public List<Attacker> makeMyAttackList(User user) { // 파라미터 user는 로그인한 사람
-		String sql2 = "SELECT attacker, defender FROM answer GROUP BY defender HAVING attacker = ?";
-		List<String> attackerNameList = new ArrayList<>();
+//		String sql2 = "SELECT attacker, defender FROM answer GROUP BY defender HAVING attacker = ?";
+		String sql2 = "SELECT attacker, defender FROM answer WHERE attacker = ?";
+//		List<String> attackerNameList = new ArrayList<>();
+		Set<String> attackerNameSet = new HashSet<>();
 		List<Attacker> attackerList = new ArrayList<>();
+		
 		try (Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
 			stmt2.setString(1, user.getId());
 
-			attackerNameList = lst.makeAttackerList(attackerNameList, stmt2);
+			try (ResultSet rs = stmt2.executeQuery()) {
+				while (rs.next()) {
+					String attackerName = rs.getString(2);
+					attackerNameSet.add(attackerName);
+				}
+			}
 
-			for (String attacker : attackerNameList) {
+			for (String attacker : attackerNameSet) {
 				Attacker a = lst.myAttackCaculationScore(attacker, (String) user.getId(), conn);
 				attackerList.add(a);
 			}
 
-//			Collections.sort(attackerList, new Comparator<Object>() {
-//				@Override
-//				public int compare(Object o1, Object o2) {
-//					if (((Attacker) o1).getScore() == ((Attacker) o2).getScore()) {
+			Collections.sort(attackerList, new Comparator<Object>() {
+				@Override
+				public int compare(Object o1, Object o2) {
+					if (((Attacker) o1).getScore() == ((Attacker) o2).getScore()) {
 //						return ((CollectionOrBuilder) o1).getName().compareTo(((CollectionOrBuilder) o2).getName());
-//					}
-//					return ((Attacker) o2).getScore() - ((Attacker) o1).getScore();
-//				}
-//			});
+					}
+					return ((Attacker) o2).getScore() - ((Attacker) o1).getScore();
+				}
+			});
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

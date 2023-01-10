@@ -16,6 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
+import exam.examServiceImpl;
+import login.UserinfoRepository;
+import login.UserinfoRepositoryImpl;
 import mbti.MbtiImageManager;
 import object.User;
 
@@ -27,6 +30,7 @@ public class SecessionDialog extends JDialog  {
 	private MbtiImageManager im = new MbtiImageManager();
 	private JButton btnSecession;
 	private JLabel noPw;
+	private UserinfoRepositoryImpl uri = new UserinfoRepositoryImpl();
 	
 //	public static void main(String[] args) {
 
@@ -127,7 +131,8 @@ public class SecessionDialog extends JDialog  {
 				String a = user.getPw();
 				
 				if(a.equals(pfPw.getText())) {
-					System.out.println("탈퇴완료");
+					uri.userDelete(user);
+					
 				}else {
 					noPw.setText("비밀번호를 잘못 입력하였습니다.");
 				}

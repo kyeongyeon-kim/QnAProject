@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
+<<<<<<< HEAD
 	<classpathentry kind="src" path="GangjoonDate_1"/>
 	<classpathentry kind="src" path="GangjoonDate_2"/>
 	<classpathentry kind="src" path="GangjoonDate_3"/>
@@ -23,5 +24,19 @@
 	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DbUtil"/>
 	<classpathentry kind="lib" path="D:/kimkyeongyeon/mysql-connector-j-8.0.31/mysql-connector-j-8.0.31.jar"/>
+=======
+	<classpathentry kind="src" path="02_katalk_Man"/>
+	<classpathentry kind="src" path="03_likeability_Woman"/>
+	<classpathentry kind="src" path="02_katalk_Woman"/>
+	<classpathentry kind="src" path="03_likeability_Fail_Man"/>
+	<classpathentry kind="src" path="03_likeability_Fail_Woman"/>
+	<classpathentry kind="src" path="03_likeability_Man"/>
+	<classpathentry kind="src" path="01_intro"/>
+	<classpathentry kind="src" path="imagesMbti"/>
+	<classpathentry kind="lib" path="jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Dbutil"/>
+	<classpathentry kind="lib" path="D:/mysql-connector-j-8.0.31/mysql-connector-j-8.0.31.jar"/>
+>>>>>>> branch 'master' of https://github.com/yeon966/QnAProject.git
 	<classpathentry kind="output" path="bin"/>
 </classpath>

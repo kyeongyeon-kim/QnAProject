@@ -107,4 +107,74 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 		}
 		return null;
 	}
+
+	@Override
+	public void userDelete(User user) {
+	
+		String sql1 = "delete from answer where defender = ? or attacker = ?";
+		String sql2 = "delete from mission where id = ?";
+		String sql3 = "delete from userinfo where id= ?";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt1 = conn.prepareStatement(sql1);
+				PreparedStatement stmt2 = conn.prepareStatement(sql2);
+				PreparedStatement stmt3 = conn.prepareStatement(sql3);
+				
+				) {
+			stmt1.setString(1, user.getId());
+			stmt1.setString(2, user.getId());
+			stmt2.setString(1,user.getId());
+			stmt3.setString(1,user.getId());
+			
+				
+					stmt1.executeUpdate();
+					stmt2.executeUpdate();
+					stmt3.executeUpdate();
+					
+					
+					System.out.println("탈퇴완료");
+				
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		
+//		String sql1= "DELETE FROM answer WHERE defender = ? or attacker = ?";
+//		String sql2= "DELETE FROM mission WHERE id = ?";
+//		String sql3= "DELETE FROM userinfo WHERE id = ?";
+//		try (Connection conn = ConnectionProvider.makeConnection();
+//				PreparedStatement stmt1 = conn.prepareStatement(sql1);
+//				PreparedStatement stmt2 = conn.prepareStatement(sql2);
+//				PreparedStatement stmt3 = conn.prepareStatement(sql3)) {
+//			stmt1.setString(1, user.getId());
+//			stmt1.setString(2, user.getId());
+//			stmt2.setString(1, user.getId());
+//			stmt3.setString(1, user.getId());
+//			
+//			try (ResultSet rs = stmt1.executeQuery();
+//				 ResultSet rs2 = stmt2.executeQuery();
+//				 ResultSet rs3 = stmt3.executeQuery();) {
+//				
+//					stmt1.executeUpdate();
+//					stmt2.executeUpdate();
+//					stmt3.executeUpdate();
+//					System.out.println("탈퇴완료");
+//				}
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+		
+	}
 }
