@@ -24,7 +24,7 @@ import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import exam.ExamFrame;
+import exam.ExamDialog;
 import mbti.MbtiDialog;
 import mbti.MbtiImageManager;
 
