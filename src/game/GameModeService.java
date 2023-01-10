@@ -3,6 +3,8 @@ package game;
 import java.awt.Image;
 import java.util.List;
 
+import javax.swing.JLabel;
+
 import object.User;
 
 public interface GameModeService {
@@ -13,5 +15,5 @@ public interface GameModeService {
 	public int selectByOption(String option);
 	public void dataTransferToDB(User user, User defender ,GameFrame gameFrame);
 	public boolean isUserPlayedGameBefore(User user, User defender);
-	public void setTextByImageIndex(GameFrame gameFrame);
+	public JLabel setTextByImageIndex(GameFrame gameFrame);
 }

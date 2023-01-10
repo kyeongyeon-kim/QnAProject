@@ -40,6 +40,7 @@ public class GameFrame extends JFrame {
 	private User defender;
 	private User user;
 	private int score = 0;
+	private JLabel textLbl = new JLabel();
 
 	public GameFrame(User user, User defender) {
 		GameModeService gameModeService = new GameModeServiceImpl(new GameModeServiceToolImpl());
@@ -180,7 +181,10 @@ public class GameFrame extends JFrame {
 
 	public void gameOn(User user, User defender, GameModeService gameModeService) {
 		if (selectedMode == false) {
-			gameModeService.setTextByImageIndex(this);
+			if (textLbl.isVisible()) {
+				textLbl.setVisible(false);
+			}
+			textLbl = gameModeService.setTextByImageIndex(this);
 			int lastImageNum = resultImages.size() - 1;
 			if (currentImageIndex == lastImageNum) {
 				dispose();
@@ -201,7 +205,7 @@ public class GameFrame extends JFrame {
 			if (examNo.contains(currentImageIndex)) {
 				int optionSceneNum = examNo.indexOf(currentImageIndex) + 1;
 				optionPanel = new OptionPanel(optionSceneNum);
-				optionPanel.setBounds(200, 200, 500, 370);
+				optionPanel.setBounds(0, 0, 960, 720);
 				for (JButton btn : optionPanel.getBtns()) {
 					btn.addActionListener(listener);
 				}
