@@ -279,13 +279,13 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 			System.out.println("회원가입 완료");
 			lblResult.setText("");
 //			join.insert();
-<<<<<<< HEAD
-			new ExamFrame(join.getUser()).setVisible(true);
+
+			new ExamDialog(join.getUser()).setVisible(true);
 //			dispose();
-=======
+
 			new ExamDialog(join.getUser()).setVisible(true);
 			dispose();
->>>>>>> branch 'master' of https://github.com/yeon966/QnAProject.git
+
 		} else if (result == join.joinFailByName) {
 			lblResult.setText("이름 입력이 잘못되었습니다.(1~15자)");
 		} else if (result == join.joinFailByDuplicate) {
