@@ -17,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.sun.corba.se.impl.orbutil.DenseIntMapImpl;
 
 import lobby.LobbyFrame;
 import lobby.LobbyService;

@@ -55,7 +55,7 @@ public class ExamDialog extends JDialog implements ActionListener {
 //	}
 
 	public ExamDialog(User user) {
-		setModal(true);
+	//	setModal(true);
 		this.user = user;
 		esi = new examServiceImpl();
 
