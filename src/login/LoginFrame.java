@@ -157,16 +157,16 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (charPw.length >= 0 &&
-				(e.getKeyCode() == KeyEvent.VK_BACK_SPACE
-				|| e.getKeyCode() == KeyEvent.VK_DELETE)) {
-			charPw = Arrays.copyOf(charPw, tfPw.getText().length());
-			hidePw(charPw);
-		} else if (e.getSource() == tfPw && tfPw.getText().length() > charPw.length) {
-			charPw = Arrays.copyOf(charPw, charPw.length + 1);
-			charPw[charPw.length - 1] = e.getKeyChar();
-			hidePw(charPw);
-		}
+//		if (charPw.length >= 0 &&
+//				(e.getKeyCode() == KeyEvent.VK_BACK_SPACE
+//				|| e.getKeyCode() == KeyEvent.VK_DELETE)) {
+//			charPw = Arrays.copyOf(charPw, tfPw.getText().length());
+//			hidePw(charPw);
+//		} else if (e.getSource() == tfPw && tfPw.getText().length() > charPw.length) {
+//			charPw = Arrays.copyOf(charPw, charPw.length + 1);
+//			charPw[charPw.length - 1] = e.getKeyChar();
+//			hidePw(charPw);
+//		}
 	}
 
 	@Override
@@ -191,20 +191,20 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 	}
 
 	// 비밀번호 암호화
-	public void hidePw(char[] charPw) {
-		pw = "";
-		System.out.println(charPw);
-		for (int i = 0; i < charPw.length; i++) {
-			pw += charPw[i];
-		}
-		System.out.println("비밀번호: " + pw);
-		System.out.println("charPw.length : " + charPw.length);
-		System.out.println("tfPw.getText().length() : " + tfPw.getText().length());
-
-		String hide = "";
-		for (int i = 0; i < tfPw.getText().length(); i++) {
-			hide += "●";
-		}
-		tfPw.setText(hide);
-	}
+//	public void hidePw(char[] charPw) {
+//		pw = "";
+//		System.out.println(charPw);
+//		for (int i = 0; i < charPw.length; i++) {
+//			pw += charPw[i];
+//		}
+//		System.out.println("비밀번호: " + pw);
+//		System.out.println("charPw.length : " + charPw.length);
+//		System.out.println("tfPw.getText().length() : " + tfPw.getText().length());
+//
+//		String hide = "";
+//		for (int i = 0; i < tfPw.getText().length(); i++) {
+//			hide += "●";
+//		}
+//		tfPw.setText(hide);
+//	}
 }

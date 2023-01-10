@@ -212,6 +212,7 @@ public class GameFrame extends JFrame {
 				textLbl.setVisible(false);
 				textLbl2.setVisible(false);
 			}
+			gameModeService.makeSelectOption(this);
 			textLbl = gameModeService.setTextByImageIndex(this);
 			textLbl2 = gameModeService.setTextByImageIndex2(this);
 			int lastImageNum = resultImages.size() - 1;
