@@ -29,6 +29,7 @@ public class GameModeServiceImpl implements GameModeService {
 	private GameModeServiceTool gmst;
 	private int[] attackerIndex = {0,3,8,51,54,60,63,65,71};
 	private int[] defenderIndex = {49,50,53,55,57,59,66,67,69,70,72,75};
+	private int[] bread= {37,38,39};
 
 	public GameModeServiceImpl(GameModeServiceTool gmst) {
 		super();
@@ -210,15 +211,19 @@ public class GameModeServiceImpl implements GameModeService {
 			lbl.setFont(font);
 			gameFrame.getLabel().add(lbl);
 		}
-		if (currentImageIndex == 37) {
+		
+		for(int i =0; i<bread.length; i++) {
+			if (currentImageIndex == bread[i]) {
 				
-			lbl.setText(gameFrame.getSelectOption());
-			lbl.setForeground(new Color(48,56,72));
-			lbl.setBounds(475, 482, 400, 300);
-			
-			lbl.setFont(font);
-			gameFrame.getLabel().add(lbl);
+				lbl.setText(gameFrame.getSelectOption());
+				lbl.setForeground(new Color(48,56,72));
+				lbl.setBounds(475, 475 - i*55 , 400, 300);
+				
+				lbl.setFont(font);
+				gameFrame.getLabel().add(lbl);
+			}
 		}
+		
 		return lbl;
 	}
 
