@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -32,19 +33,8 @@ public class SecessionDialog extends JDialog  {
 	private JLabel noPw;
 	private UserinfoRepositoryImpl uri = new UserinfoRepositoryImpl();
 	
-//	public static void main(String[] args) {
 
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					SecessionDialog frame = new SecessionDialog(null);
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	
 	// 라벨 설정
 	private void lblSetting(JLabel lbl) {
 		lbl.setFont(new Font("맑은 고딕", Font.BOLD, 11));
@@ -132,6 +122,7 @@ public class SecessionDialog extends JDialog  {
 				
 				if(a.equals(pfPw.getText())) {
 					uri.userDelete(user);
+					JOptionPane.showMessageDialog(null, "탈퇴가 완료되었습니다.");
 					
 				}else {
 					noPw.setText("비밀번호를 잘못 입력하였습니다.");
