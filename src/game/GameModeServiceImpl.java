@@ -33,13 +33,6 @@ public class GameModeServiceImpl implements GameModeService {
 	private Font font = new Font("맑은 고딕", Font.BOLD, 18);
 	private Font font2 = new Font("맑은 고딕", Font.BOLD, 27);
 	private Font font3 = new Font("맑은 고딕", Font.BOLD, 33);
-	private String userName;
-	private String defenderName;
-	private String optionSong;
-	private String optionIE;
-	private String optionHobby;
-	private String optionMeal;
-	private String optionBenefit;
 
 	public GameModeServiceImpl(GameModeServiceTool gmst) {
 		super();
@@ -157,9 +150,6 @@ public class GameModeServiceImpl implements GameModeService {
 
 	@Override
 	public boolean isUserPlayedGameBefore(User user, User defender) {
-		userName = user.getName();
-		defenderName = defender.getName();
-		
 		String sql = "SELECT EXISTS "
 				+ "(SELECT defender, attacker FROM answer GROUP BY attacker HAVING defender = ? AND attacker = ?)"
 				+ " AS `isNOTNULL`;";
@@ -222,6 +212,13 @@ public class GameModeServiceImpl implements GameModeService {
 			gameFrame.getLabel().add(lbl);
 		}
 		
+		if (currentImageIndex == 22) {
+			lbl.setText(gameFrame.getOptionIE());
+			lbl.setBounds(370, 260, 400, 700);
+			lbl.setFont(font);
+			gameFrame.getLabel().add(lbl);
+		}
+		
 		for (int i = 0; i < bread.length; i++) { // 음식메뉴라벨
 			if (currentImageIndex == bread[i]) {
 				lbl.setText(gameFrame.getSelectOption());
@@ -238,59 +235,23 @@ public class GameModeServiceImpl implements GameModeService {
 	public JLabel setTextByImageIndex2(GameFrame gameFrame) { // 라벨 두개필요할때 사용
 		JLabel lbl = new JLabel();
 		int currentImageIndex = gameFrame.getCurrentImageIndex();
-		List<Integer> choiceList = new ArrayList<>(Arrays.asList(17, 18, 19, 20, 22));
+		List<Integer> choiceList = new ArrayList<>(Arrays.asList(17, 18, 19, 20, 21, 22));
 		int y = 175;
 		if (choiceList.contains(currentImageIndex)) {
 			if (currentImageIndex == 19) {
-				y -= 85;
+				y = 90; // 90
 			} else if (currentImageIndex == 20) {
-				y -= 165;
+				y = 10; // 10
+			} else if (currentImageIndex == 21) {
+				lbl.setVisible(false);
+			} else if (currentImageIndex == 22) {
+				y = -77; // 10
 			} 
-			else if (currentImageIndex == 22) {
-				y -= 255;
-			}
-			
-			String[] str = gameFrame.getSelectOption().split("-");
-			String option = "";
-			for (int i = 0; i < str.length; i++) {
-				option += str[i] + "<br>";
-			}
-			option = "<HTML><body>" + option + "</body></HTML>";
-			lbl.setText(option);
+			lbl.setText(gameFrame.getOptionSong());
 			lbl.setBounds(355, y, 400, 700);
 			lbl.setFont(font);
 			gameFrame.getLabel().add(lbl);
 		}
-		
 		return lbl;
 	}
-
-	@Override
-	public void makeSelectOption(GameFrame gameFrame) {
-		
-		int currentImageIndex = gameFrame.getCurrentImageIndex();         
-		if (currentImageIndex == 17) {
-			String[] str = gameFrame.getSelectOption().split("-");
-			optionSong = "";
-			for (int i = 0; i < str.length; i++) {
-				optionSong += str[i] + "<br>";
-			}
-			optionSong = "<HTML><body>" + optionSong + "</body></HTML>";
-			System.out.println(optionSong);
-		}
-//		if (currentImageIndex == ) {
-//			optionIE;
-//		}
-//		if (currentImageIndex == ) {
-//			optionHobby;
-//		}
-		
-		if (currentImageIndex == 37) {
-			optionMeal = gameFrame.getSelectOption();
-		}
-//		if (currentImageIndex == ) {
-//			optionBenefit;
-//		}	
-	}
-
 }

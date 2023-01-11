@@ -191,7 +191,7 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 	}
 
 	// 비밀번호 암호화
-//	public void hidePw(char[] charPw) {
+	public void hidePw(char[] charPw) {
 //		pw = "";
 //		System.out.println(charPw);
 //		for (int i = 0; i < charPw.length; i++) {
@@ -203,8 +203,8 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 //
 //		String hide = "";
 //		for (int i = 0; i < tfPw.getText().length(); i++) {
-//			hide += "●";
+//			hide += "ㆍ";
 //		}
 //		tfPw.setText(hide);
-//	}
+	}
 }

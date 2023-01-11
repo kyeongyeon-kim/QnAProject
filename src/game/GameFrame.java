@@ -10,13 +10,13 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 
 import lobby.LobbyFrame;
 import lobby.LobbyService;
@@ -43,6 +43,16 @@ public class GameFrame extends JFrame {
 	private JLabel textLbl = new JLabel();
 	private JLabel textLbl2 = new JLabel();
 	private String selectOption = "";
+	private String optionSong;
+	private String optionIE;
+	private String optionHobby;
+	private String optionMeal;
+	private String optionBenefit;
+
+//	public static void main(String[] args) { // 테스트용
+//		new GameFrame(new User("은진", "1234", "이은진", "ISTJ", "여"), new User("경연", "1234", "김경연", "ISFP", "남"))
+//				.setVisible(true);
+//	}
 
 	public GameFrame(User user, User defender) {
 		GameModeService gameModeService = new GameModeServiceImpl(new GameModeServiceToolImpl());
@@ -61,6 +71,7 @@ public class GameFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// 게임 정상적으로 완료 시 동작
+//				setOptionAnswer();
 				gameOn(user, defender, gameModeService);
 			}
 		});
@@ -71,6 +82,7 @@ public class GameFrame extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+//					setOptionAnswer();
 					gameOn(user, defender, gameModeService);
 				}
 			}
@@ -95,9 +107,82 @@ public class GameFrame extends JFrame {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
+	public void setOptionAnswer() {
+		if (currentImageIndex >= 15 && currentImageIndex < 20) {
+			String[] str = selectOption.split("-");
+			String option = "";
+			for (int i = 0; i < str.length; i++) {
+				option += str[i] + "<br>";
+			}
+			optionSong = "<HTML><body>" + option + "</body></HTML>";
+		}
+		System.out.println("optionSong" + optionSong + currentImageIndex);
+		if (currentImageIndex >= 21 && currentImageIndex < 23) {
+			// 저는 집돌이라 집에 처박혀있었네요 ㅋㅋ
+			// 어제 저녁에 친구들이랑 나가서 술 존나 퍼먹었어요 ㅋㅋ
+			String[] str = selectOption.split(" 처");
+			String option = "";
+			if (str.length > 1) {
+				option += str[0] + "<br>처";
+				for (int i = 1; i < str.length; i++) {
+					option += str[i];
+				}
+			}
+			str = selectOption.split(" 나");
+			if (str.length > 1) {
+				option += str[0] + "<br>나";
+				for (int i = 1; i < str.length; i++) {
+					option += str[i];
+				}
+			}
+			optionIE = "<HTML><body>" + option + "</body></HTML>";
+		}
+		System.out.println("optionIE" + optionIE + currentImageIndex);
+	}
+
 	public void nextImage() {
 		currentImageIndex += 1;
 		label.setIcon(new ImageIcon(resultImages.get(currentImageIndex)));
+	}
+
+	public String getOptionSong() {
+		return optionSong;
+	}
+
+	public void setOptionSong(String optionSong) {
+		this.optionSong = optionSong;
+	}
+
+	public String getOptionIE() {
+		return optionIE;
+	}
+
+	public void setOptionIE(String optionIE) {
+		this.optionIE = optionIE;
+	}
+
+	public String getOptionHobby() {
+		return optionHobby;
+	}
+
+	public void setOptionHobby(String optionHobby) {
+		this.optionHobby = optionHobby;
+	}
+
+	public String getOptionMeal() {
+		return optionMeal;
+	}
+
+	public void setOptionMeal(String optionMeal) {
+		this.optionMeal = optionMeal;
+	}
+
+	public String getOptionBenefit() {
+		return optionBenefit;
+	}
+
+	public void setOptionBenefit(String optionBenefit) {
+		this.optionBenefit = optionBenefit;
 	}
 
 	public boolean isSelectedMode() {
@@ -163,7 +248,6 @@ public class GameFrame extends JFrame {
 	public void setDefender(User defender) {
 		this.defender = defender;
 	}
-	
 
 	public JLabel getLabel() {
 		return label;
@@ -180,7 +264,6 @@ public class GameFrame extends JFrame {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
 
 	public JLabel getTextLbl() {
 		return textLbl;
@@ -208,11 +291,12 @@ public class GameFrame extends JFrame {
 
 	public void gameOn(User user, User defender, GameModeService gameModeService) {
 		if (selectedMode == false) {
+//			System.out.println("optionIE" + optionIE + currentImageIndex);
+
 			if (textLbl.isVisible() || textLbl2.isVisible()) {
 				textLbl.setVisible(false);
 				textLbl2.setVisible(false);
 			}
-			gameModeService.makeSelectOption(this);
 			textLbl = gameModeService.setTextByImageIndex(this);
 			textLbl2 = gameModeService.setTextByImageIndex2(this);
 			int lastImageNum = resultImages.size() - 1;
@@ -251,5 +335,5 @@ public class GameFrame extends JFrame {
 			System.out.println("이미지 번호 : " + currentImageIndex);
 		}
 	}
-	
+
 }

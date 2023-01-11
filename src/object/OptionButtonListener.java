@@ -25,6 +25,7 @@ public class OptionButtonListener implements ActionListener {
 		gameFrame.getOptionPanel().setVisible(false);
 		gameFrame.setSelectedMode(false);
 		gameFrame.setSelectOption(e.getActionCommand());
+		gameFrame.setOptionAnswer();
 		gameFrame.setTextLbl(gameModeService.setTextByImageIndex(gameFrame));
 		gameFrame.setTextLbl2(gameModeService.setTextByImageIndex2(gameFrame));
 		int choice = gameModeService.selectByOption(e.getActionCommand());

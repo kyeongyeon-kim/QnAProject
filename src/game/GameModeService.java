@@ -19,5 +19,4 @@ public interface GameModeService {
 	public boolean isUserPlayedGameBefore(User user, User defender);
 	public JLabel setTextByImageIndex(GameFrame gameFrame);
 	public JLabel setTextByImageIndex2(GameFrame gameFrame);
-	public void makeSelectOption(GameFrame gameFrame);
 }
