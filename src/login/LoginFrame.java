@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
+import exception.DataIOException;
 import lobby.LobbyFrame;
 
 import javax.swing.JTextPane;
@@ -82,7 +83,11 @@ public class LoginFrame extends JFrame implements KeyListener {
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectLogin(login);
+				try {
+					selectLogin(login);
+				} catch (DataIOException e2) {
+					lblResult.setText("서버 연결이 원활하지 않습니다.");
+				}
 			}
 		});
 
@@ -163,7 +168,7 @@ public class LoginFrame extends JFrame implements KeyListener {
 
 	}
 
-	public void selectLogin(Login login) {
+	public void selectLogin(Login login) throws DataIOException {
 		int result = login.checkLogin(tfId.getText(), getPassword(pfPw));
 		if (result == login.loginComplete) {
 			// 로그인 완료

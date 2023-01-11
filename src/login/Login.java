@@ -1,5 +1,6 @@
 package login;
 
+import exception.DataIOException;
 import object.User;
 
 public class Login {
@@ -15,7 +16,7 @@ public class Login {
 	}
 
 	// 로그인 정보 -> db 연결
-	public int checkLogin(String id, String pw) {
+	public int checkLogin(String id, String pw) throws DataIOException {
 		if (repo.countById(id) != 0) {
 			if (repo.selectPw(id).equals(pw)) {
 				return loginComplete;
