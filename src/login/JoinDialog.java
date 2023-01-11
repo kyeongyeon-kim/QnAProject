@@ -99,6 +99,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		JLabel lblMbti = new JLabel("MBTI");
 		lblMbti.setBounds(66, 325, 100, 32);
 		lblSetting(lblMbti);
+
 		tfMbti = new JTextField("MBTI");
 		tfMbti.setBounds(63, 354, 234, 33);
 		tfSetting(tfMbti);
