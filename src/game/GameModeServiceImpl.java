@@ -23,13 +23,11 @@ import object.User;
 import ranking.UserRankDialog;
 import style.ImageServiceImpl;
 import style.ImageServiceToolImpl;
-import style.Paths;
 
 public class GameModeServiceImpl implements GameModeService {
 	private GameModeServiceTool gmst;
 	private int[] attackerIndex = { 0, 3, 8, 51, 54, 60, 63, 65, 71 };
 	private int[] defenderIndex = { 49, 50, 53, 55, 57, 59, 66, 67, 69, 70, 72, 75 };
-	private int[] bread = { 37, 38, 39 };
 	private Font font = new Font("맑은 고딕", Font.BOLD, 18);
 	private Font font2 = new Font("맑은 고딕", Font.BOLD, 27);
 	private Font font3 = new Font("맑은 고딕", Font.BOLD, 33);
@@ -314,8 +312,6 @@ public class GameModeServiceImpl implements GameModeService {
 				y = 290;
 			} else if (currentImageIndex == 32 || currentImageIndex == 33) {
 				y = 209;
-			} else if (currentImageIndex == 33) {
-//				y = 209;
 			} else if (currentImageIndex == 34) {
 				y = 121;
 			} else if (currentImageIndex == 35) {
@@ -331,8 +327,6 @@ public class GameModeServiceImpl implements GameModeService {
 			lbl.setBounds(372, y, 400, 300);
 			gameFrame.getLabel().add(lbl);
 		}
-		
-		
 		return lbl;
 	}
 }

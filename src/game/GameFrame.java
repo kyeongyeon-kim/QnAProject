@@ -49,11 +49,6 @@ public class GameFrame extends JFrame {
 	private String optionMeal;
 	private String optionBenefit;
 
-	public static void main(String[] args) { // 테스트용
-		new GameFrame(new User("은진", "1234", "이은진", "ISTJ", "여"), new User("경연", "1234", "김경연", "ISFP", "남"))
-				.setVisible(true);
-	}
-
 	public GameFrame(User user, User defender) {
 		GameModeService gameModeService = new GameModeServiceImpl(new GameModeServiceToolImpl());
 		resultImages = gameModeService.makeFirstHalfList(defender);
