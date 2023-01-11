@@ -201,7 +201,7 @@ public class GameModeServiceImpl implements GameModeService {
 			}
 		}
 		if (currentImageIndex == 46) { // 나는... 라벨
-			lbl.setText("나는 ...");
+			lbl.setText(gameFrame.getDefender().getName() + "은(는)...");
 			lbl.setBounds(150, 380, 400, 300);
 			lbl.setFont(font3);
 			gameFrame.getLabel().add(lbl);
