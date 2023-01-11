@@ -24,6 +24,7 @@ public class FindPwResultDialog extends JDialog {
 	private JPanel contentPane;
 	private JTextField tfPw;
 	private JTextField tfMbti;
+	private JButton btnOk;
 
 	public JTextField getTfMbti() {
 		return tfMbti;
@@ -39,7 +40,7 @@ public class FindPwResultDialog extends JDialog {
 
 	public FindPwResultDialog(String pw) {
 		setModal(true);
-		setBounds(720, 230, 350, 385);
+		setBounds(720, 240, 350, 385);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,7 +62,7 @@ public class FindPwResultDialog extends JDialog {
 		tfPw.setBounds(55, 160, 230, 35);
 		tfSetting(tfPw);
 		
-		JButton btnOk = new JButton("확인");
+		btnOk = new JButton("확인");
 		btnOk.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		btnOk.setBackground(new Color(96, 182, 230));
 		btnOk.setBorderPainted(false);

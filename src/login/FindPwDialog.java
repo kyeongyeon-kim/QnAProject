@@ -54,7 +54,7 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 
 	public FindPwDialog() {
 		setModal(true);
-		setBounds(700, 180, 378, 465);
+		setBounds(700, 220, 378, 465);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -109,8 +109,7 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 					System.out.println(pw);
 					new FindPwResultDialog(pw).setVisible(true);
 					dispose();
-				}
-				else {
+				} else {
 					System.out.println("실행안됨");
 				}
 			}
@@ -172,19 +171,19 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 			return false;
 		}
 		int a = rep.countById(id);
-		if(a == 0) {
+		if (a == 0) {
 			lblResult.setText("아이디를 잘못입력하셨습니다.");
 			return false;
 		}
-		String name1=rep.loginUser(id).getName();
-		if(!name.equals(name1)) {
+		String name1 = rep.loginUser(id).getName();
+		if (!name.equals(name1)) {
 			lblResult.setText("이름을 잘못입력하셨습니다.");
 			return false;
-		}else {
+		} else {
 			return true;
 		}
 	}
-	
+
 	public String checkInput(String id, String name) {
 		String pw = "";
 		pw = rep.loginUser(id).getPw();
@@ -225,16 +224,17 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-//		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-//			btnNext.doClick();
-//		}
-//		checkInputImage(e);
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			btnNext.doClick();
+		}
 	}
+
 //
 	@Override
 	public void keyReleased(KeyEvent e) {
 //		checkInputImage(e);
 	}
+
 //
 	@Override
 	public void keyTyped(KeyEvent e) {
