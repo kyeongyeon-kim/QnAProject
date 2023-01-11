@@ -58,7 +58,7 @@ public class GameModeServiceImpl implements GameModeService {
 	public List<Image> makeSecondHalfList(User user, int score) {
 		List<Image> secondHalfImages = new ArrayList<>();
 		List<Image> secondHalfList = new ArrayList<>();
-		int passScore = 0;
+		int passScore = 20;
 		ImageServiceImpl isi = new ImageServiceImpl(new ImageServiceToolImpl());
 		if (user.getGender().equals("남")) {
 			secondHalfList = score >= passScore ? isi.getLikeAbilityMan() : isi.failedLikeAbilityMan();
@@ -131,7 +131,6 @@ public class GameModeServiceImpl implements GameModeService {
 			gmst.deleteAnswer(user, defender);
 		}
 		List<Integer> choiceList = gameFrame.getChoiceList();
-		System.out.println(choiceList);
 		String sql = "INSERT INTO answer VALUES (?, ?, ?);";
 		try (Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);) {

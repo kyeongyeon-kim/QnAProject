@@ -59,7 +59,7 @@ public class UserRankDialog extends JDialog implements ActionListener {
 
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
-		String[] header = { "랭킹", "아이디", "점수" };
+		String[] header = { "랭킹", "ID", "점수" };
 		model = new DefaultTableModel(header, 0);
 		table = new JTable(model);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

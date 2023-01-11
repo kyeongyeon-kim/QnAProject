@@ -3,6 +3,7 @@ package lobby;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -57,6 +59,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 
 		JButton startBtn = new JButton("공략 시작");
+		startBtn.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		startBtn.setForeground(Color.WHITE);
 		startBtn.setBorderPainted(false);
 		startBtn.setBackground(new Color(92, 180, 229));
@@ -96,6 +99,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		scrollPane.setViewportView(table);
 
 		JLabel listLabel = new JLabel("공략 리스트");
+		listLabel.setFont(new Font("맑은 고딕", Font.BOLD, 14));
 		listLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		listLabel.setBounds(136, 12, 80, 15);
 		panel.add(listLabel);
@@ -115,6 +119,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		});
 
 		JButton searchBtn = new JButton("검색");
+		searchBtn.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		searchBtn.setBackground(SystemColor.control);
 		searchBtn.setBounds(242, 343, 74, 23);
 		searchBtn.addActionListener(this);
@@ -134,6 +139,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		panel.add(combo);
 
 		JButton endBtn = new JButton("로그아웃");
+		endBtn.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		endBtn.setForeground(Color.WHITE);
 		endBtn.setBorderPainted(false);
 		endBtn.setBackground(new Color(92, 180, 229));
@@ -142,6 +148,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		contentPane.add(endBtn);
 
 		JButton mypageBtn = new JButton("마이페이지");
+		mypageBtn.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		mypageBtn.setForeground(Color.WHITE);
 		mypageBtn.setBorderPainted(false);
 		mypageBtn.setBackground(new Color(92, 180, 229));
@@ -158,6 +165,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		contentPane.add(mypageBtn);
 
 		JButton rankBtn = new JButton("랭킹 조회");
+		rankBtn.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		rankBtn.setForeground(Color.WHITE);
 		rankBtn.setBorderPainted(false);
 		rankBtn.setBackground(new Color(92, 180, 229));
@@ -169,7 +177,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		table.setRowSorter(sorter);
 
 		lsi.readUserinfo(model, user);
-
+		setResizable(false);
 		setLocationRelativeTo(null);
 	}
 
@@ -193,19 +201,19 @@ public class LobbyFrame extends JFrame implements ActionListener {
 			}
 		}
 		if (command.equals("검색")) {
-			if (str.equals("이름")) {
-				
-			} else if (str.equals("성별")) {
-				
-			} else if (str.equals("ID")) {
-				
-			} else if (str.equals("MBTI")) {
-				
-			} else {
-				lsi.infomationFiltering(this);
-			}
-			inputInfo.setText("");
-		}
+	         if (str.equals("이름")) {
+	            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + inputInfo.getText(), 0));
+	         } else if (str.equals("성별")) {
+	            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + inputInfo.getText(), 1));
+	         } else if (str.equals("ID")) {
+	            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + inputInfo.getText(), 2));
+	         } else if (str.equals("MBTI")) {
+	            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + inputInfo.getText(), 3));
+	         } else {
+	            lsi.infomationFiltering(this);
+	         }
+	         inputInfo.setText("");
+	      }
 	}
 
 	private void transferMethod() {

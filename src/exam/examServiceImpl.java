@@ -215,7 +215,7 @@ public class examServiceImpl implements examService {
 		try (Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, user.getId());
-			System.out.println(pstmt.executeUpdate());
+			pstmt.executeUpdate();
 
 		} catch (SQLException ee) {
 			ee.printStackTrace();

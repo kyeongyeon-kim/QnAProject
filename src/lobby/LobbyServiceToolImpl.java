@@ -60,10 +60,6 @@ public class LobbyServiceToolImpl implements LobbyServiceTool {
 					int answer = rs.getInt(1);
 					answerList.add(answer);
 				}
-//				System.out.println(user.getId() + " 미션리스트 사이즈 : " + missionList.size());
-//				System.out.println(missionList);
-//				System.out.println(attacker + " 답변리스트 사이즈 : " + answerList.size());
-//				System.out.println(answerList);
 				
 				int count = 0;
 				for (Integer answer : answerList) {
@@ -71,7 +67,6 @@ public class LobbyServiceToolImpl implements LobbyServiceTool {
 						count++;
 					}
 				}
-//				System.out.println("점수 : " + count);
 				return new Attacker(attacker, count * 10);
 			}
 		}
@@ -98,13 +93,11 @@ public class LobbyServiceToolImpl implements LobbyServiceTool {
 					int mission = rs.getInt(1);
 					missionList.add(mission);
 				}
-				System.out.println(defenderId + " 미션리스트 사이즈 : " + missionList.size());
 
 				while (rs2.next()) {
 					int answer = rs2.getInt(1);
 					answerList.add(answer);
 				}
-				System.out.println(myId + " 답변리스트 사이즈 : " + answerList.size());
 				
 				int count = 0;
 				for (Integer answer : answerList) {
@@ -112,7 +105,6 @@ public class LobbyServiceToolImpl implements LobbyServiceTool {
 						count++;
 					}
 				}
-				System.out.println(defenderId + "가 맞힌 문제 개수: " + count);
 				return new Attacker(defenderId, count * 10);
 			}
 		}
