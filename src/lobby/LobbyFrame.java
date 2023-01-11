@@ -69,7 +69,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 				if (lsi.isRowSelected(table)) {
 					int seletedRow = table.getSelectedRow();
 					Object userId = table.getValueAt(seletedRow, 2);
-					User defender = repo.loginUser((String)userId);
+					User defender = repo.loginUser((String) userId);
 					GameFrame gf = new GameFrame(user, defender);
 					gf.setVisible(true);
 					dispose();
@@ -120,7 +120,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		searchBtn.addActionListener(this);
 		panel.add(searchBtn);
 
-		String[] comboName = { " ALL", "이름", "성별", "ID", "MBTI" };
+		String[] comboName = { "ALL", "이름", "성별", "ID", "MBTI" };
 		JComboBox combo = new JComboBox(comboName);
 		combo.setBackground(SystemColor.control);
 		combo.setBounds(28, 343, 74, 23);
@@ -193,11 +193,21 @@ public class LobbyFrame extends JFrame implements ActionListener {
 			}
 		}
 		if (command.equals("검색")) {
-			lsi.infomationFiltering(this);
+			if (str.equals("이름")) {
+				
+			} else if (str.equals("성별")) {
+				
+			} else if (str.equals("ID")) {
+				
+			} else if (str.equals("MBTI")) {
+				
+			} else {
+				lsi.infomationFiltering(this);
+			}
 			inputInfo.setText("");
 		}
 	}
-	
+
 	private void transferMethod() {
 		lsi.infomationFiltering(this);
 	}
