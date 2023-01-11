@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import dbutil.ConnectionProvider;
+import exception.DataIOException;
 import object.User;
 
 public class UserinfoRepositoryImpl implements UserinfoRepository {
@@ -46,7 +47,7 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataIOException(e);
 		}
 		return 0;
 	}
@@ -63,7 +64,7 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataIOException(e);
 		}
 		return null;
 	}
