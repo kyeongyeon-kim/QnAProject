@@ -175,9 +175,8 @@ public class GameModeServiceImpl implements GameModeService {
 	public JLabel setTextByImageIndex(GameFrame gameFrame) {
 		JLabel lbl = new JLabel();
 		List<Integer> nameList = new ArrayList<>(Arrays.asList(11, 12, 13, 14, 15, 17, 18, 19));
-		int y = 53;
 		int currentImageIndex = gameFrame.getCurrentImageIndex();
-		
+
 		for (int i = 0; i < attackerIndex.length; i++) { // 사용자 이름 고정 라벨
 			if (currentImageIndex == attackerIndex[i]) {
 				lbl.setText(gameFrame.getUser().getId());
@@ -200,9 +199,10 @@ public class GameModeServiceImpl implements GameModeService {
 			lbl.setFont(font3);
 			gameFrame.getLabel().add(lbl);
 		}
-		
+
 		// ------ 카톡 화면 라벨 ------
 		if (nameList.contains(currentImageIndex)) { // 이름라벨
+			int y = 53;
 			if (currentImageIndex == 19) {
 				y -= 85;
 			}
@@ -211,22 +211,53 @@ public class GameModeServiceImpl implements GameModeService {
 			lbl.setFont(font);
 			gameFrame.getLabel().add(lbl);
 		}
-		
-		if (currentImageIndex == 22) {
+		// 외향성내향성 선택
+		List<Integer> ieList = new ArrayList<>(Arrays.asList(22, 23, 24, 25, 26, 28, 29, 30, 31));
+		if (ieList.contains(currentImageIndex)) {
+			int y = 260;
 			lbl.setText(gameFrame.getOptionIE());
-			lbl.setBounds(370, 260, 400, 700);
+			if (currentImageIndex == 22) {
+			} else if (currentImageIndex == 23) {
+				y = 150;
+			} else if (currentImageIndex == 24) {
+				y = 90;
+			} else if (currentImageIndex == 25 || currentImageIndex == 26) {
+				y = 10;
+			} else if (currentImageIndex == 28) {
+				y = -80;
+			} else if (currentImageIndex == 29) {
+				y = -130;
+			} else if (currentImageIndex == 30) {
+				y = -200;
+			} else if (currentImageIndex == 31) {
+				y = -250;
+			}
+			lbl.setBounds(370, y, 400, 700);
 			lbl.setFont(font);
 			gameFrame.getLabel().add(lbl);
 		}
-		
-		for (int i = 0; i < bread.length; i++) { // 음식메뉴라벨
-			if (currentImageIndex == bread[i]) {
-				lbl.setText(gameFrame.getSelectOption());
-				lbl.setForeground(new Color(48, 56, 72));
-				lbl.setBounds(475, 475 - i * 55, 400, 300);
-				lbl.setFont(font);
-				gameFrame.getLabel().add(lbl);
+		// 음식선택
+		List<Integer> bread = new ArrayList<>(Arrays.asList(37, 38, 39, 41, 42, 43, 44));
+		if (bread.contains(currentImageIndex)) {
+			int y = 481;
+			if (currentImageIndex == 38) {
+				y -= 54;
+			} else if (currentImageIndex == 39) {
+				y -= 124;
+			} else if (currentImageIndex == 41) {
+				y = 295;
+			} else if (currentImageIndex == 42) {
+				y = 255;
+			} else if (currentImageIndex == 43) {
+				y = 163;
+			} else if (currentImageIndex == 44) {
+				y = 105;
 			}
+			lbl.setText(gameFrame.getOptionMeal());
+			lbl.setForeground(new Color(48, 56, 72));
+			lbl.setFont(font);
+			lbl.setBounds(475, y, 400, 300);
+			gameFrame.getLabel().add(lbl);
 		}
 		return lbl;
 	}
@@ -235,23 +266,73 @@ public class GameModeServiceImpl implements GameModeService {
 	public JLabel setTextByImageIndex2(GameFrame gameFrame) { // 라벨 두개필요할때 사용
 		JLabel lbl = new JLabel();
 		int currentImageIndex = gameFrame.getCurrentImageIndex();
-		List<Integer> choiceList = new ArrayList<>(Arrays.asList(17, 18, 19, 20, 21, 22));
-		int y = 175;
+		// 노래선택
+		List<Integer> choiceList = new ArrayList<>(Arrays.asList(17, 18, 19, 20, 22, 23, 24));
 		if (choiceList.contains(currentImageIndex)) {
+			int y = 175;
 			if (currentImageIndex == 19) {
 				y = 90; // 90
 			} else if (currentImageIndex == 20) {
 				y = 10; // 10
-			} else if (currentImageIndex == 21) {
-				lbl.setVisible(false);
 			} else if (currentImageIndex == 22) {
 				y = -77; // 10
-			} 
+			} else if (currentImageIndex == 23) {
+				y = -185; 
+			} else if (currentImageIndex == 24) {
+				y = -253; 
+			}
 			lbl.setText(gameFrame.getOptionSong());
 			lbl.setBounds(355, y, 400, 700);
 			lbl.setFont(font);
 			gameFrame.getLabel().add(lbl);
 		}
+		// 혜택선택
+		List<Integer> benefit = new ArrayList<>(Arrays.asList(41, 42, 43, 44));
+		if (benefit.contains(currentImageIndex)) {
+			int y = 470;
+			if (currentImageIndex == 42) {
+				y = 430;
+			} else if (currentImageIndex == 43) {
+				y = 337;
+			} else if (currentImageIndex == 44) {
+				y = 281;
+			}
+			lbl.setText(gameFrame.getOptionBenefit());
+			lbl.setForeground(new Color(48, 56, 72));
+			lbl.setFont(font);
+			lbl.setBounds(465, y, 400, 300);
+			gameFrame.getLabel().add(lbl);
+		}
+		List<Integer> hobby = new ArrayList<>(Arrays.asList(28, 29, 30, 31, 32, 33, 34, 35, 37, 38));
+		if (hobby.contains(currentImageIndex)) {
+			int y = 457;
+			if (currentImageIndex == 29) {
+				y = 410;
+			} else if (currentImageIndex == 30) {
+				y = 344;
+			} else if (currentImageIndex == 31) {
+				y = 290;
+			} else if (currentImageIndex == 32 || currentImageIndex == 33) {
+				y = 209;
+			} else if (currentImageIndex == 33) {
+//				y = 209;
+			} else if (currentImageIndex == 34) {
+				y = 121;
+			} else if (currentImageIndex == 35) {
+				y = 77;
+			} else if (currentImageIndex == 37) {
+				y = 26;
+			} else if (currentImageIndex == 38) {
+				y = -27;
+			} 
+			lbl.setText(gameFrame.getOptionHobby());
+			lbl.setForeground(new Color(48, 56, 72));
+			lbl.setFont(font);
+			lbl.setBounds(372, y, 400, 300);
+			gameFrame.getLabel().add(lbl);
+		}
+		
+		
 		return lbl;
 	}
 }

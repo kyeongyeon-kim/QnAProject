@@ -49,10 +49,10 @@ public class GameFrame extends JFrame {
 	private String optionMeal;
 	private String optionBenefit;
 
-//	public static void main(String[] args) { // 테스트용
-//		new GameFrame(new User("은진", "1234", "이은진", "ISTJ", "여"), new User("경연", "1234", "김경연", "ISFP", "남"))
-//				.setVisible(true);
-//	}
+	public static void main(String[] args) { // 테스트용
+		new GameFrame(new User("은진", "1234", "이은진", "ISTJ", "여"), new User("경연", "1234", "김경연", "ISFP", "남"))
+				.setVisible(true);
+	}
 
 	public GameFrame(User user, User defender) {
 		GameModeService gameModeService = new GameModeServiceImpl(new GameModeServiceToolImpl());
@@ -71,7 +71,6 @@ public class GameFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// 게임 정상적으로 완료 시 동작
-//				setOptionAnswer();
 				gameOn(user, defender, gameModeService);
 			}
 		});
@@ -82,7 +81,6 @@ public class GameFrame extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-//					setOptionAnswer();
 					gameOn(user, defender, gameModeService);
 				}
 			}
@@ -116,7 +114,6 @@ public class GameFrame extends JFrame {
 			}
 			optionSong = "<HTML><body>" + option + "</body></HTML>";
 		}
-		System.out.println("optionSong" + optionSong + currentImageIndex);
 		if (currentImageIndex >= 21 && currentImageIndex < 23) {
 			// 저는 집돌이라 집에 처박혀있었네요 ㅋㅋ
 			// 어제 저녁에 친구들이랑 나가서 술 존나 퍼먹었어요 ㅋㅋ
@@ -137,7 +134,21 @@ public class GameFrame extends JFrame {
 			}
 			optionIE = "<HTML><body>" + option + "</body></HTML>";
 		}
-		System.out.println("optionIE" + optionIE + currentImageIndex);
+		if (currentImageIndex >= 27 && currentImageIndex < 30) {
+			String str = selectOption;
+			if (str.length() >= 23) {
+				str = str.substring(0, 15) + "<br>" + str.substring(15, str.length());
+			} else if (str.length() > 10 && str.length() < 23) {
+				str = str.substring(0, 14) + "<br>" + str.substring(14, str.length());
+			}
+			optionHobby = "<HTML><body>" + str + "</body></HTML>";
+		}
+		if (currentImageIndex >= 36 && currentImageIndex < 38) {
+			optionMeal = selectOption;
+		}
+		if (currentImageIndex >= 40 && currentImageIndex < 42) {
+			optionBenefit = selectOption;
+		}
 	}
 
 	public void nextImage() {
