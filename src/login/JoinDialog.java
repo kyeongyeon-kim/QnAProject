@@ -99,6 +99,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		JLabel lblMbti = new JLabel("MBTI");
 		lblMbti.setBounds(66, 325, 100, 32);
 		lblSetting(lblMbti);
+
 		tfMbti = new JTextField("MBTI");
 		tfMbti.setBounds(63, 354, 234, 33);
 		tfSetting(tfMbti);
@@ -278,7 +279,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 			dispose();
 
 		} else if (result == join.joinFailByName) {
-			lblResult.setText("이름 입력이 잘못되었습니다.(1~15자)");
+			lblResult.setText("이름 입력이 잘못되었습니다.(1~4자)");
 		} else if (result == join.joinFailByDuplicate) {
 			lblResult.setText("이미 가입된 아이디입니다.");
 		} else if (result == join.joinFailById) {
@@ -354,6 +355,7 @@ public class JoinDialog extends JDialog implements FocusListener, MouseListener,
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			btnNext.doClick();
 		}
+		checkInputImage(e);
 	}
 
 	@Override

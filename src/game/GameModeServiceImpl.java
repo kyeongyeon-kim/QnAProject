@@ -173,25 +173,34 @@ public class GameModeServiceImpl implements GameModeService {
 		JLabel lbl = new JLabel();
 		List<Integer> nameList = new ArrayList<>(Arrays.asList(11, 12, 13, 14, 15, 17, 18, 19));
 		int currentImageIndex = gameFrame.getCurrentImageIndex();
-
 		for (int i = 0; i < attackerIndex.length; i++) { // 사용자 이름 고정 라벨
 			if (currentImageIndex == attackerIndex[i]) {
-				lbl.setText(gameFrame.getUser().getId());
-				lbl.setBounds(173, 287, 400, 300);
+				String name = gameFrame.getUser().getName();
+				int x = 160;
+				if (name.length() > 3) {
+					x = 147;
+				} 
+				lbl.setText(name);
+				lbl.setBounds(x, 287, 400, 300);
 				lbl.setFont(font2);
 				gameFrame.getLabel().add(lbl);
 			}
 		}
 		for (int i = 0; i < defenderIndex.length; i++) { // defender 이름 고정 라벨
 			if (currentImageIndex == defenderIndex[i]) {
-				lbl.setText(gameFrame.getDefender().getId());
-				lbl.setBounds(173, 287, 400, 300);
+				String name = gameFrame.getDefender().getName();
+				int x = 160;
+				if (name.length() > 3) {
+					x = 147;
+				} 
+				lbl.setText(name);
+				lbl.setBounds(x, 287, 400, 300);
 				lbl.setFont(font2);
 				gameFrame.getLabel().add(lbl);
 			}
 		}
 		if (currentImageIndex == 46) { // 나는... 라벨
-			lbl.setText("나는 ...");
+			lbl.setText(gameFrame.getDefender().getName() + "은(는)...");
 			lbl.setBounds(150, 380, 400, 300);
 			lbl.setFont(font3);
 			gameFrame.getLabel().add(lbl);
@@ -203,8 +212,13 @@ public class GameModeServiceImpl implements GameModeService {
 			if (currentImageIndex == 19) {
 				y -= 85;
 			}
-			lbl.setText(gameFrame.getDefender().getId());
-			lbl.setBounds(370, y, 400, 300);
+			String name = gameFrame.getDefender().getName();
+			int x = 370;
+			if (name.length() > 3) {
+				x = 358;
+			} 
+			lbl.setText(name);
+			lbl.setBounds(x, y, 400, 300);
 			lbl.setFont(font);
 			gameFrame.getLabel().add(lbl);
 		}

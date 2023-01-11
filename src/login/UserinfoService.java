@@ -32,7 +32,7 @@ public class UserinfoService {
 	}
 
 	public boolean verifyName(String name) {
-		Pattern p = Pattern.compile("[a-zA-Zㄱ-힣0-9!@#$%^&*()]{1,15}");
+		Pattern p = Pattern.compile("[a-zA-Zㄱ-힣]{1,4}");
 		Matcher m = p.matcher(name);
 		if (m.matches()) {
 			return true;

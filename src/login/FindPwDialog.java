@@ -54,7 +54,7 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 
 	public FindPwDialog() {
 		setModal(true);
-		setBounds(700, 180, 378, 465);
+		setBounds(700, 220, 378, 465);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -71,18 +71,18 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 		JLabel lblId = new JLabel("아이디");
 		lblId.setBounds(66, 130, 100, 32);
 		lblSetting(lblId);
-		tfId = new JTextField("아이디");
+		tfId = new JTextField("");
 		tfId.setBounds(63, 159, 234, 33);
 		tfSetting(tfId);
-		checkId = checkImage(lblId, 38);
+//		checkId = checkImage(lblId, 38);
 
 		JLabel lblName = new JLabel("이름");
 		lblName.setBounds(66, 195, 100, 32);
 		lblSetting(lblName);
-		tfName = new JTextField("이름");
+		tfName = new JTextField("");
 		tfName.setBounds(63, 224, 234, 33);
 		tfSetting(tfName);
-		checkName = checkImage(lblName, 26);
+//		checkName = checkImage(lblName, 26);
 
 		lblResult = new JLabel("");
 		lblResult.setBounds(64, 266, 220, 39);
@@ -109,8 +109,7 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 					System.out.println(pw);
 					new FindPwResultDialog(pw).setVisible(true);
 					dispose();
-				}
-				else {
+				} else {
 					System.out.println("실행안됨");
 				}
 			}
@@ -137,47 +136,54 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 		contentPane.add(lbl);
 	}
 
-	// 체크이미지(입력값 확인)
-	private JLabel checkImage(JLabel lbl, int i) {
-		JLabel lblCheck = new JLabel();
-		lblCheck.setIcon(new ImageIcon(im.getUnchecked()));
-		lblCheck.setBounds(i, 10, 15, 15);
-		lblCheck.setBackground(null);
-		lbl.add(lblCheck);
-		return lblCheck;
-	}
+//	// 체크이미지(입력값 확인)
+//	private JLabel checkImage(JLabel lbl, int i) {
+//		JLabel lblCheck = new JLabel();
+//		lblCheck.setIcon(new ImageIcon(im.getUnchecked()));
+//		lblCheck.setBounds(i, 10, 15, 15);
+//		lblCheck.setBackground(null);
+//		lbl.add(lblCheck);
+//		return lblCheck;
+//	}
+//
+//	// 입력값 확인 후 체크이미지 변경
+//	private void checkInputImage(KeyEvent e) {
+//		if (e.getSource() == tfId) {
+//			if (rep.countById(tfId.getText()) != 0) {
+//				checkId.setIcon(new ImageIcon(im.getChecked()));
+//			} else {
+//				checkId.setIcon(new ImageIcon(im.getUnchecked()));
+//			}
+//		} else if (e.getSource() == tfName) {
+//			String name = rep.loginUser(tfId.getText()).getName();
+//			if (name.equals(tfName.getText())) {
+//				checkName.setIcon(new ImageIcon(im.getChecked()));
+//			} else {
+//				checkName.setIcon(new ImageIcon(im.getUnchecked()));
+//			}
+//		}
+//	}
 
-	// 입력값 확인 후 체크이미지 변경
-	private void checkInputImage(KeyEvent e) {
-		if (e.getSource() == tfId) {
-			if (rep.countById(tfId.getText()) != 0) {
-				checkId.setIcon(new ImageIcon(im.getChecked()));
-			} else {
-				checkId.setIcon(new ImageIcon(im.getUnchecked()));
-			}
-		} else if (e.getSource() == tfName) {
-			String name = rep.loginUser(tfId.getText()).getName();
-			if (name.equals(tfName.getText())) {
-				checkName.setIcon(new ImageIcon(im.getChecked()));
-			} else {
-				checkName.setIcon(new ImageIcon(im.getUnchecked()));
-			}
-		}
-	}
-
-	// 입력값 없는지 확인
+	// 패스워드 아이디,이름 확인
 	public boolean checkNotInput(String id, String name) {
-		if (name.equals("이름")) {
-			lblResult.setText("이름를 입력해주세요.");
+		if (name.equals("") || id.equals("")) {
+			lblResult.setText("다시 입력해주세요.");
 			return false;
-		} else if (id.equals("아이디")) {
-			lblResult.setText("아이디를 입력해주세요.");
+		}
+		int a = rep.countById(id);
+		if (a == 0) {
+			lblResult.setText("아이디를 잘못입력하셨습니다.");
+			return false;
+		}
+		String name1 = rep.loginUser(id).getName();
+		if (!name.equals(name1)) {
+			lblResult.setText("이름을 잘못입력하셨습니다.");
 			return false;
 		} else {
 			return true;
 		}
 	}
-	
+
 	public String checkInput(String id, String name) {
 		String pw = "";
 		pw = rep.loginUser(id).getPw();
@@ -195,25 +201,25 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 
 	@Override
 	public void focusLost(FocusEvent e) { // 내용을 지우면 초기값 설정
-		if (e.getSource() == tfName && tfName.getText().equals("")) {
-			tfName.setText("이름");
-		} else if (e.getSource() == tfId && tfId.getText().equals("")) {
-			tfId.setText("아이디");
-		}
-		if (e.getSource() == tfId) { // 코드정리하기..
-			if (rep.countById(tfId.getText()) != 0) {
-				checkId.setIcon(new ImageIcon(im.getChecked()));
-			} else {
-				checkId.setIcon(new ImageIcon(im.getUnchecked()));
-			}
-		} else if (e.getSource() == tfName) {
-			String name = rep.loginUser(tfId.getText()).getName();
-			if (name.equals(tfName.getText())) {
-				checkName.setIcon(new ImageIcon(im.getChecked()));
-			} else {
-				checkName.setIcon(new ImageIcon(im.getUnchecked()));
-			}
-		}
+//		if (e.getSource() == tfName && tfName.getText().equals("")) {
+//			tfName.setText("이름");
+//		} else if (e.getSource() == tfId && tfId.getText().equals("")) {
+//			tfId.setText("아이디");
+//		}
+//		if (e.getSource() == tfId) { // 코드정리하기..
+//			if (rep.countById(tfId.getText()) != 0) {
+//				checkId.setIcon(new ImageIcon(im.getChecked()));
+//			} else {
+//				checkId.setIcon(new ImageIcon(im.getUnchecked()));
+//			}
+//		} else if (e.getSource() == tfName) {
+//			String name = rep.loginUser(tfId.getText()).getName();
+//			if (name.equals(tfName.getText())) {
+//				checkName.setIcon(new ImageIcon(im.getChecked()));
+//			} else {
+//				checkName.setIcon(new ImageIcon(im.getUnchecked()));
+//			}
+//		}
 	}
 
 	@Override
@@ -221,16 +227,17 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			btnNext.doClick();
 		}
-		checkInputImage(e);
 	}
 
+//
 	@Override
 	public void keyReleased(KeyEvent e) {
-		checkInputImage(e);
+//		checkInputImage(e);
 	}
 
+//
 	@Override
 	public void keyTyped(KeyEvent e) {
-		checkInputImage(e);
+//		checkInputImage(e);
 	}
 }

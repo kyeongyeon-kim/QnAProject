@@ -15,28 +15,21 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Arrays;
 import java.awt.event.ActionEvent;
 
 public class LoginFrame extends JFrame implements KeyListener {
 	private JPanel contentPane;
 	private JTextField tfId;
-	private JTextField tfPw;
 	private JPasswordField pfPw;
 	private JLabel lblResult;
 	private JButton btnFind;
 	private JButton btnLogin;
 	private JButton btnJoin;
 	private JoinDialog joinDialog;
-	private String pw;
-	private char[] charPw;
 
 	public LoginFrame(Login login) {
-		charPw = new char[0];
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(700, 230, 350, 460);
 		contentPane = new JPanel();
