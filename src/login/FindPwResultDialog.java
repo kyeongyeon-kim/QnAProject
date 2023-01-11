@@ -39,7 +39,7 @@ public class FindPwResultDialog extends JDialog {
 
 	public FindPwResultDialog(String pw) {
 		setModal(true);
-		setBounds(700, 180, 378, 465);
+		setBounds(720, 230, 350, 385);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -50,21 +50,36 @@ public class FindPwResultDialog extends JDialog {
 		textPane.setFont(new Font("맑은 고딕", Font.BOLD, 24));
 		textPane.setText("비밀번호 찾기");
 		textPane.setEditable(false);
-		textPane.setBounds(100, 60, 160, 39);
+		textPane.setBounds(88, 60, 160, 39);
 		contentPane.add(textPane);
 
 		JLabel lblPw = new JLabel("비밀번호");
-		lblPw.setBounds(66, 180, 100, 32);
+		lblPw.setBounds(55, 128, 100, 32);
 		lblSetting(lblPw);
 		tfPw = new JTextField(pw);
-		tfPw.setBounds(63, 209, 234, 33);
+		tfPw.setEditable(false);
+		tfPw.setBounds(55, 160, 230, 35);
 		tfSetting(tfPw);
+		
+		JButton btnOk = new JButton("확인");
+		btnOk.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		btnOk.setBackground(new Color(96, 182, 230));
+		btnOk.setBorderPainted(false);
+		btnOk.setForeground(Color.white);
+		btnOk.setBounds(55, 210, 230, 39);
+		contentPane.add(btnOk);
+		btnOk.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 
 	}
 
 	// 텍스트필드 설정
 	private void tfSetting(JTextField tf) {
-		tf.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		tf.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		tf.setBackground(new Color(240, 241, 242));
 		tf.setForeground(Color.gray);
 		tf.setBorder(new EmptyBorder(0, 7, 0, 7));

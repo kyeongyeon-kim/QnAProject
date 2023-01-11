@@ -110,6 +110,9 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 					new FindPwResultDialog(pw).setVisible(true);
 					dispose();
 				}
+				else {
+					System.out.println("실행안됨");
+				}
 			}
 		});
 	}
@@ -174,7 +177,7 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 			return true;
 		}
 	}
-
+	
 	public String checkInput(String id, String name) {
 		String pw = "";
 		pw = rep.loginUser(id).getPw();
