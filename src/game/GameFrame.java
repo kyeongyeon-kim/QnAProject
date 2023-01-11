@@ -7,11 +7,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.StringTokenizer;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -48,6 +50,7 @@ public class GameFrame extends JFrame {
 	private String optionHobby;
 	private String optionMeal;
 	private String optionBenefit;
+	private Clip clip = null;
 
 	public GameFrame(User user, User defender) {
 		GameModeService gameModeService = new GameModeServiceImpl(new GameModeServiceToolImpl());
@@ -337,8 +340,16 @@ public class GameFrame extends JFrame {
 			if (phoneScene) {
 				Vibration vibe = new Vibration(label);
 				vibe.getTimer().start();
+				try {
+					// 음원 파일 경로
+					File file = new File("phoneVibeSound.wav");
+					clip = AudioSystem.getClip();
+					clip.open(AudioSystem.getAudioInputStream(file));
+					clip.start();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-			System.out.println("이미지 번호 : " + currentImageIndex);
 		}
 	}
 

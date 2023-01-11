@@ -108,9 +108,8 @@ public class LobbyFrame extends JFrame implements ActionListener {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				String getText = inputInfo.getText();
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					lsi.infomationFiltering(getText, sorter);
+					transferMethod();
 				}
 			}
 		});
@@ -194,9 +193,28 @@ public class LobbyFrame extends JFrame implements ActionListener {
 			}
 		}
 		if (command.equals("검색")) {
-			String getText = inputInfo.getText();
-			lsi.infomationFiltering(getText, sorter);
+			lsi.infomationFiltering(this);
 			inputInfo.setText("");
 		}
+	}
+	
+	private void transferMethod() {
+		lsi.infomationFiltering(this);
+	}
+
+	public JTextField getInputInfo() {
+		return inputInfo;
+	}
+
+	public void setInputInfo(JTextField inputInfo) {
+		this.inputInfo = inputInfo;
+	}
+
+	public TableRowSorter<TableModel> getSorter() {
+		return sorter;
+	}
+
+	public void setSorter(TableRowSorter<TableModel> sorter) {
+		this.sorter = sorter;
 	}
 }

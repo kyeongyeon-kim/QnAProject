@@ -56,12 +56,12 @@ public class LobbyServiceImpl implements LobbyService {
 	}
 
 	@Override
-	public void infomationFiltering(String getText, TableRowSorter<TableModel> sorter) {
-		if (getText.length() == 0) {
-			sorter.setRowFilter(null);
+	public void infomationFiltering(LobbyFrame lobbyFrame) {
+		if (lobbyFrame.getInputInfo().getText().length() == 0) {
+			lobbyFrame.getSorter().setRowFilter(null);
 		} else {
 			try {
-				sorter.setRowFilter(RowFilter.regexFilter(getText));
+				lobbyFrame.getSorter().setRowFilter(RowFilter.regexFilter(lobbyFrame.getInputInfo().getText()));
 			} catch (PatternSyntaxException pse) {
 //				System.out.println("Bad regex pattern");
 			}
