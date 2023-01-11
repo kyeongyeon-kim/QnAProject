@@ -21,7 +21,7 @@ import java.awt.event.KeyListener;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;
 
-public class LoginFrame extends JFrame implements FocusListener, KeyListener {
+public class LoginFrame extends JFrame implements KeyListener {
 	private JPanel contentPane;
 	private JTextField tfId;
 	private JTextField tfPw;
@@ -144,26 +144,7 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 		j.setBorder(new EmptyBorder(0, 7, 0, 7));
 		j.setColumns(20);
 		j.addKeyListener(this);
-		j.addFocusListener(this);
 		contentPane.add(j);
-	}
-
-	@Override
-	public void focusGained(FocusEvent e) {
-		if (e.getSource() == tfId && tfId.getText().equals("아이디")) {
-			tfId.setText("");
-		} else if (e.getSource() == pfPw && getPassword(pfPw).equals("비밀번호")) {
-			pfPw.setText("");
-		}
-	}
-
-	@Override
-	public void focusLost(FocusEvent e) {
-		if (e.getSource() == tfId && tfId.getText().equals("")) {
-			tfId.setText("아이디");
-		} else if (e.getSource() == pfPw && getPassword(pfPw).equals("")) {
-			pfPw.setText("비밀번호");
-		}
 	}
 
 	@Override
@@ -206,7 +187,6 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 		pfPw.setForeground(new Color(88, 89, 91));
 		pfPw.setBorder(new EmptyBorder(0, 7, 0, 7));
 		pfPw.setColumns(20);
-		pfPw.addFocusListener(this);
 		contentPane.add(pfPw);
 	}
 }
