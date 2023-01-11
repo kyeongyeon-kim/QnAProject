@@ -31,7 +31,8 @@ public class GameModeServiceImpl implements GameModeService {
 	private Font font = new Font("맑은 고딕", Font.BOLD, 18);
 	private Font font2 = new Font("맑은 고딕", Font.BOLD, 27);
 	private Font font3 = new Font("맑은 고딕", Font.BOLD, 33);
-
+	private boolean secondHalfGo = true;
+	
 	public GameModeServiceImpl(GameModeServiceTool gmst) {
 		super();
 		this.gmst = gmst;
@@ -73,6 +74,7 @@ public class GameModeServiceImpl implements GameModeService {
 				secondHalfImages.add(date);
 			}
 		} else {
+			secondHalfGo = false;
 			for (Image gameOver : isi.gameOver()) {
 				secondHalfImages.add(gameOver);
 			}
@@ -199,7 +201,7 @@ public class GameModeServiceImpl implements GameModeService {
 				gameFrame.getLabel().add(lbl);
 			}
 		}
-		if (currentImageIndex == 46) { // 나는... 라벨
+		if (currentImageIndex == 46 && secondHalfGo) { // 나는... 라벨
 			lbl.setText(gameFrame.getDefender().getName() + "은(는)...");
 			lbl.setBounds(150, 380, 400, 300);
 			lbl.setFont(font3);
@@ -248,7 +250,7 @@ public class GameModeServiceImpl implements GameModeService {
 			gameFrame.getLabel().add(lbl);
 		}
 		// 음식선택
-		List<Integer> bread = new ArrayList<>(Arrays.asList(37, 38, 39, 41, 42, 43, 44));
+		List<Integer> bread = new ArrayList<>(Arrays.asList(37, 38, 39, 41, 42, 43, 44, 45));
 		if (bread.contains(currentImageIndex)) {
 			int y = 481;
 			if (currentImageIndex == 38) {
@@ -263,6 +265,10 @@ public class GameModeServiceImpl implements GameModeService {
 				y = 163;
 			} else if (currentImageIndex == 44) {
 				y = 105;
+			} else if (currentImageIndex == 45 && !secondHalfGo) { // 여기여기
+				y = 75;
+			} else if (currentImageIndex == 45 && secondHalfGo) {
+				lbl.setVisible(false);
 			}
 			lbl.setText(gameFrame.getOptionMeal());
 			lbl.setForeground(new Color(48, 56, 72));
@@ -298,7 +304,7 @@ public class GameModeServiceImpl implements GameModeService {
 			gameFrame.getLabel().add(lbl);
 		}
 		// 혜택선택
-		List<Integer> benefit = new ArrayList<>(Arrays.asList(41, 42, 43, 44));
+		List<Integer> benefit = new ArrayList<>(Arrays.asList(41, 42, 43, 44, 45));
 		if (benefit.contains(currentImageIndex)) {
 			int y = 470;
 			if (currentImageIndex == 42) {
@@ -307,6 +313,10 @@ public class GameModeServiceImpl implements GameModeService {
 				y = 337;
 			} else if (currentImageIndex == 44) {
 				y = 281;
+			} else if (currentImageIndex == 45 && !secondHalfGo) { // 여기여기
+				y = 231;
+			} else if (currentImageIndex == 45 && secondHalfGo) {
+				lbl.setVisible(false);
 			}
 			lbl.setText(gameFrame.getOptionBenefit());
 			lbl.setForeground(new Color(48, 56, 72));

@@ -300,8 +300,6 @@ public class GameFrame extends JFrame {
 
 	public void gameOn(User user, User defender, GameModeService gameModeService) {
 		if (selectedMode == false) {
-//			System.out.println("optionIE" + optionIE + currentImageIndex);
-
 			if (textLbl.isVisible() || textLbl2.isVisible()) {
 				textLbl.setVisible(false);
 				textLbl2.setVisible(false);

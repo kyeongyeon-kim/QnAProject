@@ -175,16 +175,4 @@ public class LoginFrame extends JFrame implements KeyListener {
 			lblResult.setText("존재하지 않는 아이디입니다.");
 		}
 	}
-
-	public void makePf() {
-		pfPw.setBounds(58, 190, 220, 39);
-		pfPw.addKeyListener(this);
-		pfPw.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		pfPw.setBackground(new Color(240, 241, 242));
-		pfPw.setBorder(null);
-		pfPw.setForeground(new Color(88, 89, 91));
-		pfPw.setBorder(new EmptyBorder(0, 7, 0, 7));
-		pfPw.setColumns(20);
-		contentPane.add(pfPw);
-	}
 }
