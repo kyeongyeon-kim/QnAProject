@@ -25,6 +25,7 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 	private JPanel contentPane;
 	private JTextField tfId;
 	private JTextField tfPw;
+	private JPasswordField pfPw;
 	private JLabel lblResult;
 	private JButton btnFind;
 	private JButton btnLogin;
@@ -35,10 +36,8 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 
 	public LoginFrame(Login login) {
 		charPw = new char[0];
-//		charPw[0] = ' ';
-//		pw = "";
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(700, 230, 350, 455);
+		setBounds(700, 230, 350, 460);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -52,17 +51,22 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 		textPane.setBounds(118, 64, 115, 39);
 		contentPane.add(textPane);
 
-		tfId = new JTextField("아이디");
-		tfId.setBounds(58, 141, 220, 39);
+		JLabel lblId = new JLabel("아이디");
+		lblId.setBounds(61, 130, 100, 32);
+		lblSetting(lblId);
+		tfId = new JTextField("");
+		tfId.setBounds(58, 159, 220, 33);
 		tfSetting(tfId);
 
-		tfPw = new JTextField("비밀번호");
-		tfPw.setBounds(58, 190, 220, 39);
-		tfPw.addKeyListener(this);
-		tfSetting(tfPw);
+		JLabel lblPw = new JLabel("비밀번호");
+		lblPw.setBounds(61, 195, 100, 32);
+		lblSetting(lblPw);
+		pfPw = new JPasswordField("");
+		pfPw.setBounds(58, 224, 220, 33);
+		tfSetting(pfPw);
 
 		lblResult = new JLabel("");
-		lblResult.setBounds(59, 228, 220, 39);
+		lblResult.setBounds(59, 260, 220, 39);
 		lblResult.setFont(new Font("맑은 고딕", Font.BOLD, 11));
 		lblResult.setBorder(null);
 		lblResult.setForeground(Color.RED);
@@ -73,7 +77,7 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 		btnLogin.setBackground(new Color(96, 182, 230));
 		btnLogin.setBorderPainted(false);
 		btnLogin.setForeground(Color.white);
-		btnLogin.setBounds(58, 260, 220, 39);
+		btnLogin.setBounds(58, 292, 220, 39);
 		btnLogin.addKeyListener(this);
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
@@ -88,7 +92,7 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 		btnJoin.setFont(new Font("맑은 고딕", Font.BOLD, 11));
 		btnJoin.setBackground(Color.WHITE);
 		btnJoin.setBorderPainted(false);
-		btnJoin.setBounds(79, 308, 81, 23);
+		btnJoin.setBounds(79, 338, 81, 23);
 		btnJoin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -103,7 +107,7 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 		btnFind.setFont(new Font("맑은 고딕", Font.BOLD, 11));
 		btnFind.setBorderPainted(false);
 		btnFind.setBackground(Color.WHITE);
-		btnFind.setBounds(163, 308, 100, 23);
+		btnFind.setBounds(161, 338, 100, 23);
 		contentPane.add(btnFind);
 		btnFind.addActionListener(new ActionListener() {
 			@Override
@@ -111,6 +115,24 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 				new FindPwDialog().setVisible(true);
 			}
 		});
+	}
+
+	// 비밀번호값 구하기
+	private String getPassword(JPasswordField pfPw) {
+		char[] c = pfPw.getPassword();
+		String pw = "";
+		for (int i = 0; i < c.length; i++) {
+			pw += c[i];
+		}
+		return pw;
+	}
+
+	// 라벨 설정
+	private void lblSetting(JLabel lbl) {
+		lbl.setFont(new Font("맑은 고딕", Font.BOLD, 11));
+		lbl.setBackground(Color.white);
+		lbl.setForeground(Color.DARK_GRAY);
+		contentPane.add(lbl);
 	}
 
 	// 텍스트필드 설정
@@ -121,6 +143,7 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 		j.setForeground(new Color(88, 89, 91));
 		j.setBorder(new EmptyBorder(0, 7, 0, 7));
 		j.setColumns(20);
+		j.addKeyListener(this);
 		j.addFocusListener(this);
 		contentPane.add(j);
 	}
@@ -129,8 +152,8 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 	public void focusGained(FocusEvent e) {
 		if (e.getSource() == tfId && tfId.getText().equals("아이디")) {
 			tfId.setText("");
-		} else if (e.getSource() == tfPw && tfPw.getText().equals("비밀번호")) {
-			tfPw.setText("");
+		} else if (e.getSource() == pfPw && getPassword(pfPw).equals("비밀번호")) {
+			pfPw.setText("");
 		}
 	}
 
@@ -138,8 +161,8 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 	public void focusLost(FocusEvent e) {
 		if (e.getSource() == tfId && tfId.getText().equals("")) {
 			tfId.setText("아이디");
-		} else if (e.getSource() == tfPw && tfPw.getText().equals("")) {
-			tfPw.setText("비밀번호");
+		} else if (e.getSource() == pfPw && getPassword(pfPw).equals("")) {
+			pfPw.setText("비밀번호");
 		}
 	}
 
@@ -148,35 +171,19 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			btnLogin.doClick();
 		}
-//		if (e.getSource() == tfPw) {
-//			charPw = Arrays.copyOf(charPw, charPw.length + 1);
-//			charPw[charPw.length - 1] = e.getKeyChar();
-//			hidePw(charPw);
-//		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-//		if (charPw.length >= 0 &&
-//				(e.getKeyCode() == KeyEvent.VK_BACK_SPACE
-//				|| e.getKeyCode() == KeyEvent.VK_DELETE)) {
-//			charPw = Arrays.copyOf(charPw, tfPw.getText().length());
-//			hidePw(charPw);
-//		} else if (e.getSource() == tfPw && tfPw.getText().length() > charPw.length) {
-//			charPw = Arrays.copyOf(charPw, charPw.length + 1);
-//			charPw[charPw.length - 1] = e.getKeyChar();
-//			hidePw(charPw);
-//		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
-		
+
 	}
 
 	public void selectLogin(Login login) {
-		int result = login.checkLogin(tfId.getText(), tfPw.getText());
+		int result = login.checkLogin(tfId.getText(), getPassword(pfPw));
 		if (result == login.loginComplete) {
 			// 로그인 완료
 			lblResult.setText("");
@@ -190,21 +197,16 @@ public class LoginFrame extends JFrame implements FocusListener, KeyListener {
 		}
 	}
 
-	// 비밀번호 암호화
-	public void hidePw(char[] charPw) {
-//		pw = "";
-//		System.out.println(charPw);
-//		for (int i = 0; i < charPw.length; i++) {
-//			pw += charPw[i];
-//		}
-//		System.out.println("비밀번호: " + pw);
-//		System.out.println("charPw.length : " + charPw.length);
-//		System.out.println("tfPw.getText().length() : " + tfPw.getText().length());
-//
-//		String hide = "";
-//		for (int i = 0; i < tfPw.getText().length(); i++) {
-//			hide += "ㆍ";
-//		}
-//		tfPw.setText(hide);
+	public void makePf() {
+		pfPw.setBounds(58, 190, 220, 39);
+		pfPw.addKeyListener(this);
+		pfPw.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		pfPw.setBackground(new Color(240, 241, 242));
+		pfPw.setBorder(null);
+		pfPw.setForeground(new Color(88, 89, 91));
+		pfPw.setBorder(new EmptyBorder(0, 7, 0, 7));
+		pfPw.setColumns(20);
+		pfPw.addFocusListener(this);
+		contentPane.add(pfPw);
 	}
 }
