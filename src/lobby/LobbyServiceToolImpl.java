@@ -70,7 +70,6 @@ public class LobbyServiceToolImpl implements LobbyServiceTool {
 				return new Attacker(attacker, count * 10);
 			}
 		}
-
 	}
 
 	@Override

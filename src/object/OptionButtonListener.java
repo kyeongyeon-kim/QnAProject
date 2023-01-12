@@ -47,12 +47,12 @@ public class OptionButtonListener implements ActionListener {
 				gameFrame.getResultImages().add(date);
 			}
 		}
-		if (gameFrame.getCurrentImageIndex() == 65) {
+		if (gameFrame.getCurrentImageIndex() == 69) {
 			for (Image date : imageService.theDayWeMeet3(answer, gameFrame.getDefender())) {
 				gameFrame.getResultImages().add(date);
 			}
 		}
-		if (gameFrame.getCurrentImageIndex() == 69) {
+		if (gameFrame.getCurrentImageIndex() == 74) {
 			for (Image date : imageService.theDayWeMeet4(answer, gameFrame.getDefender())) {
 				gameFrame.getResultImages().add(date);
 			}

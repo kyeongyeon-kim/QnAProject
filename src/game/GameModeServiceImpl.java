@@ -27,7 +27,7 @@ import style.ImageServiceToolImpl;
 public class GameModeServiceImpl implements GameModeService {
 	private GameModeServiceTool gmst;
 	private int[] attackerIndex = { 0, 3, 8, 51, 54, 60, 63, 65, 71 };
-	private int[] defenderIndex = { 49, 50, 53, 55, 57, 59, 66, 67, 69, 70, 72, 75 };
+	private int[] defenderIndex = { 49, 50, 53, 55, 57, 59, 66, 67, 69, 70, 72, 74, 75 };
 	private Font font = new Font("맑은 고딕", Font.BOLD, 18);
 	private Font font2 = new Font("맑은 고딕", Font.BOLD, 27);
 	private Font font3 = new Font("맑은 고딕", Font.BOLD, 33);
@@ -150,7 +150,7 @@ public class GameModeServiceImpl implements GameModeService {
 	@Override
 	public boolean isUserPlayedGameBefore(User user, User defender) {
 		String sql = "SELECT EXISTS "
-				+ "(SELECT defender, attacker FROM answer GROUP BY attacker HAVING defender = ? AND attacker = ?)"
+				+ "(SELECT choice from answer WHERE defender = ? AND attacker = ?)"
 				+ " AS `isNOTNULL`;";
 		try (Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -175,6 +175,7 @@ public class GameModeServiceImpl implements GameModeService {
 		JLabel lbl = new JLabel();
 		List<Integer> nameList = new ArrayList<>(Arrays.asList(11, 12, 13, 14, 15, 17, 18, 19));
 		int currentImageIndex = gameFrame.getCurrentImageIndex();
+		System.out.println(currentImageIndex);
 		for (int i = 0; i < attackerIndex.length; i++) { // 사용자 이름 고정 라벨
 			if (currentImageIndex == attackerIndex[i]) {
 				String name = gameFrame.getUser().getName();
@@ -202,7 +203,7 @@ public class GameModeServiceImpl implements GameModeService {
 			}
 		}
 		if (currentImageIndex == 46 && secondHalfGo) { // 나는... 라벨
-			lbl.setText(gameFrame.getDefender().getName() + "은(는)...");
+			lbl.setText(gameFrame.getDefender().getName() + "은(는) 언제오려나...?");
 			lbl.setBounds(150, 380, 400, 300);
 			lbl.setFont(font3);
 			gameFrame.getLabel().add(lbl);

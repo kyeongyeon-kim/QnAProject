@@ -134,7 +134,7 @@ public class GameFrame extends JFrame {
 		}
 		if (currentImageIndex >= 27 && currentImageIndex < 30) {
 			String str = selectOption;
-			if (str.length() >= 23) {
+			if (str.length() >= 23) { 
 				str = str.substring(0, 15) + "<br>" + str.substring(15, str.length());
 			} else if (str.length() > 10 && str.length() < 23) {
 				str = str.substring(0, 14) + "<br>" + str.substring(14, str.length());
@@ -308,6 +308,7 @@ public class GameFrame extends JFrame {
 			textLbl2 = gameModeService.setTextByImageIndex2(this);
 			int lastImageNum = resultImages.size() - 1;
 			if (currentImageIndex == lastImageNum) {
+				System.out.println("이거언제");
 				dispose();
 				gameModeService.dataTransferToDB(user, defender, GameFrame.this);
 				gameModeService.gameComplete(user, defender);
