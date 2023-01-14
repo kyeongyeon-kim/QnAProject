@@ -15,7 +15,7 @@ public interface GameModeService {
 	public void decideSecondHalf(User attacker, List<Image> resultImages, int score);
 	public void gameComplete(User user, User defender);
 	public int selectByOption(String option);
-	public void dataTransferToDB(User user, User defender ,GameFrame gameFrame);
+	public void dataTransferToDB(User user, User defender ,List<Integer> choiceList);
 	public boolean isUserPlayedGameBefore(User user, User defender);
 	public JLabel setTextByImageIndex(GameFrame gameFrame);
 	public JLabel setTextByImageIndex2(GameFrame gameFrame);

@@ -95,7 +95,7 @@ public class GameModeServiceImpl implements GameModeService {
 		UserRankDialog urd = new UserRankDialog(defender);
 		LobbyServiceImpl lsi = new LobbyServiceImpl(new LobbyServiceToolImpl());
 		List<Attacker> attackerList = lsi.makeAttackerList(defender);
-		lsi.setUserRanking(urd, attackerList);
+		lsi.readedUserRanking(attackerList);
 		for (int i = 0; i < urd.getModel().getRowCount(); i++) {
 			String attackerId = (String) urd.getModel().getValueAt(i, 1);
 			if (user.getId().equals(attackerId)) {
@@ -128,11 +128,10 @@ public class GameModeServiceImpl implements GameModeService {
 	}
 
 	@Override
-	public void dataTransferToDB(User user, User defender, GameFrame gameFrame) {
+	public void dataTransferToDB(User user, User defender, List<Integer> choiceList) {
 		if (isUserPlayedGameBefore(user, defender)) {
 			gmst.deleteAnswer(user, defender);
 		}
-		List<Integer> choiceList = gameFrame.getChoiceList();
 		String sql = "INSERT INTO answer VALUES (?, ?, ?);";
 		try (Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);) {

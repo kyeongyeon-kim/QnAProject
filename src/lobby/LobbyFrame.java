@@ -1,8 +1,6 @@
 package lobby;
 
 import java.awt.Color;
-import java.awt.Dialog;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -12,6 +10,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.regex.PatternSyntaxException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -32,7 +31,6 @@ import javax.swing.table.TableRowSorter;
 import game.GameFrame;
 import login.Login;
 import login.UserinfoRepositoryImpl;
-import login.UserinfoService;
 import mypage.MypageInfo;
 import object.Attacker;
 import object.User;
@@ -47,6 +45,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 	private LobbyServiceImpl lsi;
 	private TableRowSorter<TableModel> sorter;
 	private UserinfoRepositoryImpl repo = new UserinfoRepositoryImpl();
+	private JButton searchBtn;
 
 	public LobbyFrame(User user) {
 		lsi = new LobbyServiceImpl(new LobbyServiceToolImpl());
@@ -69,7 +68,7 @@ public class LobbyFrame extends JFrame implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (lsi.isRowSelected(table)) {
+				if (isRowSelected(table)) {
 					int seletedRow = table.getSelectedRow();
 					Object userId = table.getValueAt(seletedRow, 2);
 					User defender = repo.loginUser((String) userId);
@@ -113,12 +112,12 @@ public class LobbyFrame extends JFrame implements ActionListener {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					transferMethod();
+					searchBtn.doClick();
 				}
 			}
 		});
 
-		JButton searchBtn = new JButton("검색");
+		searchBtn = new JButton("검색");
 		searchBtn.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		searchBtn.setBackground(SystemColor.control);
 		searchBtn.setBounds(242, 343, 74, 23);
@@ -176,7 +175,10 @@ public class LobbyFrame extends JFrame implements ActionListener {
 		sorter = new TableRowSorter<TableModel>(model);
 		table.setRowSorter(sorter);
 
-		lsi.readUserinfo(model, user);
+		List<String[]> infoList = lsi.readUserinfo(user);
+		for (String[] info : infoList) {
+			model.addRow(info);
+		}
 		setResizable(false);
 		setLocationRelativeTo(null);
 	}
@@ -185,18 +187,20 @@ public class LobbyFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
 		if (command.equals("로그아웃")) {
-			
-			Login login = new Login();
+			new Login();
 			dispose();
 		}
 		if (command.equals("랭킹 조회")) {
-			if (lsi.isRowSelected(table)) {
+			if (isRowSelected(table)) {
 				int seletedRow = table.getSelectedRow();
 				String userId = (String) table.getValueAt(seletedRow, 2);
 				User user = repo.loginUser((String) userId);
 				UserRankDialog urd = new UserRankDialog(user);
 				List<Attacker> attackerList = lsi.makeAttackerList(user);
-				lsi.setUserRanking(urd, attackerList);
+				List<String[]> infoList = lsi.readedUserRanking(attackerList);
+				for (String[] strings : infoList) {
+					urd.getModel().addRow(strings);
+				}
 				urd.setVisible(true);
 			}
 		}
@@ -210,14 +214,31 @@ public class LobbyFrame extends JFrame implements ActionListener {
 	         } else if (str.equals("MBTI")) {
 	            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + inputInfo.getText(), 3));
 	         } else {
-	            lsi.infomationFiltering(this);
+	            infomationFiltering();
 	         }
 	         inputInfo.setText("");
 	      }
 	}
-
-	private void transferMethod() {
-		lsi.infomationFiltering(this);
+	
+	public void infomationFiltering() {
+		if (inputInfo.getText().length() == 0) {
+			sorter.setRowFilter(null);
+		} else {
+			try {
+				sorter.setRowFilter(RowFilter.regexFilter(inputInfo.getText()));
+			} catch (PatternSyntaxException pse) {
+				System.out.println("패턴 문법 예외 발생");
+			}
+		}
+	}
+	
+	public boolean isRowSelected(JTable table) {
+		for (int i = 0; i < table.getRowCount(); i++) {
+			if (table.isRowSelected(i)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public JTextField getInputInfo() {

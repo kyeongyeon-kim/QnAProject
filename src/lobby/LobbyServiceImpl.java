@@ -19,7 +19,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-//import com.mysql.cj.x.protobuf.MysqlxCrud.CollectionOrBuilder;
 
 import dbutil.ConnectionProvider;
 import mypage.MypageDialog;
@@ -36,8 +35,9 @@ public class LobbyServiceImpl implements LobbyService {
 	}
 
 	@Override
-	public void readUserinfo(DefaultTableModel model, User user) {
+	public List<String[]> readUserinfo(User user) {
 		String sql = "SELECT name, gender, id, mbti FROM userinfo WHERE id <> ?";
+		List<String[]> inpuStrList = new ArrayList<>();
 		try (Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, user.getId());
@@ -45,44 +45,20 @@ public class LobbyServiceImpl implements LobbyService {
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
 					String[] inputStr = lst.makeUserinfoArr(rs);
-					model.addRow(inputStr);
+					inpuStrList.add(inputStr);
 				}
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return inpuStrList;
 
-	}
-
-	@Override
-	public void infomationFiltering(LobbyFrame lobbyFrame) {
-		if (lobbyFrame.getInputInfo().getText().length() == 0) {
-			lobbyFrame.getSorter().setRowFilter(null);
-		} else {
-			try {
-				lobbyFrame.getSorter().setRowFilter(RowFilter.regexFilter(lobbyFrame.getInputInfo().getText()));
-			} catch (PatternSyntaxException pse) {
-//				System.out.println("Bad regex pattern");
-			}
-		}
-	}
-
-	@Override
-	public boolean isRowSelected(JTable table) {
-		for (int i = 0; i < table.getRowCount(); i++) {
-			if (table.isRowSelected(i)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@Override
 	public List<Attacker> makeAttackerList(User user) {
-//		String sql2 = "SELECT defender, attacker FROM answer GROUP BY attacker HAVING defender = ?";
 		String sql2 = "SELECT defender, attacker FROM answer WHERE defender = ?";
-//		List<String> attackerNameList = new ArrayList<>();
 		List<Attacker> attackerList = new ArrayList<>();
 		Set<String> attackerNameSet = new HashSet<>();
 		
@@ -106,7 +82,6 @@ public class LobbyServiceImpl implements LobbyService {
 				@Override
 				public int compare(Object o1, Object o2) {
 					if (((Attacker) o1).getScore() == ((Attacker) o2).getScore()) {
-//						return ((CollectionOrBuilder) o1).getName().compareTo(((CollectionOrBuilder) o2).getName());
 					}
 					return ((Attacker) o2).getScore() - ((Attacker) o1).getScore();
 				}
@@ -119,9 +94,7 @@ public class LobbyServiceImpl implements LobbyService {
 
 	@Override
 	public List<Attacker> makeMyAttackList(User user) { // 파라미터 user는 로그인한 사람
-//		String sql2 = "SELECT attacker, defender FROM answer GROUP BY defender HAVING attacker = ?";
 		String sql2 = "SELECT attacker, defender FROM answer WHERE attacker = ?";
-//		List<String> attackerNameList = new ArrayList<>();
 		Set<String> attackerNameSet = new HashSet<>();
 		List<Attacker> attackerList = new ArrayList<>();
 		
@@ -145,7 +118,6 @@ public class LobbyServiceImpl implements LobbyService {
 				@Override
 				public int compare(Object o1, Object o2) {
 					if (((Attacker) o1).getScore() == ((Attacker) o2).getScore()) {
-//						return ((CollectionOrBuilder) o1).getName().compareTo(((CollectionOrBuilder) o2).getName());
 					}
 					return ((Attacker) o2).getScore() - ((Attacker) o1).getScore();
 				}
@@ -173,16 +145,18 @@ public class LobbyServiceImpl implements LobbyService {
 	}
 
 	@Override
-	public void setUserRanking(UserRankDialog urd, List<Attacker> attackerList) {
-		Object[] inputInfo = new Object[3];
+	public List<String[]> readedUserRanking(List<Attacker> attackerList) {
+		List<String[]> infoList = new ArrayList<>();
 		int rankingNum = 1;
 		for (Attacker attacker : attackerList) {
-			inputInfo[0] = rankingNum;
+			String[] inputInfo = new String[3];
+			inputInfo[0] = String.valueOf(rankingNum);
 			inputInfo[1] = attacker.getName();
-			inputInfo[2] = attacker.getScore();
-			urd.getModel().addRow(inputInfo);
+			inputInfo[2] = String.valueOf(attacker.getScore());
+			infoList.add(inputInfo);
 			rankingNum++;
 		}
+		return infoList;
 	}
 	
 	@Override

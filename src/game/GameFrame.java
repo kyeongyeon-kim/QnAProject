@@ -68,7 +68,6 @@ public class GameFrame extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// 게임 정상적으로 완료 시 동작
 				gameOn(user, defender, gameModeService);
 			}
 		});
@@ -307,10 +306,11 @@ public class GameFrame extends JFrame {
 			textLbl = gameModeService.setTextByImageIndex(this);
 			textLbl2 = gameModeService.setTextByImageIndex2(this);
 			int lastImageNum = resultImages.size() - 1;
+			// 게임 정상적으로 완료 시 동작
 			if (currentImageIndex == lastImageNum) {
 				System.out.println("이거언제");
 				dispose();
-				gameModeService.dataTransferToDB(user, defender, GameFrame.this);
+				gameModeService.dataTransferToDB(user, defender, choiceList);
 				gameModeService.gameComplete(user, defender);
 			}
 

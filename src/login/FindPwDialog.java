@@ -48,10 +48,6 @@ public class FindPwDialog extends JDialog implements FocusListener, KeyListener 
 		this.tfMbti = tfMbti;
 	}
 
-//	public static void main(String[] args) {
-//		new FindPwDialog().setVisible(true);
-//	}
-
 	public FindPwDialog() {
 		setModal(true);
 		setBounds(700, 220, 378, 465);
