@@ -57,4 +57,4 @@
 해결 : 필요한 값만을 전달받을 수 있도록 변경하여 의존성을 낮춤<br><br>
 
 
-<h2><a href="#">💌 더보기</a></h2><br><br>
+<h2><a href="https://yeon96.tistory.com/29">💌 더보기</a></h2><br><br>
